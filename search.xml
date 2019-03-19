@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title><![CDATA[Hexo常用操作]]></title>
+    <url>%2F2019%2F03%2F17%2Fhello-world%2F</url>
+    <content type="text"><![CDATA[Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[纪念金庸]]></title>
+    <url>%2F2018%2F10%2F30%2Fmy-first-blog%2F</url>
+    <content type="text"><![CDATA[笑傲江湖成绝响，人间再无侠客行； 飞雪连天射白鹿，笑书神侠倚碧鸳； 侠之大者，为国为民； 红颜弹指老，刹那芳华，与其天涯思君，恋恋不舍，莫若相忘于江湖。——金庸《天龙八部》 四张机，鸳鸯织就欲双飞，可怜未老头先白，春波碧草，晓寒深处，相对浴红衣。——金庸《射雕英雄传》 一座山，隔不了两两相思，一天涯，断不了两两无言，且听风吟，吟不完我一生思念。——金庸《神雕侠侣》 他强由他强，清风拂山岗；他横任他横，明月照大江。——金庸《倚天屠龙记》 情不知所起，一往情深；恨不知所终，一笑而泯。——金庸《笑傲江湖》]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+      <tags>
+        <tag>tag1</tag>
+        <tag>tag2</tag>
+        <tag>tag3</tag>
+      </tags>
+  </entry>
+</search>
