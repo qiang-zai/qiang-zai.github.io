@@ -88,7 +88,7 @@
 <meta property="og:description" content="前几天帮朋友做了一道面试题，感觉用Python做起来会方便很多，话不多说上图">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/%E6%93%8D%E4%BD%9C%E8%A1%A8%E6%A0%BC%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98.jpeg">
-<meta property="og:updated_time" content="2019-03-20T06:33:50.554Z">
+<meta property="og:updated_time" content="2019-03-20T07:10:50.138Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python面试题（一）：Python操作Excel">
 <meta name="twitter:description" content="前几天帮朋友做了一道面试题，感觉用Python做起来会方便很多，话不多说上图">
@@ -443,7 +443,7 @@
 <p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/%E6%93%8D%E4%BD%9C%E8%A1%A8%E6%A0%BC%E7%9A%84%E9%9D%A2%E8%AF%95%E9%A2%98.jpeg" alt></p>
 <h4 id="一、模块介绍"><a href="#一、模块介绍" class="headerlink" title="一、模块介绍"></a>一、模块介绍</h4><p>Python社区的强大和活跃，也为Python成为主流语言奠定了基础，丰富的第三方库使一切变成了可能，主要使用Python的两个模块 <code>xlrd</code>和<code>xlwt</code> 模块，顾名思义xlrd是读excel，xlwt是用来写excel的库，另外这两个库不是Python内置的模块需要自行安装。建议使用 <code>pip</code> 来进行安装</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -i 可以指定下载的源地址，默认是使用的国外的源比较慢</span></span><br><span class="line">pip install xlrd -i https://pypi.douban.com/simple/</span><br></pre></td></tr></table></figure>
-<h4 id="二、解决问题的思路"><a href="#二、解决问题的思路" class="headerlink" title="二、解决问题的思路"></a>二、解决问题的思路</h4><ul>
+<h4 id="二、解决题目的思路"><a href="#二、解决题目的思路" class="headerlink" title="二、解决题目的思路"></a>二、解决题目的思路</h4><ul>
 <li>1、要获取excel表格里面的数据</li>
 <li>2、获取到每一行的数据，然后拼接成字典</li>
 <li>3、把每一行拼接的字典放到列表当中</li>
@@ -677,7 +677,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、模块介绍"><span class="nav-number">1.</span> <span class="nav-text">一、模块介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、解决问题的思路"><span class="nav-number">2.</span> <span class="nav-text">二、解决问题的思路</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#获取Excel文件对象"><span class="nav-number">2.1.</span> <span class="nav-text">获取Excel文件对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#常用的操作"><span class="nav-number">2.2.</span> <span class="nav-text">常用的操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、代码奉上-——-gt-So-simple"><span class="nav-number">3.</span> <span class="nav-text">三、代码奉上 ——&gt;So simple</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、模块介绍"><span class="nav-number">1.</span> <span class="nav-text">一、模块介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、解决题目的思路"><span class="nav-number">2.</span> <span class="nav-text">二、解决题目的思路</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#获取Excel文件对象"><span class="nav-number">2.1.</span> <span class="nav-text">获取Excel文件对象</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#常用的操作"><span class="nav-number">2.2.</span> <span class="nav-text">常用的操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、代码奉上-——-gt-So-simple"><span class="nav-number">3.</span> <span class="nav-text">三、代码奉上 ——&gt;So simple</span></a></li></ol></div>
             
 
           </div>
