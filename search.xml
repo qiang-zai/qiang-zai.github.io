@@ -14,6 +14,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[爬虫之Http协议]]></title>
+    <url>%2F2018%2F03%2F21%2F%E7%88%AC%E8%99%AB%E4%B9%8BHttp%E5%8D%8F%E8%AE%AE%2F</url>
+    <content type="text"><![CDATA[什么是HTTP协议？Http协议专业称之为：超文本传输协议，属于网络协议中应用层的协议，默认端口是80 HTTP请求格式 案例 HTTP请求方式HTTP请求可以使用多种请求方法 HTTP1.0定义了三种请求方法：GET, POST, HEAD HTTP1.1（主流）新增了五种请求方法：OPTIONS，PUT，DELETE，TRACE，CONNECT 请求方式 描述 GET 请求指定的页面信息，并返回实体主体。 HEAD 类似于get请求，只不过返回的响应中没有具体的内容，用于获取报头 POST 向指定资源提交数据进行处理请求（例如提交表单或者上传文件）。数据被包含在请求体中。POST请求可能会导致新的资源的建立和/或已有资源的修改。 PUT 从客户端向服务器传送的数据取代指定的文档的内容。 DELETE 请求服务器删除指定的页面。 CONNECT HTTP/1.1协议中预留给能够将连接改为管道方式的代理服务器。 OPTIONS 允许客户端查看服务器的性能。 TRACE 回显服务器收到的请求，主要用于测试或诊断。 常见请求头 Cookie User-Agent 浏览器代理 Referer 防盗链，请求来自哪里 Host 请求主机 Connection Accept HTTP响应Http响应由四部分组成 状态行： HTTP/1.1 200 OK 消息报文： Content-Type: text/html….. 空行就是： 消息报文和正文中间的空行 响应正文：大家在浏览器看到的渲染后的内容 HTTP状态码当浏览者访问一个网页时，浏览者的浏览器会向网页所在服务器发出请求。当浏览器接收并显示网页前，此网页所在的服务器会返回一个包含HTTP状态码的信息头（server header）用以响应浏览器的请求。 分类 分类描述 1** 信息，服务器收到请求，需要请求者继续执行操作 2** 成功，操作被成功接收并处理 3** 重定向，需要进一步的操作以完成请求 4** 客户端错误，请求包含语法错误或无法完成请求 5** 服务器错误，服务器在处理请求的过程中发生了错误 常见的HTTP状态码： 200 - 请求成功 301 - 资源（网页等）被永久转移到其它URL 404 - 请求的资源（网页等）不存在 500 - 内部服务器错误]]></content>
+      <categories>
+        <category>爬虫</category>
+      </categories>
+      <tags>
+        <tag>Http</tag>
+        <tag>Https</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[爬虫开篇]]></title>
     <url>%2F2018%2F03%2F20%2F%E7%88%AC%E8%99%AB%E5%BC%80%E7%AF%87%2F</url>
     <content type="text"><![CDATA[当今是一个大数据的时代，数据也变得越来越值钱，有市场就有需要，“爬虫工程师”就此诞生～从此开始学习 Spider，开贴记录一下自己的学习经历, Fighting 什么是爬虫？所谓的爬虫其实就是模拟浏览器发送网络请求，接收请求响应，按照一定的规则自动的去获取网络上的信息 爬虫分为哪些从网上简单的了解，爬虫主要分为通用爬虫（搜索引擎爬虫，典型的就是百度&amp;Google）和聚焦爬虫（爬一些指定的网站） 简单的爬虫流程 1、抓到起始的url，获取响应 2、对响应再次发送请求 3、如果能从响应中提取URL，则继续发送请求获取响应 4、如果提取数据，则将数据进行保存]]></content>
@@ -21,8 +33,7 @@
         <category>爬虫</category>
       </categories>
       <tags>
-        <tag>Http</tag>
-        <tag>Https</tag>
+        <tag>Spider</tag>
       </tags>
   </entry>
   <entry>
