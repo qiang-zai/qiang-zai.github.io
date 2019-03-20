@@ -14,6 +14,18 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[爬虫开篇]]></title>
+    <url>%2F2018%2F03%2F20%2F%E7%88%AC%E8%99%AB%E5%BC%80%E7%AF%87%2F</url>
+    <content type="text"><![CDATA[当今是一个大数据的时代，数据也变得越来越值钱，有市场就有需要，“爬虫工程师”就此诞生～从此开始学习 Spider，开贴记录一下自己的学习经历, Fighting 什么是爬虫？所谓的爬虫其实就是模拟浏览器发送网络请求，接收请求响应，按照一定的规则自动的去获取网络上的信息 爬虫分为哪些从网上简单的了解，爬虫主要分为通用爬虫（搜索引擎爬虫，典型的就是百度&amp;Google）和聚焦爬虫（爬一些指定的网站） 简单的爬虫流程 1、抓到起始的url，获取响应 2、对响应再次发送请求 3、如果能从响应中提取URL，则继续发送请求获取响应 4、如果提取数据，则将数据进行保存]]></content>
+      <categories>
+        <category>爬虫</category>
+      </categories>
+      <tags>
+        <tag>Http</tag>
+        <tag>Https</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Python面试题（一）：Python操作Excel]]></title>
     <url>%2F2018%2F03%2F19%2FPython%E9%9D%A2%E8%AF%95%E9%A2%98%EF%BC%88%E4%B8%80%EF%BC%89%EF%BC%9APython%E6%93%8D%E4%BD%9CExcel%2F</url>
     <content type="text"><![CDATA[前几天帮朋友做了一道面试题，感觉用Python做起来会方便很多，话不多说上图 一、模块介绍Python社区的强大和活跃，也为Python成为主流语言奠定了基础，丰富的第三方库使一切变成了可能，主要使用Python的两个模块 xlrd和xlwt 模块，顾名思义xlrd是读excel，xlwt是用来写excel的库，另外这两个库不是Python内置的模块需要自行安装。建议使用 pip 来进行安装 12# -i 可以指定下载的源地址，默认是使用的国外的源比较慢pip install xlrd -i https://pypi.douban.com/simple/ 二、解决题目的思路 1、要获取excel表格里面的数据 2、获取到每一行的数据，然后拼接成字典 3、把每一行拼接的字典放到列表当中 看着是不是很容易，但是如果不熟悉xlrd的语法操作起来也是很困难的，下面就罗列一下基本使用 获取Excel文件对象1data = xlrd.open_workbook(filename)#文件名以及路径，如果路径或者文件名有中文给前面加一个r原生字符。 常用的操作 1、获取data中某一个工作表（sheet） 12345table = data.sheets()[0] # 通过索引顺序获取table = data.sheet_by_index(sheet_indx)) #通过索引顺序获取table = data.sheet_by_name(sheet_name)#通过名称获取 2、行的操作 1234567891011nrows = table.nrows # 获取该sheet中的有效行数table.row(rowx) #返回由该行中所有的单元格对象组成的列表table.row_slice(rowx) #返回由该列中所有的单元格对象组成的列表table.row_types(rowx, start_colx=0, end_colx=None) #返回由该行中所有单元格的数据类型组成的列表table.row_values(rowx, start_colx=0, end_colx=None) #返回由该行中所有单元格的数据组成的列表table.row_len(rowx) #返回该列的有效单元格长度 3、列的操作 123456789ncols = table.ncols #获取列表的有效列数table.col(colx, start_rowx=0, end_rowx=None) #返回由该列中所有的单元格对象组成的列表table.col_slice(colx, start_rowx=0, end_rowx=None) #返回由该列中所有的单元格对象组成的列表table.col_types(colx, start_rowx=0, end_rowx=None) #返回由该列中所有单元格的数据类型组成的列表table.col_values(colx, start_rowx=0, end_rowx=None) #返回由该列中所有单元格的数据组成的列表 4、单元格的操作 1234567table.cell(rowx,colx) #返回单元格对象table.cell_type(rowx,colx) #返回单元格中的数据类型table.cell_value(rowx,colx) #返回单元格中的数据table.cell_xf_index(rowx, colx) # 暂时还没有搞懂 三、代码奉上 ——&gt;So simple1234567891011121314151617181920212223242526272829# 导入模块import xlrd def Execl2List(): # 1.获取表格 excel = xlrd.open_workbook(r"./lianxi.xlsx") # 2.获取Sheet1表格页 sheet = excel.sheet_by_name("Sheet1") # 3.获取当前页的行数 row = sheet.nrows lists = [] for i in range(1, row): dic = &#123;&#125; list = sheet.row_values(i) # 获取表格对应行的数据 dic["姓名"] = list[0] dic["年龄"] = list[1] dic["性别"] = list[2] lists.append(dic) return listsif __name__ == '__main__': data = Execl2List() print(data)]]></content>
