@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="js2py,">
 
 
 
@@ -79,16 +79,22 @@
 
 
 
-<meta name="description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LQ | 归来仍是少年">
-<meta property="og:url" content="http://qiangzai.site/index.html">
+<meta name="description" content="爬虫小试身手之js逆向百度翻译，目前百度翻译在PC和移动端都做了反扒措施，今天我们一看究竟～">
+<meta name="keywords" content="js2py">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫之js逆向百度翻译">
+<meta property="og:url" content="http://qiangzai.site/2018/03/22/爬虫之js逆行百度翻译/index.html">
 <meta property="og:site_name" content="LQ | 归来仍是少年">
-<meta property="og:description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta property="og:description" content="爬虫小试身手之js逆向百度翻译，目前百度翻译在PC和移动端都做了反扒措施，今天我们一看究竟～">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/WechatIMG26.png">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/WX20190322-144833%402x.png">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/sign%E7%94%9F%E6%88%90%E7%9A%84js%E6%96%87%E4%BB%B6.png">
+<meta property="og:updated_time" content="2019-03-22T07:32:02.315Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LQ | 归来仍是少年">
-<meta name="twitter:description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta name="twitter:title" content="爬虫之js逆向百度翻译">
+<meta name="twitter:description" content="爬虫小试身手之js逆向百度翻译，目前百度翻译在PC和移动端都做了反扒措施，今天我们一看究竟～">
+<meta name="twitter:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/WechatIMG26.png">
 
 
 
@@ -118,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://qiangzai.site/">
+  <link rel="canonical" href="http://qiangzai.site/2018/03/22/爬虫之js逆行百度翻译/">
 
 
 
 
 
-  <title>LQ | 归来仍是少年</title>
+  <title>爬虫之js逆向百度翻译 | LQ | 归来仍是少年</title>
   
 
 
@@ -143,8 +149,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -279,207 +284,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2018/10/30/my-first-blog/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="强仔">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LQ | 归来仍是少年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/10/30/my-first-blog/" itemprop="url">纪念金庸</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-30T14:54:40+08:00">
-                2018-10-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/生活/" itemprop="url" rel="index">
-                    <span itemprop="name">生活</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/10/30/my-first-blog/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/30/my-first-blog/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/10/30/my-first-blog/" class="leancloud_visitors" data-flag-title="纪念金庸">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  180 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          一代宗师，绝迹江湖；从小就是看老爷子的书，追了一遍又一遍翻拍的电视
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/10/30/my-first-blog/">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
 
   
 
@@ -509,9 +316,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/22/爬虫之js逆行百度翻译/" itemprop="url">爬虫之js逆向百度翻译</a></h1>
+          <h1 class="post-title" itemprop="name headline">爬虫之js逆向百度翻译</h1>
         
 
         <div class="post-meta">
@@ -635,16 +440,28 @@
       
 
       
-        
-          <p>爬虫小试身手之js逆向百度翻译，目前百度翻译在PC和移动端都做了反扒措施，今天我们一看究竟～</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/22/爬虫之js逆行百度翻译/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+        <p>爬虫小试身手之js逆向百度翻译，目前百度翻译在PC和移动端都做了反扒措施，今天我们一看究竟～</p>
+<a id="more"></a>
+<h4 id="什么是js逆向？"><a href="#什么是js逆向？" class="headerlink" title="什么是js逆向？"></a>什么是js逆向？</h4><p>所谓的js逆向其实就是破解对方反扒的一种方式，目前很多网站反扒都使用js来做，百度翻译的反扒主要是利用了请求参数中的 <code>sign</code>这个签名来做的，下面就来详细的讲解</p>
+<h5 id><a href="#" class="headerlink" title></a><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/WechatIMG26.png" alt></h5><p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/WX20190322-144833%402x.png" alt></p>
+<h4 id="sign怎么变动了？"><a href="#sign怎么变动了？" class="headerlink" title="sign怎么变动了？"></a>sign怎么变动了？</h4><p>当你更换输入框输入的翻译目标时，对比请求携带的参数发现<code>sign</code>这个参数随着输入的单词所变动，判断应该是js代码在请求前生成了这个sign，需要去定位具体哪个JS文件的生成了这个sign</p>
+<p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/sign%E7%94%9F%E6%88%90%E7%9A%84js%E6%96%87%E4%BB%B6.png" alt></p>
+<p>根据上图我们可以看出sign参数是由js代码 <code>m(a)</code>来生成的，<code>a</code>参数是as也就是我们要翻译的目标，这个是我们可以拿到的，现在要做的就是如何执行<code>m()</code>这段js代码，Python被称为胶水语言，在Python当中调用JS代码自然也是可以实现的，Python调用js代码目前主流的两个模块 <code>pyexecjs</code> 、<code>js2py</code>，今天我们讲的主要是通过 <code>js2py</code>来实现。</p>
+<h4 id="下载模块"><a href="#下载模块" class="headerlink" title="下载模块"></a>下载模块</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install js2py</span><br></pre></td></tr></table></figure>
+<h4 id="基本使用"><a href="#基本使用" class="headerlink" title="基本使用"></a>基本使用</h4><ul>
+<li>在python当中执行js</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.导入模块</span></span><br><span class="line"><span class="keyword">import</span> js2py</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.构建上下文对象</span></span><br><span class="line">content = js2py.EvalJs()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.在Python当中执行js代码</span></span><br><span class="line">content.execute(<span class="string">"console.log('abc')"</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="输出"><a href="#输出" class="headerlink" title="输出"></a>输出</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'abc'</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>在JS代码中调用Python程序</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1.导入模块</span></span><br><span class="line"><span class="keyword">import</span> js2py</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.构建上下文对象</span></span><br><span class="line">content = js2py.EvalJs()</span><br><span class="line"></span><br><span class="line"><span class="comment"># 3.在js当中调用Python程序</span></span><br><span class="line">content.a = <span class="number">1</span></span><br><span class="line">content.b = <span class="string">'abc'</span></span><br><span class="line">content.c = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">content.d = &#123;</span><br><span class="line">    <span class="string">"name"</span>: <span class="string">'qwe'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">content.execute(<span class="string">'console.log(a)'</span>)</span><br><span class="line">content.execute(<span class="string">'console.log(b)'</span>)</span><br><span class="line">content.execute(<span class="string">'console.log(c)'</span>)</span><br><span class="line">content.execute(<span class="string">'console.log(d)'</span>)</span><br></pre></td></tr></table></figure>
+<h5 id="输出-1"><a href="#输出-1" class="headerlink" title="输出"></a>输出</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">'1'</span></span><br><span class="line"><span class="string">'abc'</span></span><br><span class="line">[<span class="number">1</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">&#123;<span class="string">'name'</span>: <span class="string">'qwe'</span>&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="实战"><a href="#实战" class="headerlink" title="实战"></a>实战</h4><p>既然Pythoncode中可以调用js我们只要找到这段js在代码中执行就解决了这个问题，上代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Python代码</span></span><br><span class="line"><span class="comment"># 1.导入模块</span></span><br><span class="line"><span class="keyword">import</span> requests</span><br><span class="line"><span class="keyword">import</span> js2py</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2.发送请求，获取响应内容</span></span><br><span class="line"><span class="comment"># 请求地址 请求头 请求方式 请求参数</span></span><br><span class="line"></span><br><span class="line">url = <span class="string">'https://fanyi.baidu.com/v2transapi'</span></span><br><span class="line"></span><br><span class="line">headers = &#123;</span><br><span class="line">    <span class="string">'User-Agent'</span>: <span class="string">'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.75 Safari/537.36'</span>,</span><br><span class="line">    <span class="string">'Referer'</span>: <span class="string">'https://fanyi.baidu.com/?aldtype=16047'</span>,</span><br><span class="line">    <span class="string">'Cookie'</span>: <span class="string">'BAIDUID=DAD75821AD7D4663D00D9C0E7F9C8011:FG=1; BIDUPSID=DAD75821AD7D4663D00D9C0E7F9C8011; PSTM=1553134744; BDORZ=B490B5EBF6F3CD402E515D22BCDA1598; delPer=0; H_PS_PSSID=1439_21121_18559_28723_28557_28697_28585_28518_28627_22157; PSINO=2; locale=zh; to_lang_often=%5B%7B%22value%22%3A%22en%22%2C%22text%22%3A%22%u82F1%u8BED%22%7D%2C%7B%22value%22%3A%22zh%22%2C%22text%22%3A%22%u4E2D%u6587%22%7D%5D; REALTIME_TRANS_SWITCH=1; FANYI_WORD_SWITCH=1; HISTORY_SWITCH=1; SOUND_SPD_SWITCH=1; SOUND_PREFER_SWITCH=1; from_lang_often=%5B%7B%22value%22%3A%22zh%22%2C%22text%22%3A%22%u4E2D%u6587%22%7D%2C%7B%22value%22%3A%22en%22%2C%22text%22%3A%22%u82F1%u8BED%22%7D%5D; Hm_lvt_64ecd82404c51e03dc91cb9e8c025574=1553218276,1553218292; Hm_lpvt_64ecd82404c51e03dc91cb9e8c025574=1553218292'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 需要翻译的内容</span></span><br><span class="line">kw = <span class="string">'thank'</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 构建上下文对象</span></span><br><span class="line">content = js2py.EvalJs()</span><br><span class="line"><span class="keyword">with</span> open(<span class="string">'test.js'</span>, <span class="string">'r'</span>) <span class="keyword">as</span> f:</span><br><span class="line">    content.execute(f.read())</span><br><span class="line">    sign = content.e(kw)</span><br><span class="line"></span><br><span class="line">data = &#123;</span><br><span class="line">    <span class="string">"from"</span>: <span class="string">"en"</span>,</span><br><span class="line">    <span class="string">"to"</span>: <span class="string">"zh"</span>,</span><br><span class="line">    <span class="string">"query"</span>: kw,</span><br><span class="line">    <span class="string">"transtype"</span>: <span class="string">"translang"</span>,</span><br><span class="line">    <span class="string">"simple_means_flag"</span>: <span class="string">"3"</span>,</span><br><span class="line">    <span class="string">"sign"</span>: sign,</span><br><span class="line">    <span class="string">"token"</span>: <span class="string">"88d322490309c4abee0496f0dbab1a4b"</span>,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">response = requests.post(</span><br><span class="line">    url=url,</span><br><span class="line">    headers=headers,</span><br><span class="line">    data=data</span><br><span class="line">)</span><br><span class="line">print(response.json())</span><br></pre></td></tr></table></figure>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// test.js 文件</span></span><br><span class="line"><span class="keyword">var</span> i = <span class="string">'320305.131321201'</span>;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">n</span>(<span class="params">r, o</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> t = <span class="number">0</span>; t &lt; o.length - <span class="number">2</span>; t += <span class="number">3</span>) &#123;</span><br><span class="line">            <span class="keyword">var</span> a = o.charAt(t + <span class="number">2</span>);</span><br><span class="line">            a = a &gt;= <span class="string">"a"</span> ? a.charCodeAt(<span class="number">0</span>) - <span class="number">87</span> : <span class="built_in">Number</span>(a),</span><br><span class="line">            a = <span class="string">"+"</span> === o.charAt(t + <span class="number">1</span>) ? r &gt;&gt;&gt; a : r &lt;&lt; a,</span><br><span class="line">            r = <span class="string">"+"</span> === o.charAt(t) ? r + a &amp; <span class="number">4294967295</span> : r ^ a</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> r</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">e</span>(<span class="params">r</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">var</span> o = r.match(<span class="regexp">/[\uD800-\uDBFF][\uDC00-\uDFFF]/g</span>);</span><br><span class="line">        <span class="keyword">if</span> (<span class="literal">null</span> === o) &#123;</span><br><span class="line">            <span class="keyword">var</span> t = r.length;</span><br><span class="line">            t &gt; <span class="number">30</span> &amp;&amp; (r = <span class="string">""</span> + r.substr(<span class="number">0</span>, <span class="number">10</span>) + r.substr(<span class="built_in">Math</span>.floor(t / <span class="number">2</span>) - <span class="number">5</span>, <span class="number">10</span>) + r.substr(<span class="number">-10</span>, <span class="number">10</span>))</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">for</span> (<span class="keyword">var</span> e = r.split(<span class="regexp">/[\uD800-\uDBFF][\uDC00-\uDFFF]/</span>), C = <span class="number">0</span>, h = e.length, f = []; h &gt; C; C++)</span><br><span class="line">                <span class="string">""</span> !== e[C] &amp;&amp; f.push.apply(f, a(e[C].split(<span class="string">""</span>))),</span><br><span class="line">                C !== h - <span class="number">1</span> &amp;&amp; f.push(o[C]);</span><br><span class="line">            <span class="keyword">var</span> g = f.length;</span><br><span class="line">            g &gt; <span class="number">30</span> &amp;&amp; (r = f.slice(<span class="number">0</span>, <span class="number">10</span>).join(<span class="string">""</span>) + f.slice(<span class="built_in">Math</span>.floor(g / <span class="number">2</span>) - <span class="number">5</span>, <span class="built_in">Math</span>.floor(g / <span class="number">2</span>) + <span class="number">5</span>).join(<span class="string">""</span>) + f.slice(<span class="number">-10</span>).join(<span class="string">""</span>))</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">var</span> u = <span class="keyword">void</span> <span class="number">0</span></span><br><span class="line">          , l = <span class="string">""</span> + <span class="built_in">String</span>.fromCharCode(<span class="number">103</span>) + <span class="built_in">String</span>.fromCharCode(<span class="number">116</span>) + <span class="built_in">String</span>.fromCharCode(<span class="number">107</span>);</span><br><span class="line">        u = <span class="literal">null</span> !== i ? i : (i = <span class="built_in">window</span>[l] || <span class="string">""</span>) || <span class="string">""</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> d = u.split(<span class="string">"."</span>), m = <span class="built_in">Number</span>(d[<span class="number">0</span>]) || <span class="number">0</span>, s = <span class="built_in">Number</span>(d[<span class="number">1</span>]) || <span class="number">0</span>, S = [], c = <span class="number">0</span>, v = <span class="number">0</span>; v &lt; r.length; v++) &#123;</span><br><span class="line">            <span class="keyword">var</span> A = r.charCodeAt(v);</span><br><span class="line">            <span class="number">128</span> &gt; A ? S[c++] = A : (<span class="number">2048</span> &gt; A ? S[c++] = A &gt;&gt; <span class="number">6</span> | <span class="number">192</span> : (<span class="number">55296</span> === (<span class="number">64512</span> &amp; A) &amp;&amp; v + <span class="number">1</span> &lt; r.length &amp;&amp; <span class="number">56320</span> === (<span class="number">64512</span> &amp; r.charCodeAt(v + <span class="number">1</span>)) ? (A = <span class="number">65536</span> + ((<span class="number">1023</span> &amp; A) &lt;&lt; <span class="number">10</span>) + (<span class="number">1023</span> &amp; r.charCodeAt(++v)),</span><br><span class="line">            S[c++] = A &gt;&gt; <span class="number">18</span> | <span class="number">240</span>,</span><br><span class="line">            S[c++] = A &gt;&gt; <span class="number">12</span> &amp; <span class="number">63</span> | <span class="number">128</span>) : S[c++] = A &gt;&gt; <span class="number">12</span> | <span class="number">224</span>,</span><br><span class="line">            S[c++] = A &gt;&gt; <span class="number">6</span> &amp; <span class="number">63</span> | <span class="number">128</span>),</span><br><span class="line">            S[c++] = <span class="number">63</span> &amp; A | <span class="number">128</span>)</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">var</span> p = m, F = <span class="string">""</span> + <span class="built_in">String</span>.fromCharCode(<span class="number">43</span>) + <span class="built_in">String</span>.fromCharCode(<span class="number">45</span>) + <span class="built_in">String</span>.fromCharCode(<span class="number">97</span>) + (<span class="string">""</span> + <span class="built_in">String</span>.fromCharCode(<span class="number">94</span>) + <span class="built_in">String</span>.fromCharCode(<span class="number">43</span>) + <span class="built_in">String</span>.fromCharCode(<span class="number">54</span>)), D = <span class="string">""</span> + <span class="built_in">String</span>.fromCharCode(<span class="number">43</span>) + <span class="built_in">String</span>.fromCharCode(<span class="number">45</span>) + <span class="built_in">String</span>.fromCharCode(<span class="number">51</span>) + (<span class="string">""</span> + <span class="built_in">String</span>.fromCharCode(<span class="number">94</span>) + <span class="built_in">String</span>.fromCharCode(<span class="number">43</span>) + <span class="built_in">String</span>.fromCharCode(<span class="number">98</span>)) + (<span class="string">""</span> + <span class="built_in">String</span>.fromCharCode(<span class="number">43</span>) + <span class="built_in">String</span>.fromCharCode(<span class="number">45</span>) + <span class="built_in">String</span>.fromCharCode(<span class="number">102</span>)), b = <span class="number">0</span>; b &lt; S.length; b++)</span><br><span class="line">            p += S[b],</span><br><span class="line">            p = n(p, F);</span><br><span class="line">        <span class="keyword">return</span> p = n(p, D),</span><br><span class="line">        p ^= s,</span><br><span class="line">        <span class="number">0</span> &gt; p &amp;&amp; (p = (<span class="number">2147483647</span> &amp; p) + <span class="number">2147483648</span>),</span><br><span class="line">        p %= <span class="number">1e6</span>,</span><br><span class="line">        p.toString() + <span class="string">"."</span> + (p ^ m)</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -659,410 +476,55 @@
 
     <footer class="post-footer">
       
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2018/03/21/爬虫之Http协议/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="强仔">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LQ | 归来仍是少年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/21/爬虫之Http协议/" itemprop="url">爬虫之Http协议</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-21T21:03:48+08:00">
-                2018-03-21
-              </time>
-            
-
-            
-
-            
-          </span>
-
+        <div class="post-tags">
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/爬虫/" itemprop="url" rel="index">
-                    <span itemprop="name">爬虫</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
+            <a href="/tags/js2py/" rel="tag"># js2py</a>
           
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/21/爬虫之Http协议/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/03/21/爬虫之Http协议/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/03/21/爬虫之Http协议/" class="leancloud_visitors" data-flag-title="爬虫之Http协议">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  631 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  2 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
         </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h4 id="什么是HTTP协议？"><a href="#什么是HTTP协议？" class="headerlink" title="什么是HTTP协议？"></a>什么是HTTP协议？</h4><p><code>Http</code>协议专业称之为：超文本传输协议，属于网络协议中应用层的协议，默认端口是80</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/21/爬虫之Http协议/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
       
 
       
       
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2018/03/20/爬虫开篇/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="强仔">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LQ | 归来仍是少年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/20/爬虫开篇/" itemprop="url">爬虫开篇</a></h1>
+        <div class="post-widgets">
         
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-20T20:47:12+08:00">
-                2018-03-20
-              </time>
-            
+        
 
-            
-
-            
-          </span>
-
+        
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/爬虫/" itemprop="url" rel="index">
-                    <span itemprop="name">爬虫</span>
-                  </a>
-                </span>
-
-                
-                
-              
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
             </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/20/爬虫开篇/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/03/20/爬虫开篇/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/03/20/爬虫开篇/" class="leancloud_visitors" data-flag-title="爬虫开篇">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  225 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>当今是一个大数据的时代，数据也变得越来越值钱，有市场就有需要，“爬虫工程师”就此诞生～从此开始学习 <code>Spider</code>，开贴记录一下自己的学习经历, <code>Fighting</code></p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/20/爬虫开篇/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
           </div>
-          <!--/noindex-->
         
+        </div>
       
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
       
 
       
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/21/爬虫之Http协议/" rel="next" title="爬虫之Http协议">
+                <i class="fa fa-chevron-left"></i> 爬虫之Http协议
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/30/my-first-blog/" rel="prev" title="纪念金庸">
+                纪念金庸 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
 
       
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </div>
@@ -1072,413 +534,25 @@
   </article>
 
 
-    
-      
 
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2018/03/19/Python面试题（一）：Python操作Excel/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="强仔">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LQ | 归来仍是少年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/03/19/Python面试题（一）：Python操作Excel/" itemprop="url">Python面试题（一）：Python操作Excel</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-19T20:59:12+08:00">
-                2018-03-19
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/面试题/" itemprop="url" rel="index">
-                    <span itemprop="name">面试题</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2018/03/19/Python面试题（一）：Python操作Excel/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/03/19/Python面试题（一）：Python操作Excel/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2018/03/19/Python面试题（一）：Python操作Excel/" class="leancloud_visitors" data-flag-title="Python面试题（一）：Python操作Excel">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  760 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  3 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <p>前几天帮朋友做了一道面试题，感觉用Python做起来会方便很多，话不多说上图</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/03/19/Python面试题（一）：Python操作Excel/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
+    <div class="post-spread">
       
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
-  
-  
-  
-  </article>
 
 
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2017/10/30/hello-world/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="强仔">
-      <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="LQ | 归来仍是少年">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/10/30/hello-world/" itemprop="url">Hexo常用操作</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-30T14:54:40+08:00">
-                2017-10-30
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/工具/" itemprop="url" rel="index">
-                    <span itemprop="name">工具</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-              <span class="post-comments-count">
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-comment-o"></i>
-                </span>
-                <a href="/2017/10/30/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2017/10/30/hello-world/" itemprop="commentCount"></span>
-                </a>
-              </span>
-            
-          
-
-          
-          
-             <span id="/2017/10/30/hello-world/" class="leancloud_visitors" data-flag-title="Hexo常用操作">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数&#58;</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计&#58;</span>
-                
-                <span title="字数统计">
-                  37 字
-                </span>
-              
-
-              
-                <span class="post-meta-divider">|</span>
-              
-
-              
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-clock-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
-                
-                <span title="阅读时长">
-                  1 分钟
-                </span>
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          Hexo终端上的常用命令
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/10/30/hello-world/">
-              阅读全文 &raquo;
-            </a>
           </div>
-          <!--/noindex-->
-        
-      
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
     </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-  </section>
-
   
 
 
-          </div>
-          
-
-
-          
 
         </div>
         
@@ -1499,8 +573,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -1576,6 +659,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是js逆向？"><span class="nav-number">1.</span> <span class="nav-text">什么是js逆向？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#"><span class="nav-number">1.1.</span> <span class="nav-text"></span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#sign怎么变动了？"><span class="nav-number">2.</span> <span class="nav-text">sign怎么变动了？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#下载模块"><span class="nav-number">3.</span> <span class="nav-text">下载模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本使用"><span class="nav-number">4.</span> <span class="nav-text">基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#输出"><span class="nav-number">4.1.</span> <span class="nav-text">输出</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#输出-1"><span class="nav-number">4.2.</span> <span class="nav-text">输出</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#实战"><span class="nav-number">5.</span> <span class="nav-text">实战</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -1717,6 +816,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
