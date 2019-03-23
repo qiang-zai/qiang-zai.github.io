@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="sandowsocks,">
 
 
 
@@ -79,17 +79,26 @@
 
 
 
-<meta name="description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
-<meta property="og:type" content="website">
-<meta property="og:title" content="文章分类">
-<meta property="og:url" content="http://qiangzai.site/categories/index.html">
+<meta name="description" content="一直都想找Google和AWS这种大BOSS撸羊毛，但是苦于没有信用卡，也不想走淘宝买卡害怕被套路，偶然机会需要出国旅游，所以匆匆去办了一张中信的 Visa信用卡（欧洲用现金、美国用信用卡、中国在用支付宝，国外很流行信用卡），回国以后就赶紧草草注册了AWS，开启科学上网～">
+<meta name="keywords" content="sandowsocks">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于AWS服务器利用sandowsocks科学上网">
+<meta property="og:url" content="http://qiangzai.site/2018/10/23/基于AWS服务器利用sandowsocks科学上网/index.html">
 <meta property="og:site_name" content="LQ | 归来仍是少年">
-<meta property="og:description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta property="og:description" content="一直都想找Google和AWS这种大BOSS撸羊毛，但是苦于没有信用卡，也不想走淘宝买卡害怕被套路，偶然机会需要出国旅游，所以匆匆去办了一张中信的 Visa信用卡（欧洲用现金、美国用信用卡、中国在用支付宝，国外很流行信用卡），回国以后就赶紧草草注册了AWS，开启科学上网～">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-17T12:39:45.685Z">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/%E7%82%B9%E5%87%BB%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B.png">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/%E5%AE%9E%E4%BE%8B%E5%B1%95%E7%A4%BA.png">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/%E9%97%AE%E9%A2%981.png">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/%E7%AB%AF%E5%8F%A3.png">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/vpn%E9%85%8D%E7%BD%AE.png">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/ret-show.jpeg">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/%E9%85%8D%E7%BD%AE%E5%A4%9A%E4%B8%AA%E7%94%A8%E6%88%B7.png">
+<meta property="og:updated_time" content="2019-03-23T08:47:43.568Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="文章分类">
-<meta name="twitter:description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta name="twitter:title" content="基于AWS服务器利用sandowsocks科学上网">
+<meta name="twitter:description" content="一直都想找Google和AWS这种大BOSS撸羊毛，但是苦于没有信用卡，也不想走淘宝买卡害怕被套路，偶然机会需要出国旅游，所以匆匆去办了一张中信的 Visa信用卡（欧洲用现金、美国用信用卡、中国在用支付宝，国外很流行信用卡），回国以后就赶紧草草注册了AWS，开启科学上网～">
+<meta name="twitter:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/%E7%82%B9%E5%87%BB%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B.png">
 
 
 
@@ -119,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://qiangzai.site/categories/">
+  <link rel="canonical" href="http://qiangzai.site/2018/10/23/基于AWS服务器利用sandowsocks科学上网/">
 
 
 
 
 
-  <title>文章分类 | LQ | 归来仍是少年</title>
+  <title>基于AWS服务器利用sandowsocks科学上网 | LQ | 归来仍是少年</title>
   
 
 
@@ -282,40 +291,295 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2018/10/23/基于AWS服务器利用sandowsocks科学上网/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="强仔">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LQ | 归来仍是少年">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">文章分类</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
-                目前共计 4 个分类
+          <h1 class="post-title" itemprop="name headline">基于AWS服务器利用sandowsocks科学上网</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-10-23T15:23:47+08:00">
+                2018-10-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/工具/" itemprop="url" rel="index">
+                    <span itemprop="name">工具</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/10/23/基于AWS服务器利用sandowsocks科学上网/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/10/23/基于AWS服务器利用sandowsocks科学上网/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/10/23/基于AWS服务器利用sandowsocks科学上网/" class="leancloud_visitors" data-flag-title="基于AWS服务器利用sandowsocks科学上网">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  757 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  2 分钟
+                </span>
+              
             </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/面试题/">面试题</a><span class="category-list-count">1</span></li></ul>
-            </div>
-          </div>
-        
-      </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>一直都想找<code>Google</code>和<code>AWS</code>这种大BOSS撸羊毛，但是苦于没有信用卡，也不想走淘宝买卡害怕被套路，偶然机会需要出国旅游，所以匆匆去办了一张中信的 <code>Visa</code>信用卡（欧洲用现金、美国用信用卡、中国在用支付宝，国外很流行信用卡），回国以后就赶紧草草注册了AWS，开启科学上网～</p>
+<a id="more"></a>
+<h4 id="一、注册AWS并创建Ec2实例"><a href="#一、注册AWS并创建Ec2实例" class="headerlink" title="一、注册AWS并创建Ec2实例"></a>一、注册AWS并创建Ec2实例</h4><p>1、注册地址：<a href="https://www.amazonaws.cn/sign-up/" target="_blank" rel="noopener">https://www.amazonaws.cn/sign-up/</a>&gt;</p>
+<p>2、注册需要条件</p>
+<ul>
+<li>信用卡（必备，我用的visa双币卡，注册后扣除1$）</li>
+<li>手机号</li>
+<li>邮箱</li>
+</ul>
+<p>备注：注册成功以后需要等待一天验证身份什么的，反正我当初等了一天才能去创建Ec2</p>
+<p>3、申请成功，创建Ec2实例</p>
+<p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/%E7%82%B9%E5%87%BB%E5%88%9B%E5%BB%BA%E5%AE%9E%E4%BE%8B.png" alt></p>
+<p>创建实例我选择的是 <code>Ubuntu16.40</code>因为对ubuntu系统比较熟悉</p>
+<ul>
+<li>参考链接：<a href="https://blog.csdn.net/jewely/article/details/78030057" target="_blank" rel="noopener">https://blog.csdn.net/jewely/article/details/78030057</a></li>
+<li><strong>保存好</strong>私钥文件，文件结尾是xxx.pem</li>
+</ul>
+<h4 id="二、连接服务器"><a href="#二、连接服务器" class="headerlink" title="二、连接服务器"></a>二、连接服务器</h4><p>1、修改一下本地私钥文件权限 </p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chmod <span class="number">400</span> xxx.pem</span><br><span class="line"><span class="comment"># 备注 权限太高，后面ssh的时候连接不了会提示不安全</span></span><br></pre></td></tr></table></figure>
+<p>2、ssh连接</p>
+<figure class="highlight py"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -i <span class="string">"xxx.pem"</span> ubuntu@ec2<span class="number">-54</span><span class="number">-191</span><span class="number">-9</span><span class="number">-26.</span>us-west<span class="number">-2.</span>compute.amazonaws.com</span><br></pre></td></tr></table></figure>
+<ul>
+<li>xxx.pem 就是你下载下来的私钥文件 xxx这个名字是当时下载时写的，大家按自己的来</li>
+<li>@前面的那个ubuntu应该是固定的，我选的就是ubuntu系统</li>
+<li>@后面的就是AWS上你创建的实例的公有DNS（IPv4）名称 或者写 IPv4的公有IP也可以 我两个都尝试了 It`s OK</li>
+</ul>
+<p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/%E5%AE%9E%E4%BE%8B%E5%B1%95%E7%A4%BA.png" alt></p>
+<p>3、修改一下<code>root</code>用户密码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo passwd root</span><br></pre></td></tr></table></figure>
+<h4 id="三、安装shadowsocks并配置"><a href="#三、安装shadowsocks并配置" class="headerlink" title="三、安装shadowsocks并配置"></a>三、安装shadowsocks并配置</h4><p>默认ubuntu16.04已经预装了Python3</p>
+<p>1、更新apt-get</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get update</span><br></pre></td></tr></table></figure>
+<p>2、安装pip3（我用惯了Python3）</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">apt-get install python-pip3</span><br></pre></td></tr></table></figure>
+<p>3、安装shadowsocks</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip3 install shadowsocks</span><br></pre></td></tr></table></figure>
+<p>4、创建配置文件</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo touch /etc/shadowsocks.json</span><br></pre></td></tr></table></figure>
+<p>5、添加配置内容</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  "server": "0.0.0.0",  // 服务端IP 0.0.0.0即可方便连接</span><br><span class="line">  "server_port": 50003,  // 服务器端口方便后期客户端连接</span><br><span class="line">  "local_address": "127.0.0.1",</span><br><span class="line">  "local_port": 1080,</span><br><span class="line">  "password": "******", //连接服务器的密码，自己设置，客户端连接时候要填写</span><br><span class="line">  "timeout": 300,</span><br><span class="line">  "method": "aes-256-cfb", // 加密方式</span><br><span class="line">  "fast_open": false,</span><br><span class="line">  "workers": 1</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>配置以后启动shadowsocks</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo ssserver -c /etc/shadowsocks.json -d start</span><br></pre></td></tr></table></figure>
+<ul>
+<li>如果遇到<code>permission denied</code>错误解决方法如下</li>
+</ul>
+<p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/%E9%97%AE%E9%A2%981.png" alt></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一步查看sserver的位置 </span></span><br><span class="line">which ssserver </span><br><span class="line"><span class="comment"># 第二步</span></span><br><span class="line">sudo 填写完整的ssserver路径 -c /etc/shadowsocks.json -d start</span><br></pre></td></tr></table></figure>
+<p>6、修改AWS上EC2实例的入站端口</p>
+<p>配置好 shaodowsocks 后，还需要将配置中的端口打开, 这样客户端的服务才能链接得上 EC2 中的 shadowsocks 服务，首先打开正在运行的实例，向右滚动表格，最后一项，安全组，点击进入，编辑入站规则</p>
+<p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/%E7%AB%AF%E5%8F%A3.png" alt="配置入站规则"></p>
+<h4 id="四、客户端连接-amp-科学上网"><a href="#四、客户端连接-amp-科学上网" class="headerlink" title="四、客户端连接&amp;科学上网"></a>四、客户端连接&amp;科学上网</h4><p>1、打开本地shadowsocks客户端</p>
+<p>2、填写信息</p>
+<p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/vpn%E9%85%8D%E7%BD%AE.png" alt></p>
+<p>3、上网</p>
+<p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/ret-show.jpeg" alt></p>
+<blockquote>
+<p>遇到问题的可以留言区留言，一起看看</p>
+</blockquote>
+<h4 id="配置多用户上网"><a href="#配置多用户上网" class="headerlink" title="配置多用户上网"></a>配置多用户上网</h4><p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/%E9%85%8D%E7%BD%AE%E5%A4%9A%E4%B8%AA%E7%94%A8%E6%88%B7.png" alt></p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/sandowsocks/" rel="tag"># sandowsocks</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/23/爬虫之数据提取/" rel="next" title="爬虫之数据提取">
+                <i class="fa fa-chevron-left"></i> 爬虫之数据提取
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/30/my-first-blog/" rel="prev" title="纪念金庸">
+                纪念金庸 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -351,8 +615,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -428,6 +701,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#一、注册AWS并创建Ec2实例"><span class="nav-number">1.</span> <span class="nav-text">一、注册AWS并创建Ec2实例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#二、连接服务器"><span class="nav-number">2.</span> <span class="nav-text">二、连接服务器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#三、安装shadowsocks并配置"><span class="nav-number">3.</span> <span class="nav-text">三、安装shadowsocks并配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#四、客户端连接-amp-科学上网"><span class="nav-number">4.</span> <span class="nav-text">四、客户端连接&amp;科学上网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置多用户上网"><span class="nav-number">5.</span> <span class="nav-text">配置多用户上网</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

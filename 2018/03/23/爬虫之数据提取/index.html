@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="re,jsonpath,bs4,xpath,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
-<meta property="og:type" content="website">
-<meta property="og:title" content="文章分类">
-<meta property="og:url" content="http://qiangzai.site/categories/index.html">
+<meta name="description" content="今天主要记录一下数据提取的几种方法，在爬虫获取到响应数据以后我们改怎么处理响应的数据呢？从网上拿到的响应数据各种类型都有：JSON类型的，XML格式的,html格式的等等。">
+<meta name="keywords" content="re,jsonpath,bs4,xpath">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫之数据提取">
+<meta property="og:url" content="http://qiangzai.site/2018/03/23/爬虫之数据提取/index.html">
 <meta property="og:site_name" content="LQ | 归来仍是少年">
-<meta property="og:description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta property="og:description" content="今天主要记录一下数据提取的几种方法，在爬虫获取到响应数据以后我们改怎么处理响应的数据呢？从网上拿到的响应数据各种类型都有：JSON类型的，XML格式的,html格式的等等。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-17T12:39:45.685Z">
+<meta property="og:updated_time" content="2019-03-23T08:34:04.608Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="文章分类">
-<meta name="twitter:description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta name="twitter:title" content="爬虫之数据提取">
+<meta name="twitter:description" content="今天主要记录一下数据提取的几种方法，在爬虫获取到响应数据以后我们改怎么处理响应的数据呢？从网上拿到的响应数据各种类型都有：JSON类型的，XML格式的,html格式的等等。">
 
 
 
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://qiangzai.site/categories/">
+  <link rel="canonical" href="http://qiangzai.site/2018/03/23/爬虫之数据提取/">
 
 
 
 
 
-  <title>文章分类 | LQ | 归来仍是少年</title>
+  <title>爬虫之数据提取 | LQ | 归来仍是少年</title>
   
 
 
@@ -282,40 +283,253 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2018/03/23/爬虫之数据提取/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="强仔">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LQ | 归来仍是少年">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-	<h1 class="post-title" itemprop="name headline">文章分类</h1>
-
-
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
-                目前共计 4 个分类
+          <h1 class="post-title" itemprop="name headline">爬虫之数据提取</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-03-23T13:41:54+08:00">
+                2018-03-23
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/03/23/爬虫之数据提取/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/03/23/爬虫之数据提取/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/03/23/爬虫之数据提取/" class="leancloud_visitors" data-flag-title="爬虫之数据提取">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  220 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  1 分钟
+                </span>
+              
             </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/工具/">工具</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/爬虫/">爬虫</a><span class="category-list-count">4</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/面试题/">面试题</a><span class="category-list-count">1</span></li></ul>
-            </div>
-          </div>
-        
-      </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>今天主要记录一下数据提取的几种方法，在爬虫获取到响应数据以后我们改怎么处理响应的数据呢？从网上拿到的响应数据各种类型都有：<code>JSON</code>类型的，<code>XML</code>格式的,<code>html</code>格式的等等。</p>
+<a id="more"></a>
+<h4 id="常用的数据提取方式"><a href="#常用的数据提取方式" class="headerlink" title="常用的数据提取方式"></a>常用的数据提取方式</h4><ul>
+<li>jsonpath</li>
+<li>re</li>
+<li>xpath</li>
+<li>beautifulsoup</li>
+</ul>
+<h4 id="jsonpath基本使用"><a href="#jsonpath基本使用" class="headerlink" title="jsonpath基本使用"></a>jsonpath基本使用</h4><h5 id="1、json是什么"><a href="#1、json是什么" class="headerlink" title="1、json是什么"></a>1、json是什么</h5><p><code>JSON(JavaScript Object Notation)</code> 是一种轻量级的数据交换格式，它使得人们很容易的进行阅读和编写。同时也方便了机器进行解析和生成。适用于进行数据交互的场景，比如网站前台与后台之间的数据交互。</p>
+<h5 id="2、jsonpath是什么"><a href="#2、jsonpath是什么" class="headerlink" title="2、jsonpath是什么"></a>2、jsonpath是什么</h5><p><code>jsonpath</code>就是方便我们去对 <code>json</code>格式数据进行处理，帮助我们快速对json格式数据定位、获取</p>
+<h4 id="re基本使用"><a href="#re基本使用" class="headerlink" title="re基本使用"></a>re基本使用</h4><h4 id="xpath基本使用"><a href="#xpath基本使用" class="headerlink" title="xpath基本使用"></a>xpath基本使用</h4><h4 id="beautifulsoup基本使用"><a href="#beautifulsoup基本使用" class="headerlink" title="beautifulsoup基本使用"></a>beautifulsoup基本使用</h4><p>### </p>
+
       
     </div>
     
     
     
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/re/" rel="tag"># re</a>
+          
+            <a href="/tags/jsonpath/" rel="tag"># jsonpath</a>
+          
+            <a href="/tags/bs4/" rel="tag"># bs4</a>
+          
+            <a href="/tags/xpath/" rel="tag"># xpath</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/22/爬虫之js逆行百度翻译/" rel="next" title="爬虫之js逆向百度翻译">
+                <i class="fa fa-chevron-left"></i> 爬虫之js逆向百度翻译
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/23/基于AWS服务器利用sandowsocks科学上网/" rel="prev" title="基于AWS服务器利用sandowsocks科学上网">
+                基于AWS服务器利用sandowsocks科学上网 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
   </div>
 
 
@@ -351,8 +565,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -428,6 +651,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的数据提取方式"><span class="nav-number">1.</span> <span class="nav-text">常用的数据提取方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jsonpath基本使用"><span class="nav-number">2.</span> <span class="nav-text">jsonpath基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、json是什么"><span class="nav-number">2.1.</span> <span class="nav-text">1、json是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、jsonpath是什么"><span class="nav-number">2.2.</span> <span class="nav-text">2、jsonpath是什么</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#re基本使用"><span class="nav-number">3.</span> <span class="nav-text">re基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xpath基本使用"><span class="nav-number">4.</span> <span class="nav-text">xpath基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#beautifulsoup基本使用"><span class="nav-number">5.</span> <span class="nav-text">beautifulsoup基本使用</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
