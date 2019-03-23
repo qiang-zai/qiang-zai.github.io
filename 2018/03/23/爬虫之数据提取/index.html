@@ -87,7 +87,7 @@
 <meta property="og:site_name" content="LQ | 归来仍是少年">
 <meta property="og:description" content="今天主要记录一下数据提取的几种方法，在爬虫获取到响应数据以后我们改怎么处理响应的数据呢？从网上拿到的响应数据各种类型都有：JSON类型的，XML格式的,html格式的等等。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-23T08:34:04.608Z">
+<meta property="og:updated_time" content="2019-03-23T13:15:28.006Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="爬虫之数据提取">
 <meta name="twitter:description" content="今天主要记录一下数据提取的几种方法，在爬虫获取到响应数据以后我们改怎么处理响应的数据呢？从网上拿到的响应数据各种类型都有：JSON类型的，XML格式的,html格式的等等。">
@@ -399,7 +399,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  220 字
+                  403 字
                 </span>
               
 
@@ -445,7 +445,76 @@
 <li>beautifulsoup</li>
 </ul>
 <h4 id="jsonpath基本使用"><a href="#jsonpath基本使用" class="headerlink" title="jsonpath基本使用"></a>jsonpath基本使用</h4><h5 id="1、json是什么"><a href="#1、json是什么" class="headerlink" title="1、json是什么"></a>1、json是什么</h5><p><code>JSON(JavaScript Object Notation)</code> 是一种轻量级的数据交换格式，它使得人们很容易的进行阅读和编写。同时也方便了机器进行解析和生成。适用于进行数据交互的场景，比如网站前台与后台之间的数据交互。</p>
-<h5 id="2、jsonpath是什么"><a href="#2、jsonpath是什么" class="headerlink" title="2、jsonpath是什么"></a>2、jsonpath是什么</h5><p><code>jsonpath</code>就是方便我们去对 <code>json</code>格式数据进行处理，帮助我们快速对json格式数据定位、获取</p>
+<h5 id="2、json模块常用操作"><a href="#2、json模块常用操作" class="headerlink" title="2、json模块常用操作"></a>2、json模块常用操作</h5><ul>
+<li>json.loads(json_str)   JSON字符串—&gt;转换成Python数据类型</li>
+<li>json.dumps(dict_data) Python数据类型—&gt;JSON字符串</li>
+<li>json.load(f) json文件—&gt;获取Python数据类型 </li>
+<li>json.dump(dict_data, f) Python数据类型—&gt;写入json文件<ul>
+<li><code>ensure_ascii</code>=False 显示中文</li>
+<li><code>indent</code>=数字表示空格</li>
+</ul>
+</li>
+</ul>
+<h5 id="3、Jsonpath是什么？"><a href="#3、Jsonpath是什么？" class="headerlink" title="3、Jsonpath是什么？"></a>3、Jsonpath是什么？</h5><blockquote>
+<p><code>jsonpath</code>是一种语法规则快速从JSON数据当中提取数据</p>
+</blockquote>
+<ul>
+<li>在线调试网址：<a href="https://jsonpath.com/" target="_blank" rel="noopener">https://jsonpath.com/</a></li>
+<li>在线解析工具：<a href="https://www.json.cn/#" target="_blank" rel="noopener">https://www.json.cn/#</a></li>
+</ul>
+<p>语法规则</p>
+<table>
+<thead>
+<tr>
+<th>语法</th>
+<th>描述</th>
+<th>案例</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>$</td>
+<td>根节点</td>
+<td></td>
+</tr>
+<tr>
+<td>@</td>
+<td>现行节点</td>
+<td></td>
+</tr>
+<tr>
+<td>.</td>
+<td>取子节点</td>
+<td>$.store.book</td>
+</tr>
+<tr>
+<td>..</td>
+<td>取子孙节点</td>
+<td>$..book</td>
+</tr>
+<tr>
+<td>[]</td>
+<td>设置筛选条件</td>
+<td>$..book[0]</td>
+</tr>
+<tr>
+<td>[,]</td>
+<td>支持多选选择内容</td>
+<td>$..book[1,3]</td>
+</tr>
+<tr>
+<td>()</td>
+<td>支持表达式计算</td>
+<td>$..book[(@.length - 1)]</td>
+</tr>
+<tr>
+<td>?()</td>
+<td>支持过滤操作</td>
+<td>$..book[?(@.price&lt;10)]</td>
+</tr>
+</tbody>
+</table>
+<h5 id="Python中使用"><a href="#Python中使用" class="headerlink" title="Python中使用"></a>Python中使用</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> jsonpath</span><br><span class="line">data = jsonpath(<span class="string">'字典类型数据'</span>, <span class="string">'jsonpath提取语法'</span>)</span><br><span class="line"><span class="comment"># data是list类型 如果提取不出来返回False</span></span><br></pre></td></tr></table></figure>
 <h4 id="re基本使用"><a href="#re基本使用" class="headerlink" title="re基本使用"></a>re基本使用</h4><h4 id="xpath基本使用"><a href="#xpath基本使用" class="headerlink" title="xpath基本使用"></a>xpath基本使用</h4><h4 id="beautifulsoup基本使用"><a href="#beautifulsoup基本使用" class="headerlink" title="beautifulsoup基本使用"></a>beautifulsoup基本使用</h4><p>### </p>
 
       
@@ -590,7 +659,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-count">9</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -601,7 +670,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-count">5</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -612,7 +681,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">13</span>
+                  <span class="site-state-item-count">15</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -661,7 +730,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的数据提取方式"><span class="nav-number">1.</span> <span class="nav-text">常用的数据提取方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jsonpath基本使用"><span class="nav-number">2.</span> <span class="nav-text">jsonpath基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、json是什么"><span class="nav-number">2.1.</span> <span class="nav-text">1、json是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、jsonpath是什么"><span class="nav-number">2.2.</span> <span class="nav-text">2、jsonpath是什么</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#re基本使用"><span class="nav-number">3.</span> <span class="nav-text">re基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xpath基本使用"><span class="nav-number">4.</span> <span class="nav-text">xpath基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#beautifulsoup基本使用"><span class="nav-number">5.</span> <span class="nav-text">beautifulsoup基本使用</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#常用的数据提取方式"><span class="nav-number">1.</span> <span class="nav-text">常用的数据提取方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#jsonpath基本使用"><span class="nav-number">2.</span> <span class="nav-text">jsonpath基本使用</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#1、json是什么"><span class="nav-number">2.1.</span> <span class="nav-text">1、json是什么</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#2、json模块常用操作"><span class="nav-number">2.2.</span> <span class="nav-text">2、json模块常用操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#3、Jsonpath是什么？"><span class="nav-number">2.3.</span> <span class="nav-text">3、Jsonpath是什么？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Python中使用"><span class="nav-number">2.4.</span> <span class="nav-text">Python中使用</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#re基本使用"><span class="nav-number">3.</span> <span class="nav-text">re基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#xpath基本使用"><span class="nav-number">4.</span> <span class="nav-text">xpath基本使用</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#beautifulsoup基本使用"><span class="nav-number">5.</span> <span class="nav-text">beautifulsoup基本使用</span></a></li></ol></div>
             
 
           </div>
