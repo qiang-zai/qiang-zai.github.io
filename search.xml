@@ -95,6 +95,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Python编程之线程守护和线程同步问题]]></title>
+    <url>%2F2017%2F11%2F26%2FPython%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BA%BF%E7%A8%8B%E5%AE%88%E6%8A%A4%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98%2F</url>
+    <content type="text"><![CDATA[什么是守护线程？什么是非守护线程？什么是线程同步？ 目标：搞懂Python中的上面三个问题 非守护线程 线程概念当一个进程启动以后，默认会产生一个主线程，因为线程是程序执行的最小单位，在Python当中线程默认情况下就是setDaemon(False)（非守护线程）,也就是主线程执行完自己的任务退出以后，子线程会继续执行自己的任务，不会随主线程退出受影响 案例1234567891011121314151617import threadingimport timedef run(): time.sleep(2) # 延时等待2s print('---子线程结束执行---')def main(): t1 = threading.Thread(target=run) t1.start() print('---主线程结束执行---')if __name__ == '__main__': main() 输出 12---主线程结束执行------子线程结束执行--- 总结:非守护线程，子线程不随主线程结束而立马结束，而是继续执行 守护线程 当守护线程时，子线程会守护主线程，主线程一旦退出，全部子线程都会被强制终止 案例123456789101112131415161718import threadingimport timedef run(): time.sleep(2) print('---子线程结束---')def main(): t1 = threading.Thread(target=run) t1.setDaemon(True) # 设置子线程守护主线程 t1.start() print('---主线程结束---')if __name__ == '__main__': main() 输出 1---主线程结束--- 线程同步 线程同步就是让线程处于堵塞状态，等待子线程执行以后主线程再执行，也可以设置堵塞时间 案例（主线程堵塞，等待子线程结束以后再执行）123456789101112131415161718import threadingimport timedef run(): time.sleep(2) print('---子线程结束---')def main(): t1 = threading.Thread(target=run) t1.start() t1.join() # 主线程堵塞 print('---主线程结束---')if __name__ == '__main__': main() 输出 12---子线程结束------主线程结束--- 案例（主线程堵塞1s，主线程继续执行）123456789101112131415161718import threadingimport timedef run(): time.sleep(2) print('---子线程结束---')def main(): t1 = threading.Thread(target=run) t1.start() t1.join(timeout=1) # 主线程堵塞1s print('---主线程结束---')if __name__ == '__main__': main() 输出 12---主线程结束------子线程结束--- 案例（主线程堵塞1s，然后守护主线程）12345678910111213141516171819import threadingimport timedef run(): time.sleep(2) print('---子线程结束---')def main(): t1 = threading.Thread(target=run) t1.setDaemon(True) # 守护主线程 t1.start() t1.join(timeout=1) # 主线程堵塞1s print('---主线程结束---')if __name__ == '__main__': main() 输出 1---主线程结束--- 主线程等待1s后主线程结束，子线程随着主线程结束而结束]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>线程</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Hexo常用操作]]></title>
     <url>%2F2017%2F10%2F30%2Fhello-world%2F</url>
     <content type="text"><![CDATA[Quick StartCreate a new post1$ hexo new "My New Post" More info: Writing Run server1$ hexo server More info: Server Generate static files1$ hexo generate More info: Generating Deploy to remote sites1$ hexo deploy More info: Deployment]]></content>
