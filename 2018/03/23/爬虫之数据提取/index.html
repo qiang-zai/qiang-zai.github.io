@@ -88,7 +88,7 @@
 <meta property="og:description" content="今天主要记录一下数据提取的几种方法，在爬虫获取到响应数据以后我们改怎么处理响应的数据呢？从网上拿到的响应数据各种类型都有：JSON类型的，XML格式的,html格式的等等。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/%E6%AD%A3%E5%88%99.png">
-<meta property="og:updated_time" content="2019-03-26T08:33:14.521Z">
+<meta property="og:updated_time" content="2019-03-26T09:29:11.730Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="爬虫之数据提取">
 <meta name="twitter:description" content="今天主要记录一下数据提取的几种方法，在爬虫获取到响应数据以后我们改怎么处理响应的数据呢？从网上拿到的响应数据各种类型都有：JSON类型的，XML格式的,html格式的等等。">
@@ -785,7 +785,10 @@
 <li>6、混合使用</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">soup.find_all(</span><br><span class="line">	<span class="string">'标签名'</span>,</span><br><span class="line">    attrs=&#123;</span><br><span class="line">        <span class="string">'属性名'</span>：<span class="string">'值'</span></span><br><span class="line">    &#125;，</span><br><span class="line">    text=<span class="string">'内容'</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
-<h4 id="CSS样式选择器"><a href="#CSS样式选择器" class="headerlink" title="CSS样式选择器"></a>CSS样式选择器</h4><ul>
+<h4 id="CSS样式选择器"><a href="#CSS样式选择器" class="headerlink" title="CSS样式选择器"></a>CSS样式选择器</h4><blockquote>
+<p>返回值是一个list</p>
+</blockquote>
+<ul>
 <li>类选择器 使用 <code>.</code>开头</li>
 </ul>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">soup.select(<span class="string">'.class_name'</span>)</span><br></pre></td></tr></table></figure>
