@@ -95,6 +95,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Python编程之线程池]]></title>
+    <url>%2F2018%2F01%2F27%2FPython%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BA%BF%E7%A8%8B%E6%B1%A0%2F</url>
+    <content type="text"><![CDATA[作用 计算机每次创建线程和销毁线程需要额外占用资源，频繁创建和销毁线程会导致计算机性能下降 处理过程 优点 重复利用线程，减少因为创建线程和销毁线程带来不必要的性能销毁 让程序更加的稳定，不会因为同一时间创建线程过多而导致内存不够使程序引发系统一系列的问题 代码实现流程 1、导入线程池模块 1from multiprocessing.dummy import Pool 2、创建线程池 1pools = Pool(5) 3、定义线程池要执行的任务 12def exec_task(): print('---要执行的任务---') 4、任务完成的回调函数 12def exec_task_finish(self, result): print('执行任务完成回调函数') 注意回调函数必须要有result参数，result参数表示执行任务代码的返回值 5、线程池执行任务 1pools.apply_async(self.exec_task,callback=self.exec_task_finish) 扩展进程池 12# 导入进程池库from multiprocessing import Pool 协程池 12345# 打补丁import gevent.monkeygevent.monkey.patch_all()# 导入协程池库from gevent.pool import Pool 备注，默认线程池里面的线程是守护线程，进程池&amp;协程池同理]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>线程池</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Python编程之队列Queue]]></title>
     <url>%2F2017%2F11%2F27%2FPython%E7%BC%96%E7%A8%8B%E4%B9%8B%E9%98%9F%E5%88%97Queue%2F</url>
     <content type="text"><![CDATA[Queue Queue是Python标准库中的线程安全的队列(FIFO)实现，提供了一个适用于多线程编程的先进先出的数据结构，即队列，用来在生产者和消费者之间的信息传递。 二种队列形式 FIFO队列FIFO即First in First Out，先进先出。Queue提供了一个基本的FIFO容器，使用方法很简单。 参数：maxsize是一个整数，指明了队列中能存放的数据个数的上限。一旦达到上限，插入会导致堵塞，直到队列中的数据被消费掉。 案例 创建队列 12from queue import Queueq = Queue(maxsize=3) 存取数据 1234# 存放数据q.put('aaa')# 获取数据q.get() LIFO队列LIFO即Last in First Out,后进先出。与栈的类似，使用也很简单,maxsize用法同上 创建队列 12from queue import LifoQueueq = LifoQueue() 存放数据API语法同上 常用方法 task_done() 告诉队列该任务已经处理完毕，队列的unfinished_tasks的属性-1 join() 堵塞调用线程，直到队列中的所有任务被处理完毕，一旦有数据被加入队列，未完成的任务数就会增加。当消费者线程调用task_done()（意味着有消费者取得任务并完成任务），未完成的任务数就会减少。当未完成的任务数降到0（内部就是当队列的unfinished_tasks属性为0时），join()解除阻塞。 put(item[, block[, timeout]]) 将item放入队列中。 如果可选的参数block为True且timeout为空对象（默认的情况，阻塞调用，无超时）。 如果timeout是个正整数，阻塞调用进程最多timeout秒，如果一直无空空间可用，抛出Full异常（带超时的阻塞调用）。 如果block为False，如果有空闲空间可用将数据放入队列，否则立即抛出Full异常 get() 从队列中移除并返回一个数据。block跟timeout参数同put方法 其非阻塞方法为｀get_nowait()｀相当与get(False) empty() 如果队列为空，返回True，反之返回False]]></content>
