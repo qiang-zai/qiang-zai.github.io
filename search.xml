@@ -95,6 +95,17 @@
       </tags>
   </entry>
   <entry>
+    <title><![CDATA[Python编程之队列Queue]]></title>
+    <url>%2F2017%2F11%2F27%2FPython%E7%BC%96%E7%A8%8B%E4%B9%8B%E9%98%9F%E5%88%97Queue%2F</url>
+    <content type="text"><![CDATA[Queue Queue是Python标准库中的线程安全的队列(FIFO)实现，提供了一个适用于多线程编程的先进先出的数据结构，即队列，用来在生产者和消费者之间的信息传递。 三种队列形式 基本FIFO队列FIFO即First in First Out，先进先出。Queue提供了一个基本的FIFO容器，使用方法很简单。 参数：maxsize是一个整数，指明了队列中能存放的数据个数的上限。一旦达到上限，插入会导致堵塞，直到队列中的数据被消费掉。 案例 创建队列 12from queue import Queueq = Queue(maxsize=3) 存取数据 1234# 存放数据q.put('aaa')# 获取数据q.get() LIFO队列LIFO即Last in First Out,后进先出。与栈的类似，使用也很简单,maxsize用法同上 创建队列 12from queue import LifoQueueq = LifoQueue() 存放数据API语法同上 常用方法 task_done() 告诉队列该任务已经处理完毕，队列的unfinished_tasks的属性-1 join() 堵塞调用线程，直到队列中的所有任务被处理完毕，一旦有数据被加入队列，未完成的任务数就会增加。当消费者线程调用task_done()（意味着有消费者取得任务并完成任务），未完成的任务数就会减少。当未完成的任务数降到0（内部就是当队列的unfinished_tasks属性为0时），join()解除阻塞。 put(item[, block[, timeout]]) 将item放入队列中。 如果可选的参数block为True且timeout为空对象（默认的情况，阻塞调用，无超时）。 如果timeout是个正整数，阻塞调用进程最多timeout秒，如果一直无空空间可用，抛出Full异常（带超时的阻塞调用）。 如果block为False，如果有空闲空间可用将数据放入队列，否则立即抛出Full异常 get() 从队列中移除并返回一个数据。block跟timeout参数同put方法 其非阻塞方法为｀get_nowait()｀相当与get(False) empty() 如果队列为空，返回True，反之返回False]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>Queue</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Python编程之线程守护和线程同步问题]]></title>
     <url>%2F2017%2F11%2F26%2FPython%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BA%BF%E7%A8%8B%E5%AE%88%E6%8A%A4%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98%2F</url>
     <content type="text"><![CDATA[什么是守护线程？什么是非守护线程？什么是线程同步？ 目标：搞懂Python中的上面三个问题 非守护线程 线程概念当一个进程启动以后，默认会产生一个主线程，因为线程是程序执行的最小单位，在Python当中线程默认情况下就是setDaemon(False)（非守护线程）,也就是主线程执行完自己的任务退出以后，子线程会继续执行自己的任务，不会随主线程退出受影响 案例1234567891011121314151617import threadingimport timedef run(): time.sleep(2) # 延时等待2s print('---子线程结束执行---')def main(): t1 = threading.Thread(target=run) t1.start() print('---主线程结束执行---')if __name__ == '__main__': main() 输出 12---主线程结束执行------子线程结束执行--- 总结:非守护线程，子线程不随主线程结束而立马结束，而是继续执行 守护线程 当守护线程时，子线程会守护主线程，主线程一旦退出，全部子线程都会被强制终止 案例123456789101112131415161718import threadingimport timedef run(): time.sleep(2) print('---子线程结束---')def main(): t1 = threading.Thread(target=run) t1.setDaemon(True) # 设置子线程守护主线程 t1.start() print('---主线程结束---')if __name__ == '__main__': main() 输出 1---主线程结束--- 线程同步 线程同步就是让线程处于堵塞状态，等待子线程执行以后主线程再执行，也可以设置堵塞时间 案例（主线程堵塞，等待子线程结束以后再执行）123456789101112131415161718import threadingimport timedef run(): time.sleep(2) print('---子线程结束---')def main(): t1 = threading.Thread(target=run) t1.start() t1.join() # 主线程堵塞 print('---主线程结束---')if __name__ == '__main__': main() 输出 12---子线程结束------主线程结束--- 案例（主线程堵塞1s，主线程继续执行）123456789101112131415161718import threadingimport timedef run(): time.sleep(2) print('---子线程结束---')def main(): t1 = threading.Thread(target=run) t1.start() t1.join(timeout=1) # 主线程堵塞1s print('---主线程结束---')if __name__ == '__main__': main() 输出 12---主线程结束------子线程结束--- 案例（主线程堵塞1s，然后守护主线程）12345678910111213141516171819import threadingimport timedef run(): time.sleep(2) print('---子线程结束---')def main(): t1 = threading.Thread(target=run) t1.setDaemon(True) # 守护主线程 t1.start() t1.join(timeout=1) # 主线程堵塞1s print('---主线程结束---')if __name__ == '__main__': main() 输出 1---主线程结束--- 主线程等待1s后主线程结束，子线程随着主线程结束而结束]]></content>
