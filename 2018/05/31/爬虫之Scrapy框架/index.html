@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="scrapy,">
 
 
 
@@ -86,16 +86,21 @@
 
 
 
-<meta name="description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LQ | 归来仍是少年">
-<meta property="og:url" content="http://qiangzai.site/archives/index.html">
+<meta name="description" content="Scrapy是一个高性能的爬虫框架，主要是为了提取结构化数据而编写的应用框架，我们只需要实现少量代码就可以实现数据的快速获取，框架底层使用的Twisted异步网络框架,所以爬取速度非常的快。  文章目的：掌握Scrapy的基本使用">
+<meta name="keywords" content="scrapy">
+<meta property="og:type" content="article">
+<meta property="og:title" content="爬虫之Scrapy框架">
+<meta property="og:url" content="http://qiangzai.site/2018/05/31/爬虫之Scrapy框架/index.html">
 <meta property="og:site_name" content="LQ | 归来仍是少年">
-<meta property="og:description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta property="og:description" content="Scrapy是一个高性能的爬虫框架，主要是为了提取结构化数据而编写的应用框架，我们只需要实现少量代码就可以实现数据的快速获取，框架底层使用的Twisted异步网络框架,所以爬取速度非常的快。  文章目的：掌握Scrapy的基本使用">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/scrapy%E7%9A%84%E6%B5%81%E7%A8%8B.png">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/scrapy%E6%AF%8F%E4%B8%AA%E6%A8%A1%E5%9D%97%E7%9A%84%E5%85%B7%E4%BD%93%E4%BD%9C%E7%94%A8.png">
+<meta property="og:updated_time" content="2019-03-31T08:00:36.545Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LQ | 归来仍是少年">
-<meta name="twitter:description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta name="twitter:title" content="爬虫之Scrapy框架">
+<meta name="twitter:description" content="Scrapy是一个高性能的爬虫框架，主要是为了提取结构化数据而编写的应用框架，我们只需要实现少量代码就可以实现数据的快速获取，框架底层使用的Twisted异步网络框架,所以爬取速度非常的快。  文章目的：掌握Scrapy的基本使用">
+<meta name="twitter:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/scrapy%E7%9A%84%E6%B5%81%E7%A8%8B.png">
 
 
 
@@ -125,13 +130,13 @@
 
 
 
-  <link rel="canonical" href="http://qiangzai.site/archives/">
+  <link rel="canonical" href="http://qiangzai.site/2018/05/31/爬虫之Scrapy框架/">
 
 
 
 
 
-  <title>归档 | LQ | 归来仍是少年</title>
+  <title>爬虫之Scrapy框架 | LQ | 归来仍是少年</title>
   
 
 
@@ -150,7 +155,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -286,391 +291,364 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2018/05/31/爬虫之Scrapy框架/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="强仔">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LQ | 归来仍是少年">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">爬虫之Scrapy框架</h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-31T12:50:40+08:00">
+                2018-05-31
+              </time>
+            
+
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 15 篇日志。 继续努力。
-      </span>
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/爬虫/" itemprop="url" rel="index">
+                    <span itemprop="name">爬虫</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/31/爬虫之Scrapy框架/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2018/05/31/爬虫之Scrapy框架/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2018/05/31/爬虫之Scrapy框架/" class="leancloud_visitors" data-flag-title="爬虫之Scrapy框架">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  813 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
+      
 
+      
+        <p><code>Scrapy</code>是一个高性能的爬虫框架，主要是为了提取结构化数据而编写的应用框架，我们只需要实现少量代码就可以实现数据的快速获取，框架底层使用的<code>Twisted</code>异步网络框架,所以爬取速度非常的快。</p>
+<blockquote>
+<p>文章目的：掌握Scrapy的基本使用</p>
+</blockquote>
+<a id="more"></a>
+<h4 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install scrapy</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>查看常用操作(检查是否安装成功)</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy --help</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="基本使用流程"><a href="#基本使用流程" class="headerlink" title="基本使用流程"></a>基本使用流程</h4><hr>
+<ul>
+<li>第一步：创建项目（固定步骤）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy startproject 项目名称</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第二步：创建爬虫（固定步骤）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd 项目目录</span><br><span class="line">scrapy genspider 爬虫名称 目标域名</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第三步：编写爬虫组件和管道（主要编写的部分）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 在第二步创建的爬虫文件当中编写</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>第四步：启动爬虫（固定步骤）</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl 爬虫名称</span><br></pre></td></tr></table></figure>
+<h4 id="scrapy组成"><a href="#scrapy组成" class="headerlink" title="scrapy组成"></a>scrapy组成</h4><hr>
+<ul>
+<li>运行流程图（scrapy官方公布）</li>
+</ul>
+<p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/scrapy%E7%9A%84%E6%B5%81%E7%A8%8B.png" alt></p>
+<ul>
+<li>各部件作用</li>
+</ul>
+<p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/scrapy%E6%AF%8F%E4%B8%AA%E6%A8%A1%E5%9D%97%E7%9A%84%E5%85%B7%E4%BD%93%E4%BD%9C%E7%94%A8.png" alt></p>
+<ul>
+<li>五大组件<ul>
+<li><strong>引擎</strong> 中央协调</li>
+<li><strong>爬虫组件</strong> 提取数据 or url，生成请求对象</li>
+<li><strong>请求调度器</strong>  存放请求对象</li>
+<li><strong>下载器</strong> 发送请求获取响应</li>
+<li><strong>管道</strong> 保存数据</li>
+</ul>
+</li>
+<li>三大对象<ul>
+<li><code>Request</code>请求对象</li>
+<li><code>Response</code>响应对象</li>
+<li><code>Item</code>数据对象</li>
+</ul>
+</li>
+<li>两大中间件<ul>
+<li>下载中间件</li>
+<li>爬虫中间件</li>
+</ul>
+</li>
+</ul>
+<h4 id="项目目录结构介绍"><a href="#项目目录结构介绍" class="headerlink" title="项目目录结构介绍"></a>项目目录结构介绍</h4><hr>
+<ul>
+<li><p><code>spider-project</code>项目目录</p>
+<ul>
+<li><p><code>__init__.py</code></p>
+</li>
+<li><p><code>items.py</code>定义数据模型</p>
+</li>
+<li><p><code>middlewares.py</code>自定义中间件</p>
+</li>
+<li><p><code>pipelines.py</code>自定义管道，保存数据</p>
+</li>
+<li><p><code>settings.py</code>项目配置文件</p>
+</li>
+<li><p><code>scrapy.cfg</code>项目部署文件</p>
+</li>
+<li><p><code>spiders</code>爬虫组件目录</p>
+<ul>
+<li><p><code>xxx.py</code>具体实现爬虫的文件</p>
+<blockquote>
+<p>通过 scrapy genspider 爬虫名称–&gt;生成的爬虫都在这个目录下</p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h4 id="五大组件之爬虫组件"><a href="#五大组件之爬虫组件" class="headerlink" title="五大组件之爬虫组件"></a>五大组件之爬虫组件</h4><hr>
+<blockquote>
+<p>作用：提取数据 | 提取url返回请求对象</p>
+</blockquote>
+<h5 id="具体编写步骤"><a href="#具体编写步骤" class="headerlink" title="具体编写步骤"></a>具体编写步骤</h5><p>1、继承爬虫类</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"><span class="comment"># 导入模块</span></span><br><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"><span class="comment"># 继承爬虫类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ExampleSpider</span><span class="params">(scrapy.Spider)</span>:</span></span><br><span class="line">    ...</span><br></pre></td></tr></table></figure>
+<p>2、定义爬虫名称</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">name = <span class="string">'example'</span></span><br></pre></td></tr></table></figure>
+<p>3、设置允许爬取的范围</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">allowed_domains = [<span class="string">'example.com'</span>]</span><br></pre></td></tr></table></figure>
+<p>4、设置开始爬取的请求地址</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">start_urls = [<span class="string">'https://wxample.com/xxxx'</span>]</span><br></pre></td></tr></table></figure>
+<p>5、实现解析函数</p>
+<p>​    1、提取数据</p>
+<p>​    2、提取url，返回请求对象</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">parse</span><span class="params">(self, response)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<h5 id="响应对象response基本信息"><a href="#响应对象response基本信息" class="headerlink" title="响应对象response基本信息"></a>响应对象response基本信息</h5><ul>
+<li><code>response.status</code> &gt;&gt; 响应状态码</li>
+<li><code>response.headers</code> &gt;&gt; 响应头</li>
+<li><code>response.text</code>&gt;&gt; 响应内容</li>
+<li><code>response.request.cookies</code>&gt;&gt;获取cookies</li>
+</ul>
+<h5 id="Selector对象基本操作"><a href="#Selector对象基本操作" class="headerlink" title="Selector对象基本操作"></a>Selector对象基本操作</h5><ul>
+<li><code>extract()</code>提取数据，提取不到会抛出下标异常</li>
+<li><code>extract_first()</code>提取第一条数据，提取不到返回None</li>
+</ul>
+<h4 id="数据保存-gt-管道"><a href="#数据保存-gt-管道" class="headerlink" title="数据保存=&gt;管道"></a>数据保存=&gt;管道</h4><hr>
+<h5 id="系统管道"><a href="#系统管道" class="headerlink" title="系统管道"></a>系统管道</h5><p>1、提取函数中使用 <code>yield</code>返回函数</p>
+<p>2、命令行导出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl 爬虫名称 -o 导出文件名称</span><br></pre></td></tr></table></figure>
+<h5 id="自定义管道"><a href="#自定义管道" class="headerlink" title="自定义管道"></a>自定义管道</h5><p>1、在 <code>pipelines.py</code>编写管道</p>
+<p>​    1、创建管道类</p>
+<p>​    2、实现管道处理数据方法</p>
+<p>​        2.1 <code>process_item</code>必须实现</p>
+<p>​        2.2 <code>open_spider</code> 可选实现，当爬虫启动时调用一次</p>
+<p>​        2.3 <code>close_spider</code> 可选实现，当爬虫结束时调用一次</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pipelines.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JsonDataPipeline</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">'''创建管道类'''</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></span><br><span class="line">        <span class="string">'''实现管道处理数据方法</span></span><br><span class="line"><span class="string">        --&gt;yield item--&gt;引擎--&gt;触发process_item方法</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<p>2、在 <code>settings.py</code>中开启管道</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ITEM_PIPELINEs = &#123;</span><br><span class="line">    <span class="comment"># 在里面配置自己定义的管道类</span></span><br><span class="line">    <span class="string">'xxx.pipelines.定义的管道类名称'</span>:score <span class="comment"># score 表示数字和权重</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/scrapy/" rel="tag"># scrapy</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
         
-        
+
         
 
         
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2018">2018</h1>
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
           </div>
         
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/30/my-first-blog/" itemprop="url">
-              
-                <span itemprop="name">纪念金庸</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-10-30T14:54:40+08:00" content="2018-10-30">
-          10-30
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+        </div>
+      
       
 
-        
-        
-        
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/04/27/爬虫之selenium/" rel="next" title="爬虫之selenium">
+                <i class="fa fa-chevron-left"></i> 爬虫之selenium
+              </a>
+            
+          </div>
 
-        
-        
+          <span class="post-nav-divider"></span>
 
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/10/23/基于AWS服务器利用sandowsocks科学上网/" itemprop="url">
-              
-                <span itemprop="name">基于AWS服务器利用sandowsocks科学上网</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-10-23T15:23:47+08:00" content="2018-10-23">
-          10-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/10/23/基于AWS服务器利用sandowsocks科学上网/" rel="prev" title="基于AWS服务器利用sandowsocks科学上网">
+                基于AWS服务器利用sandowsocks科学上网 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/05/31/爬虫之Scrapy框架/" itemprop="url">
-              
-                <span itemprop="name">爬虫之Scrapy框架</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-05-31T12:50:40+08:00" content="2018-05-31">
-          05-31
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/27/爬虫之selenium/" itemprop="url">
-              
-                <span itemprop="name">爬虫之selenium</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-04-27T14:36:12+08:00" content="2018-04-27">
-          04-27
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/04/26/csv和json之间的转换/" itemprop="url">
-              
-                <span itemprop="name">csv和json之间的转换</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-04-26T19:58:46+08:00" content="2018-04-26">
-          04-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/03/23/爬虫之数据提取/" itemprop="url">
-              
-                <span itemprop="name">爬虫之数据提取</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-23T13:41:54+08:00" content="2018-03-23">
-          03-23
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/03/22/爬虫之js逆行百度翻译/" itemprop="url">
-              
-                <span itemprop="name">爬虫之js逆向百度翻译</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-22T11:34:25+08:00" content="2018-03-22">
-          03-22
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/03/21/爬虫之Http协议/" itemprop="url">
-              
-                <span itemprop="name">爬虫之Http协议</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-21T21:03:48+08:00" content="2018-03-21">
-          03-21
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/03/20/爬虫开篇/" itemprop="url">
-              
-                <span itemprop="name">爬虫开篇</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-20T20:47:12+08:00" content="2018-03-20">
-          03-20
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2018/03/19/Python面试题（一）：Python操作Excel/" itemprop="url">
-              
-                <span itemprop="name">Python面试题（一）：Python操作Excel</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-19T20:59:12+08:00" content="2018-03-19">
-          03-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
-      
-
-    </div>
+    </footer>
   </div>
   
   
   
-
-  
-  <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/archives/page/2/">2</a><a class="extend next" rel="next" href="/archives/page/2/"><i class="fa fa-angle-right"></i></a>
-  </nav>
+  </article>
 
 
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -678,6 +656,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -698,8 +683,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -775,6 +769,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本使用流程"><span class="nav-number">2.</span> <span class="nav-text">基本使用流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scrapy组成"><span class="nav-number">3.</span> <span class="nav-text">scrapy组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#项目目录结构介绍"><span class="nav-number">4.</span> <span class="nav-text">项目目录结构介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五大组件之爬虫组件"><span class="nav-number">5.</span> <span class="nav-text">五大组件之爬虫组件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#具体编写步骤"><span class="nav-number">5.1.</span> <span class="nav-text">具体编写步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#响应对象response基本信息"><span class="nav-number">5.2.</span> <span class="nav-text">响应对象response基本信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Selector对象基本操作"><span class="nav-number">5.3.</span> <span class="nav-text">Selector对象基本操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据保存-gt-管道"><span class="nav-number">6.</span> <span class="nav-text">数据保存=&gt;管道</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#系统管道"><span class="nav-number">6.1.</span> <span class="nav-text">系统管道</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自定义管道"><span class="nav-number">6.2.</span> <span class="nav-text">自定义管道</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -916,6 +926,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
