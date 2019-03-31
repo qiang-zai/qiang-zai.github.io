@@ -96,7 +96,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/scrapy%E7%9A%84%E6%B5%81%E7%A8%8B.png">
 <meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201903/scrapy%E6%AF%8F%E4%B8%AA%E6%A8%A1%E5%9D%97%E7%9A%84%E5%85%B7%E4%BD%93%E4%BD%9C%E7%94%A8.png">
-<meta property="og:updated_time" content="2019-03-31T08:00:36.545Z">
+<meta property="og:updated_time" content="2019-03-31T13:40:43.142Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="爬虫之Scrapy框架">
 <meta name="twitter:description" content="Scrapy是一个高性能的爬虫框架，主要是为了提取结构化数据而编写的应用框架，我们只需要实现少量代码就可以实现数据的快速获取，框架底层使用的Twisted异步网络框架,所以爬取速度非常的快。  文章目的：掌握Scrapy的基本使用">
@@ -409,7 +409,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  813 字
+                  1k 字
                 </span>
               
 
@@ -425,7 +425,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  3 分钟
+                  4 分钟
                 </span>
               
             </div>
@@ -558,7 +558,13 @@
 <li><code>extract()</code>提取数据，提取不到会抛出下标异常</li>
 <li><code>extract_first()</code>提取第一条数据，提取不到返回None</li>
 </ul>
-<h4 id="数据保存-gt-管道"><a href="#数据保存-gt-管道" class="headerlink" title="数据保存=&gt;管道"></a>数据保存=&gt;管道</h4><hr>
+<h5 id="提取-amp-构建请求对象"><a href="#提取-amp-构建请求对象" class="headerlink" title="提取&amp;构建请求对象"></a>提取&amp;构建请求对象</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 构建请求对象</span></span><br><span class="line">request = scrapy.Request(url=<span class="string">'xxxx'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 返回请求对象&gt;&gt;引擎&gt;&gt;请求调度（scheduler）器&gt;&gt;请求下载器</span></span><br><span class="line"><span class="keyword">yield</span> request</span><br></pre></td></tr></table></figure>
+<ul>
+<li>参数<code>callback</code>指定请求对象的解析函数</li>
+<li>参数 <code>meta</code>把数据可以传递给解析函数</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">yield</span> scrapy.Request(url=detail_url,</span><br><span class="line">                    callback=self.parse_detail,</span><br><span class="line">                     meta=&#123;</span><br><span class="line">                         <span class="string">'item'</span>:item</span><br><span class="line">                     &#125;)</span><br></pre></td></tr></table></figure>
+<h4 id="五大组件之管道"><a href="#五大组件之管道" class="headerlink" title="五大组件之管道"></a>五大组件之管道</h4><hr>
 <h5 id="系统管道"><a href="#系统管道" class="headerlink" title="系统管道"></a>系统管道</h5><p>1、提取函数中使用 <code>yield</code>返回函数</p>
 <p>2、命令行导出</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scrapy crawl 爬虫名称 -o 导出文件名称</span><br></pre></td></tr></table></figure>
@@ -571,6 +577,31 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># pipelines.py</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">JsonDataPipeline</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">'''创建管道类'''</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">process_item</span><span class="params">(self, item, spider)</span>:</span></span><br><span class="line">        <span class="string">'''实现管道处理数据方法</span></span><br><span class="line"><span class="string">        --&gt;yield item--&gt;引擎--&gt;触发process_item方法</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
 <p>2、在 <code>settings.py</code>中开启管道</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ITEM_PIPELINEs = &#123;</span><br><span class="line">    <span class="comment"># 在里面配置自己定义的管道类</span></span><br><span class="line">    <span class="string">'xxx.pipelines.定义的管道类名称'</span>:score <span class="comment"># score 表示数字和权重</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>注意点</p>
+<ul>
+<li>1、数字越小越优先执行</li>
+<li>2、多管道 <code>item</code>传递必须在 <code>process_item</code>函数中返回 <code>item</code></li>
+</ul>
+</li>
+</ul>
+<h4 id="自定义数据模型"><a href="#自定义数据模型" class="headerlink" title="自定义数据模型"></a>自定义数据模型</h4><blockquote>
+<p>作用：规范数据的格式</p>
+</blockquote>
+<h5 id="定义文件位置"><a href="#定义文件位置" class="headerlink" title="定义文件位置"></a>定义文件位置</h5><ul>
+<li><p><code>items.py</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> scrapy</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">dataItem</span><span class="params">(scrapy.Item)</span>:</span></span><br><span class="line">    <span class="comment"># define the fields for your item here like:</span></span><br><span class="line">    name = scrapy.Field()</span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>使用</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入items.py里面定义的模型类</span></span><br><span class="line"><span class="keyword">from</span> xxx.items <span class="keyword">import</span> dataItem</span><br><span class="line"><span class="comment"># 创建模型对象</span></span><br><span class="line">data = dataItem()</span><br><span class="line"><span class="comment"># 给对象添加数据和字典操作一样</span></span><br><span class="line">data[<span class="string">'name'</span>] = <span class="string">'xxxx'</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>模型对象转字典</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dict(模型对象)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>#### </p>
 
       
     </div>
@@ -626,8 +657,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/10/23/基于AWS服务器利用sandowsocks科学上网/" rel="prev" title="基于AWS服务器利用sandowsocks科学上网">
-                基于AWS服务器利用sandowsocks科学上网 <i class="fa fa-chevron-right"></i>
+              <a href="/2018/07/31/爬虫之常见问题总结/" rel="prev" title="爬虫之常见问题总结">
+                爬虫之常见问题总结 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -708,7 +739,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">15</span>
+                  <span class="site-state-item-count">16</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -730,7 +761,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-count">22</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -779,7 +810,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本使用流程"><span class="nav-number">2.</span> <span class="nav-text">基本使用流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scrapy组成"><span class="nav-number">3.</span> <span class="nav-text">scrapy组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#项目目录结构介绍"><span class="nav-number">4.</span> <span class="nav-text">项目目录结构介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五大组件之爬虫组件"><span class="nav-number">5.</span> <span class="nav-text">五大组件之爬虫组件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#具体编写步骤"><span class="nav-number">5.1.</span> <span class="nav-text">具体编写步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#响应对象response基本信息"><span class="nav-number">5.2.</span> <span class="nav-text">响应对象response基本信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Selector对象基本操作"><span class="nav-number">5.3.</span> <span class="nav-text">Selector对象基本操作</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#数据保存-gt-管道"><span class="nav-number">6.</span> <span class="nav-text">数据保存=&gt;管道</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#系统管道"><span class="nav-number">6.1.</span> <span class="nav-text">系统管道</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自定义管道"><span class="nav-number">6.2.</span> <span class="nav-text">自定义管道</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装"><span class="nav-number">1.</span> <span class="nav-text">安装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本使用流程"><span class="nav-number">2.</span> <span class="nav-text">基本使用流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#scrapy组成"><span class="nav-number">3.</span> <span class="nav-text">scrapy组成</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#项目目录结构介绍"><span class="nav-number">4.</span> <span class="nav-text">项目目录结构介绍</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五大组件之爬虫组件"><span class="nav-number">5.</span> <span class="nav-text">五大组件之爬虫组件</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#具体编写步骤"><span class="nav-number">5.1.</span> <span class="nav-text">具体编写步骤</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#响应对象response基本信息"><span class="nav-number">5.2.</span> <span class="nav-text">响应对象response基本信息</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Selector对象基本操作"><span class="nav-number">5.3.</span> <span class="nav-text">Selector对象基本操作</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#提取-amp-构建请求对象"><span class="nav-number">5.4.</span> <span class="nav-text">提取&amp;构建请求对象</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#五大组件之管道"><span class="nav-number">6.</span> <span class="nav-text">五大组件之管道</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#系统管道"><span class="nav-number">6.1.</span> <span class="nav-text">系统管道</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#自定义管道"><span class="nav-number">6.2.</span> <span class="nav-text">自定义管道</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自定义数据模型"><span class="nav-number">7.</span> <span class="nav-text">自定义数据模型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#定义文件位置"><span class="nav-number">7.1.</span> <span class="nav-text">定义文件位置</span></a></li></ol></li></ol></div>
             
 
           </div>
