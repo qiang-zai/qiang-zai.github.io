@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[记录之19年学习技术栈]]></title>
+    <url>%2F2019%2F01%2F01%2F%E8%AE%B0%E5%BD%95%E4%B9%8B18%E5%B9%B4%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%9C%AF%E6%A0%88%2F</url>
+    <content type="text"><![CDATA[记录一下今年的学习目标，Fighting！！！ [ ] 爬虫回顾 requests scrapy 目标：基本使用 [ ] Web框架延伸 1、Django&amp;Django-rest-framework 目标：源码尝试阅读2、第三方组件集成学习（channel）3、websocket Flask 目标Flask复习 Tornado 目标：学习使用 Bottle 目标：基本使用 [ ] 数据分析 numpy pandas 目标：基本使用API语法熟悉 [ ] 机器学习 常用算法 特征工程 推荐算法 [ ] 数据结构&amp;算法 常用的设计模式 基本算法解决思路 [ ] 新语言学习 C语言 Java语言 Go语言 目标：入门即可，了解底层语言帮助自己对Python理解 [ ] 数据库 [ ] SQL 目标：反复练习 [ ] redis 目标：反复练习 运维 [ ] Docker&amp;K8S&amp;Supervisor 目标：学习和基本使用]]></content>
+      <categories>
+        <category>生活</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[纪念金庸]]></title>
     <url>%2F2018%2F10%2F30%2Fmy-first-blog%2F</url>
     <content type="text"><![CDATA[飞雪连天射白鹿，笑书神侠倚碧鸳。 侠之大者，为国为民。 红颜弹指老，刹那芳华，与其天涯思君，恋恋不舍，莫若相忘于江湖。——金庸《天龙八部》 四张机，鸳鸯织就欲双飞，可怜未老头先白，春波碧草，晓寒深处，相对浴红衣。——金庸《射雕英雄传》 一座山，隔不了两两相思，一天涯，断不了两两无言，且听风吟，吟不完我一生思念。——金庸《神雕侠侣》 他强由他强，清风拂山岗；他横任他横，明月照大江。——金庸《倚天屠龙记》 情不知所起，一往情深；恨不知所终，一笑而泯。——金庸《笑傲江湖》]]></content>
