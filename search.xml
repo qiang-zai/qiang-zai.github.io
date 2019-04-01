@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[记录之19年学习技术栈]]></title>
     <url>%2F2019%2F01%2F01%2F%E8%AE%B0%E5%BD%95%E4%B9%8B18%E5%B9%B4%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%9C%AF%E6%A0%88%2F</url>
-    <content type="text"><![CDATA[记录一下今年的学习目标，Fighting！！！ [ ] 爬虫回顾 requests scrapy 目标：基本使用 [ ] Web框架延伸 1、Django&amp;Django-rest-framework 目标：源码尝试阅读2、第三方组件集成学习（channel）3、websocket Flask 目标Flask复习 Tornado 目标：学习使用 Bottle 目标：基本使用 [ ] 数据分析 numpy pandas 目标：基本使用API语法熟悉 [ ] 机器学习 常用算法 特征工程 推荐算法 [ ] 数据结构&amp;算法 常用的设计模式 基本算法解决思路 [ ] 新语言学习 C语言 Java语言 Go语言 目标：入门即可，了解底层语言帮助自己对Python理解 [ ] 数据库 [ ] SQL 目标：反复练习 [ ] redis 目标：反复练习 运维 [ ] Docker&amp;K8S&amp;Supervisor 目标：学习和基本使用]]></content>
+    <content type="text"><![CDATA[记录一下今年的学习目标，Fighting！！！ [x] 爬虫回顾 requests scrapy 目标：基本使用 [ ] Web框架延伸 1、Django&amp;Django-rest-framework 目标：源码尝试阅读2、第三方组件集成学习（channel）3、websocket Flask 目标Flask复习 Tornado 目标：学习使用 Bottle 目标：基本使用 [ ] 数据分析 numpy pandas 目标：基本使用API语法熟悉 [ ] 机器学习 常用算法 特征工程 推荐算法 基本使用 [ ] 数据结构&amp;算法 常用的设计模式 基本算法解决思路 多了解 [ ] 新语言学习 C语言 Java语言 Go语言 目标：入门即可，了解底层语言帮助自己对Python理解 [ ] 数据库 SQL redis 反复练习 [ ] 运维 Docker K8S Supervisor 基本使用]]></content>
       <categories>
         <category>生活</category>
       </categories>
