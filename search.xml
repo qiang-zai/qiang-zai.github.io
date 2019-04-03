@@ -35,7 +35,7 @@
   <entry>
     <title><![CDATA[爬虫之常见问题总结]]></title>
     <url>%2F2018%2F07%2F31%2F%E7%88%AC%E8%99%AB%E4%B9%8B%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E6%80%BB%E7%BB%93%2F</url>
-    <content type="text"><![CDATA[目的：记录爬虫中遇到的坑…… xpath提取数据遇到tbody标签问题描述：今天在用scrapy爬取网页时，当爬取表格内容时，发现使用插件 xpath helper获取正常，程序中的xpath解析不到 问题原因：浏览器会在table标签下添加tbody标签，浏览器会对html文件进行一定的规范化，但是源码当中是没有tbody标签的。 解决办法：将分析的xpath语句中把tbody去掉即可]]></content>
+    <content type="text"><![CDATA[目的：记录爬虫中遇到的坑…… xpath提取数据遇到tbody标签 问题描述：今天在用scrapy爬取网页时，当爬取表格内容时，发现使用插件 xpath helper获取正常，程序中的xpath解析不到 问题原因：浏览器会在table标签下添加tbody标签，浏览器会对html文件进行一定的规范化，但是源码当中是没有tbody标签的。 解决办法：将分析的xpath语句中把tbody去掉即可 Scrapyd运行后被拒绝访问 问题描述：我在腾讯服务器运行scrapyd项目部署，启动以后访问6800端口被拒绝，第一反应就是腾讯云的安全组配置问题，后来发现自己的出站端口6800早已打开。翻了翻日志，看到下面这句代码 1[-] Scrapyd web console available at http://127.0.0.1:6800/ 哈哈，尴尬的127.0.0.1，判断需要修改scrapyd的配置文件 解决问题 1、找到配置文件，先找Python的第三方库 scrapyd 安装目录 我这里找了半天没找到，就是用 find大法了 sudo find / -name scrapyd 2、找到目录，下一步就是 cd到安装目录下 1cd /usr/....../scrapyd 3、找到 default_scrapyd.conf，并打开修改 1bind_address = 127.0.0.1 为 1bind_address = 0.0.0.0 然后保存退出，重试一下就ok！]]></content>
       <categories>
         <category>爬虫</category>
       </categories>

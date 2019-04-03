@@ -94,10 +94,12 @@
 <meta property="og:site_name" content="LQ | 归来仍是少年">
 <meta property="og:description" content="目的：记录爬虫中遇到的坑……">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-03-31T13:47:33.216Z">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201904/find.png">
+<meta property="og:updated_time" content="2019-04-03T12:51:10.013Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="爬虫之常见问题总结">
 <meta name="twitter:description" content="目的：记录爬虫中遇到的坑……">
+<meta name="twitter:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201904/find.png">
 
 
 
@@ -406,7 +408,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  126 字
+                  342 字
                 </span>
               
 
@@ -447,10 +449,33 @@
 <p>目的：记录爬虫中遇到的坑……</p>
 </blockquote>
 <a id="more"></a>
-<h4 id="xpath提取数据遇到tbody标签"><a href="#xpath提取数据遇到tbody标签" class="headerlink" title="xpath提取数据遇到tbody标签"></a>xpath提取数据遇到tbody标签</h4><h5 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h5><p>今天在用scrapy爬取网页时，当爬取表格内容时，发现使用插件 <code>xpath helper</code>获取正常，程序中的xpath解析不到</p>
-<h5 id="问题原因："><a href="#问题原因：" class="headerlink" title="问题原因："></a>问题原因：</h5><p>浏览器会在table标签下添加tbody标签，浏览器会对html文件进行一定的规范化，但是源码当中是没有tbody标签的。</p>
-<h5 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h5><p>将分析的xpath语句中把tbody去掉即可</p>
-<hr>
+<h3 id="xpath提取数据遇到tbody标签"><a href="#xpath提取数据遇到tbody标签" class="headerlink" title="xpath提取数据遇到tbody标签"></a>xpath提取数据遇到tbody标签</h3><hr>
+<h4 id="问题描述："><a href="#问题描述：" class="headerlink" title="问题描述："></a>问题描述：</h4><p>今天在用scrapy爬取网页时，当爬取表格内容时，发现使用插件 <code>xpath helper</code>获取正常，程序中的xpath解析不到</p>
+<h4 id="问题原因："><a href="#问题原因：" class="headerlink" title="问题原因："></a>问题原因：</h4><p>浏览器会在table标签下添加tbody标签，浏览器会对html文件进行一定的规范化，但是源码当中是没有tbody标签的。</p>
+<h4 id="解决办法："><a href="#解决办法：" class="headerlink" title="解决办法："></a>解决办法：</h4><p>将分析的xpath语句中把tbody去掉即可</p>
+<h3 id="Scrapyd运行后被拒绝访问"><a href="#Scrapyd运行后被拒绝访问" class="headerlink" title="Scrapyd运行后被拒绝访问"></a>Scrapyd运行后被拒绝访问</h3><hr>
+<h4 id="问题描述：-1"><a href="#问题描述：-1" class="headerlink" title="问题描述："></a>问题描述：</h4><p>我在腾讯服务器运行scrapyd项目部署，启动以后访问6800端口被拒绝，第一反应就是腾讯云的安全组配置问题，后来发现自己的出站端口6800早已打开。翻了翻日志，看到下面这句代码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[-] Scrapyd web console available at http://<span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span>:<span class="number">6800</span>/</span><br></pre></td></tr></table></figure>
+<p>哈哈，尴尬的<code>127.0.0.1</code>，判断需要修改scrapyd的配置文件</p>
+<h4 id="解决问题"><a href="#解决问题" class="headerlink" title="解决问题"></a>解决问题</h4><ul>
+<li>1、找到配置文件，先找Python的第三方库 <code>scrapyd</code> 安装目录</li>
+</ul>
+<blockquote>
+<p>我这里找了半天没找到，就是用 <code>find</code>大法了</p>
+<p><code>sudo find / -name scrapyd</code></p>
+</blockquote>
+<p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201904/find.png" alt></p>
+<ul>
+<li>2、找到目录，下一步就是 <code>cd</code>到安装目录下</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cd /usr/....../scrapyd</span><br></pre></td></tr></table></figure>
+<ul>
+<li>3、找到 <code>default_scrapyd.conf</code>，并打开修改</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind_address = <span class="number">127.0</span><span class="number">.0</span><span class="number">.1</span></span><br></pre></td></tr></table></figure>
+<p>为</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">bind_address = <span class="number">0.0</span><span class="number">.0</span><span class="number">.0</span></span><br></pre></td></tr></table></figure>
+<p>然后保存退出，重试一下就ok！</p>
 
       
     </div>
@@ -659,7 +684,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#xpath提取数据遇到tbody标签"><span class="nav-number">1.</span> <span class="nav-text">xpath提取数据遇到tbody标签</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#问题描述："><span class="nav-number">1.1.</span> <span class="nav-text">问题描述：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#问题原因："><span class="nav-number">1.2.</span> <span class="nav-text">问题原因：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#解决办法："><span class="nav-number">1.3.</span> <span class="nav-text">解决办法：</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#xpath提取数据遇到tbody标签"><span class="nav-number">1.</span> <span class="nav-text">xpath提取数据遇到tbody标签</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题描述："><span class="nav-number">1.1.</span> <span class="nav-text">问题描述：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#问题原因："><span class="nav-number">1.2.</span> <span class="nav-text">问题原因：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决办法："><span class="nav-number">1.3.</span> <span class="nav-text">解决办法：</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Scrapyd运行后被拒绝访问"><span class="nav-number">2.</span> <span class="nav-text">Scrapyd运行后被拒绝访问</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#问题描述：-1"><span class="nav-number">2.1.</span> <span class="nav-text">问题描述：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决问题"><span class="nav-number">2.2.</span> <span class="nav-text">解决问题</span></a></li></ol></li></ol></div>
             
 
           </div>
