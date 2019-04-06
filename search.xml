@@ -177,6 +177,18 @@
       </categories>
   </entry>
   <entry>
+    <title><![CDATA[Python编程之assert&raise]]></title>
+    <url>%2F2017%2F04%2F03%2FPython%E7%BC%96%E7%A8%8B%E4%B9%8Bassert-raise%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>assert</tag>
+        <tag>raise</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[计算机之UEFI和Legacy]]></title>
     <url>%2F2017%2F03%2F23%2F%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B9%8BUEFI%E5%92%8CLegacy%2F</url>
     <content type="text"><![CDATA[今天主要讲一下UEFI 和Legacy这两种引导启动方式的区别 由于经常帮同学装电脑系统，看到boot模式装UEFI BIOS感觉得心应手，但是有的电脑（尤其是w7系统）老是出现：无法将Windows安装到磁盘0的分区这种问题，后来才明白是 UEFI+GPT 和Legacy+MBR这两种模式区别造成的 解决办法：https://wenku.baidu.com/view/6b6dfb5ef7ec4afe04a1dfb9.html 两种模式运行方式 对比采用传统的BIOS引导启动方式，UEFI BIOS减少了BIOS自检的步骤，节省了大量的时间。UEFI BIOS比传统的BIOS先进得很多，它的标准已经制定了很多年，目前新出厂的电脑基本清一色 UEFI BIOS，但是电脑磁盘的格式必须是GPT格式，这完全不同于传统的MBR格式，所以在使用UEFI BIOS格式给电脑磁盘格式为MBR的装系统时候就会出现上面的问题，需要把电脑磁盘格式从MBR—&gt;GPT]]></content>
