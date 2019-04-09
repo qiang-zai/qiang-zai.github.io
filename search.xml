@@ -1,11 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[记录之Linux常用命令]]></title>
+    <url>%2F2019%2F04%2F07%2F%E8%AE%B0%E5%BD%95%E4%B9%8BLinux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
+    <content type="text"><![CDATA[好记性不如烂笔头，记录一下常用的Linux 命令 1、find语法 1sudo find path -name file_name 案例：查找 根目录下的mysql相关文件 1sudo find / -name mysql 2、lsof语法 1sudo lsof -i:port 案例：查找8000端口对应的进程PID号 1sudo lsof -i:8000 3、nc nc是netcat的简写，能够实现任意TCP/UDP端口的监听,nc可以作为server以TCP或UDP方式侦听指定端口 语法 1nc -l port 案例：服务器监听9000端口 1nc -l 9000 4、telnet命令 用于远程登陆连接 语法 1telnet [-8acdEfFKLrx][-b&lt;主机别名&gt;][-e&lt;脱离字符&gt;][-k&lt;域名&gt;][-l&lt;用户名称&gt;][-n&lt;记录文件&gt;][-S&lt;服务类型&gt;][-X&lt;认证形态&gt;][主机名称或IP地址&lt;通信端口&gt;] 实例:登陆IP为xx的远程主机 1telnet 192.168.36.1]]></content>
+      <categories>
+        <category>记录</category>
+      </categories>
+      <tags>
+        <tag>Linux</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[记录之19年学习技术栈]]></title>
     <url>%2F2019%2F01%2F01%2F%E8%AE%B0%E5%BD%95%E4%B9%8B18%E5%B9%B4%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%9C%AF%E6%A0%88%2F</url>
     <content type="text"><![CDATA[记录一下今年的学习目标，Fighting！！！ [x] 爬虫回顾 requests scrapy 目标：基本使用 [ ] Web框架延伸 1、Django&amp;Django-rest-framework 目标：源码尝试阅读2、第三方组件集成学习（channel）3、websocket Flask 目标Flask复习 Tornado 目标：学习使用 Bottle 目标：基本使用 [ ] 数据分析 numpy pandas 目标：基本使用API语法熟悉 [ ] 机器学习 常用算法 特征工程 推荐算法 基本使用 [ ] 数据结构&amp;算法 常用的设计模式 基本算法解决思路 多了解 [ ] 新语言学习 C语言 Java语言 Go语言 目标：入门即可，了解底层语言帮助自己对Python理解 [ ] 数据库 SQL redis 反复练习 [ ] 运维 Docker K8S Supervisor 基本使用]]></content>
       <categories>
-        <category>生活</category>
+        <category>记录</category>
       </categories>
   </entry>
   <entry>
@@ -31,6 +42,11 @@
       <tags>
         <tag>sandowsocks</tag>
       </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[记录之shell学习]]></title>
+    <url>%2F2018%2F10%2F09%2F%E8%AE%B0%E5%BD%95%E4%B9%8Bshell%E5%AD%A6%E4%B9%A0%2F</url>
+    <content type="text"></content>
   </entry>
   <entry>
     <title><![CDATA[爬虫之常见问题总结]]></title>
@@ -74,6 +90,17 @@
       </categories>
       <tags>
         <tag>csv</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[工具之Charles使用问题记录]]></title>
+    <url>%2F2018%2F04%2F07%2F%E5%B7%A5%E5%85%B7%E4%B9%8BCharles%E4%BD%BF%E7%94%A8%E9%97%AE%E9%A2%98%E8%AE%B0%E5%BD%95%2F</url>
+    <content type="text"><![CDATA[最近研究爬虫需要进行HTTP抓包，由于 Fiddler没有Mac版本，选择使用Charles（青花瓷）来抓包，文章 记录一下 Charles的使用和使用过程中遇到的问题 目标：Charles抓包&amp;问题记录 安装 安装包百度云链接：链接:https://pan.baidu.com/s/1QYaEVwgKSH8znwORotBOvg 密码:s7jz 安装步骤1、点击dmg安装—&gt;应用程序 2、打开charles应用程序—&gt;显示包信息—&gt;替换其中的 charles.jar包 基本使用 这个我就不过多介绍网上教程一大堆，需要注意的是如果要抓 https需要安装证书，并使证书可信任 问题记录 安装证书以后还是无法抓HTTPS的包，显示unknown?解决步骤 1、点击Proxy—&gt;SSL Proxying settings—&gt;SSL Proxying—&gt;Add—&gt; HOST和PORT都填写 *即可 2、重启 charles 安装Charles 抓包信息当中以后不显示 request和response解决步骤 1、点击Preferences—&gt;Viewers—&gt;把 Combine request and response 取消勾选—&gt;点击OK即可 2、重启charles 抓包手机配置链接：https://blog.csdn.net/pansanday/article/details/80347632]]></content>
+      <categories>
+        <category>工具</category>
+      </categories>
+      <tags>
+        <tag>Charles</tag>
       </tags>
   </entry>
   <entry>
