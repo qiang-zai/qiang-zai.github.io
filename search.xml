@@ -14,7 +14,7 @@
   <entry>
     <title><![CDATA[记录之19年学习技术栈]]></title>
     <url>%2F2019%2F01%2F01%2F%E8%AE%B0%E5%BD%95%E4%B9%8B18%E5%B9%B4%E5%AD%A6%E4%B9%A0%E6%8A%80%E6%9C%AF%E6%A0%88%2F</url>
-    <content type="text"><![CDATA[记录一下今年的学习目标，Fighting！！！ [x] 爬虫回顾 requests scrapy 目标：基本使用 [ ] Web框架延伸 1、Django&amp;Django-rest-framework 目标：源码尝试阅读2、第三方组件集成学习（channel）3、websocket Flask 目标Flask复习 Tornado 目标：学习使用 Bottle 目标：基本使用 [ ] 数据分析 numpy pandas 目标：基本使用API语法熟悉 [ ] 机器学习 常用算法 特征工程 推荐算法 基本使用 [ ] 数据结构&amp;算法 常用的设计模式 基本算法解决思路 多了解 [ ] 新语言学习 C语言 Java语言 Go语言 目标：入门即可，了解底层语言帮助自己对Python理解 [ ] 数据库 SQL redis 反复练习 [ ] 运维 Docker K8S Supervisor 基本使用]]></content>
+    <content type="text"><![CDATA[记录一下今年的学习目标，Fighting！！！ [x] 爬虫回顾 requests scrapy 目标：基本使用 [ ] Web框架延伸 1、Django&amp;Django-rest-framework 目标：源码尝试阅读2、第三方组件集成学习（channel）3、websocket Flask 目标Flask复习 Tornado 目标：学习使用 Bottle 目标：基本使用 [ ] 数据分析 numpy pandas 目标：基本使用API语法熟悉 [ ] 机器学习 常用算法 特征工程 推荐算法 基本使用 [ ] 数据结构&amp;算法 常用的设计模式 基本算法解决思路 多了解 [ ] 新语言学习 C语言 Java语言 Go语言 目标：入门即可，了解底层语言帮助自己对Python理解 [ ] 数据库 SQL redis 反复练习 [ ] 运维 Docker K8S Supervisor Shell 基本使用]]></content>
       <categories>
         <category>记录</category>
       </categories>
@@ -46,7 +46,13 @@
   <entry>
     <title><![CDATA[记录之shell学习]]></title>
     <url>%2F2018%2F10%2F09%2F%E8%AE%B0%E5%BD%95%E4%B9%8Bshell%E5%AD%A6%E4%B9%A0%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[最近在学习 shell，开一篇文章记录一下 目的：掌握shell的基本语法，编程思想是不变的，不同的语言只是语法不一样 变量的定义 局部变量局部变量作用域只是在当前的sh文件or当前的终端内 1234# 新建var.sh#!/bin/basha=helloworldecho $a 执行 123456# 第一种方式执行bash var.sh# 第二种方式执行 ./var.sh 前提是文件有可执行权限 chmod u+x var.sh# 第三种方式执行source var.sh 输出 1helloworld 备注1：shell变量赋值 ‘=’两边不能有空格 备注2: shell变量赋的值如果不是连续的，有空格的需要使用单/双引号 a=&#39;hello world&#39;,这时候需要引号包裹‘ 备注3: shell变量赋的值如果里面有另外的变量 12345key='test'a="hello $key world" # 注意这里面一定要用双引号包裹echo a# 输出hello test world #####系统命令变量定义 先执行命令，将命令执行之后的结果存到变量当中 1234cmd=`ls`orcmd=$(ls)echo $cmd 输出 1当前目录文件效果同 `ls` 全局变量 系统所有环境都可以使用的变量 查看方法：env 定义方式 分步骤定义 定义一个本地变量 12# 变量名=变量值name=qiangzai 声明为全局变量 12# export 变量名export name 同时定义 export 变量名=变量值 1export 变量名=变量值 内置变量 bash命令内部已经定义好的变量，可以直接使用，不需要定义 使用方法 和shell脚本有关的内置变量 $0 获取当前脚本名称 $# 获取当前脚本的参数个数 $n 获取当前脚本获取到的第n个参数 $? 获取上一次命令的执行情况，0表示成功 $$ 脚本运行时使用的进程号 $@ 获取所有的参数 和字符串相关的内置变量 字符串切割 12$&#123;var_name:start:n&#125;# var_name是字符串变量名 start正数 从开头开始 n表示截取字符的个数 案例：截取字符串’abcdefg’,从c开始截取2个字符 12alpha="abcdefg"echo $&#123;alpha:3:2&#125; 和默认值相关的内置变量 第一种 1234# 获取脚本第一个参数var_name=$1# defalut表示默认值，如果没有输入参数，default将会被使用$&#123;var_name:-default&#125; 第二种 123var_name=$1# 将会无视输入参数，直接输出设定好的默认值$&#123;var_name:+default&#125; 查看变量的3种方式123456# 定义一个变量name=qinagzai# 打印一下变量echo $name echo "$name"echo "&#123;$name&#125;" # 推荐使用，最规范 删除变量&amp;设置变量只读12unset 变量名readonly 变量名 语法学习 验证表达式 方式一 1[表达式] 方式二 1test 表达式 表达式两侧必须要有空格，表达式之间需要有空格，不然表达式表示的是一个整体]]></content>
+      <categories>
+        <category>记录</category>
+      </categories>
+      <tags>
+        <tag>shell</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[爬虫之常见问题总结]]></title>

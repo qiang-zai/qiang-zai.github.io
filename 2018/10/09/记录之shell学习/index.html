@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="shell,">
 
 
 
@@ -86,17 +86,18 @@
 
 
 
-<meta name="description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta name="description" content="最近在学习 shell，开一篇文章记录一下  目的：掌握shell的基本语法，编程思想是不变的，不同的语言只是语法不一样">
+<meta name="keywords" content="shell">
 <meta property="og:type" content="article">
 <meta property="og:title" content="记录之shell学习">
 <meta property="og:url" content="http://qiangzai.site/2018/10/09/记录之shell学习/index.html">
 <meta property="og:site_name" content="LQ | 归来仍是少年">
-<meta property="og:description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta property="og:description" content="最近在学习 shell，开一篇文章记录一下  目的：掌握shell的基本语法，编程思想是不变的，不同的语言只是语法不一样">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-09T06:59:38.239Z">
+<meta property="og:updated_time" content="2019-04-09T13:16:30.392Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记录之shell学习">
-<meta name="twitter:description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta name="twitter:description" content="最近在学习 shell，开一篇文章记录一下  目的：掌握shell的基本语法，编程思想是不变的，不同的语言只是语法不一样">
 
 
 
@@ -341,6 +342,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/记录/" itemprop="url" rel="index">
+                    <span itemprop="name">记录</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -383,7 +406,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0 字
+                  747 字
                 </span>
               
 
@@ -399,7 +422,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  1 分钟
+                  2 分钟
                 </span>
               
             </div>
@@ -420,7 +443,110 @@
       
 
       
-        
+        <p>最近在学习 <code>shell</code>，开一篇文章记录一下</p>
+<blockquote>
+<p>目的：掌握shell的基本语法，编程思想是不变的，不同的语言只是语法不一样</p>
+</blockquote>
+<a id="more"></a>
+<h3 id="变量的定义"><a href="#变量的定义" class="headerlink" title="变量的定义"></a>变量的定义</h3><hr>
+<h4 id="局部变量"><a href="#局部变量" class="headerlink" title="局部变量"></a>局部变量</h4><p>局部变量作用域只是在当前的sh文件or当前的终端内</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 新建var.sh</span></span><br><span class="line"><span class="meta">#!/bin/bash</span></span><br><span class="line">a=helloworld</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$a</span></span><br></pre></td></tr></table></figure>
+<p>执行</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一种方式执行</span></span><br><span class="line">bash var.sh</span><br><span class="line"><span class="comment"># 第二种方式执行 </span></span><br><span class="line">./var.sh 前提是文件有可执行权限 chmod u+x var.sh</span><br><span class="line"><span class="comment"># 第三种方式执行</span></span><br><span class="line"><span class="built_in">source</span> var.sh</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">helloworld</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>备注1：shell变量赋值 ‘=’两边不能有空格</p>
+</li>
+<li><p>备注2:  shell变量赋的值如果不是连续的，有空格的需要使用单/双引号</p>
+<ul>
+<li><code>a=&#39;hello world&#39;</code>,这时候需要引号包裹‘</li>
+</ul>
+</li>
+<li><p>备注3: shell变量赋的值如果里面有另外的变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">key=<span class="string">'test'</span></span><br><span class="line">a=<span class="string">"hello <span class="variable">$key</span> world"</span>  <span class="comment"># 注意这里面一定要用双引号包裹</span></span><br><span class="line"><span class="built_in">echo</span> a</span><br><span class="line"><span class="comment"># 输出</span></span><br><span class="line">hello <span class="built_in">test</span> world</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>#####系统命令变量定义</p>
+<p>先执行命令，将命令执行之后的结果存到变量当中</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">cmd=`ls`</span><br><span class="line">or</span><br><span class="line">cmd=$(ls)</span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$cmd</span></span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">当前目录文件效果同 `ls`</span><br></pre></td></tr></table></figure>
+<h4 id="全局变量"><a href="#全局变量" class="headerlink" title="全局变量"></a>全局变量</h4><blockquote>
+<p>系统所有环境都可以使用的变量</p>
+</blockquote>
+<p>查看方法：<code>env</code></p>
+<p>定义方式</p>
+<ul>
+<li><p>分步骤定义</p>
+<ul>
+<li>定义一个本地变量</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 变量名=变量值</span></span><br><span class="line">name=qiangzai</span><br></pre></td></tr></table></figure>
+<ul>
+<li>声明为全局变量</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># export 变量名</span></span><br><span class="line"><span class="built_in">export</span> name</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>同时定义</p>
+<ul>
+<li><code>export</code> 变量名=变量值</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> 变量名=变量值</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="内置变量"><a href="#内置变量" class="headerlink" title="内置变量"></a>内置变量</h4><blockquote>
+<p>bash命令内部已经定义好的变量，可以直接使用，不需要定义</p>
+</blockquote>
+<h5 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h5><ul>
+<li><p>和shell脚本有关的内置变量</p>
+<ul>
+<li><code>$0</code> 获取当前脚本名称</li>
+<li><code>$#</code> 获取当前脚本的参数个数</li>
+<li><code>$n</code> 获取当前脚本获取到的第n个参数</li>
+<li><code>$?</code> 获取上一次命令的执行情况，0表示成功</li>
+<li><code>$$</code> 脚本运行时使用的进程号</li>
+<li><code>$@</code> 获取所有的参数</li>
+</ul>
+</li>
+<li><p>和字符串相关的内置变量</p>
+<ul>
+<li>字符串切割</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$&#123;var_name:start:n&#125;</span></span><br><span class="line"><span class="comment"># var_name是字符串变量名</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>start</code>正数 从开头开始</li>
+<li><code>n</code>表示截取字符的个数</li>
+</ul>
+<p>案例：截取字符串’abcdefg’,从c开始截取2个字符</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">alpha=<span class="string">"abcdefg"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$&#123;alpha:3:2&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>和默认值相关的内置变量</p>
+<ul>
+<li>第一种</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取脚本第一个参数</span></span><br><span class="line">var_name=<span class="variable">$1</span></span><br><span class="line"><span class="comment"># defalut表示默认值，如果没有输入参数，default将会被使用</span></span><br><span class="line"><span class="variable">$&#123;var_name:-default&#125;</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>第二种</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var_name=<span class="variable">$1</span></span><br><span class="line"><span class="comment"># 将会无视输入参数，直接输出设定好的默认值</span></span><br><span class="line"><span class="variable">$&#123;var_name:+default&#125;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h5 id="查看变量的3种方式"><a href="#查看变量的3种方式" class="headerlink" title="查看变量的3种方式"></a>查看变量的3种方式</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 定义一个变量</span></span><br><span class="line">name=qinagzai</span><br><span class="line"><span class="comment"># 打印一下变量</span></span><br><span class="line"><span class="built_in">echo</span> <span class="variable">$name</span>  </span><br><span class="line"><span class="built_in">echo</span> <span class="string">"<span class="variable">$name</span>"</span></span><br><span class="line"><span class="built_in">echo</span> <span class="string">"&#123;<span class="variable">$name</span>&#125;"</span> <span class="comment"># 推荐使用，最规范</span></span><br></pre></td></tr></table></figure>
+<h5 id="删除变量-amp-设置变量只读"><a href="#删除变量-amp-设置变量只读" class="headerlink" title="删除变量&amp;设置变量只读"></a>删除变量&amp;设置变量只读</h5><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unset</span> 变量名</span><br><span class="line"><span class="built_in">readonly</span> 变量名</span><br></pre></td></tr></table></figure>
+<h3 id="语法学习"><a href="#语法学习" class="headerlink" title="语法学习"></a>语法学习</h3><hr>
+<h4 id="验证表达式"><a href="#验证表达式" class="headerlink" title="验证表达式"></a>验证表达式</h4><ul>
+<li><p>方式一</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[表达式]</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>方式二</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">test</span> 表达式</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>表达式两侧必须要有空格，表达式之间需要有空格，不然表达式表示的是一个整体</p>
+</blockquote>
+</li>
+</ul>
+
       
     </div>
     
@@ -434,6 +560,12 @@
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/shell/" rel="tag"># shell</a>
+          
+        </div>
       
 
       
@@ -526,8 +658,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -564,7 +705,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -603,6 +744,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量的定义"><span class="nav-number">1.</span> <span class="nav-text">变量的定义</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#局部变量"><span class="nav-number">1.1.</span> <span class="nav-text">局部变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#全局变量"><span class="nav-number">1.2.</span> <span class="nav-text">全局变量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内置变量"><span class="nav-number">1.3.</span> <span class="nav-text">内置变量</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#使用方法"><span class="nav-number">1.3.1.</span> <span class="nav-text">使用方法</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#查看变量的3种方式"><span class="nav-number">1.3.2.</span> <span class="nav-text">查看变量的3种方式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#删除变量-amp-设置变量只读"><span class="nav-number">1.3.3.</span> <span class="nav-text">删除变量&amp;设置变量只读</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语法学习"><span class="nav-number">2.</span> <span class="nav-text">语法学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#验证表达式"><span class="nav-number">2.1.</span> <span class="nav-text">验证表达式</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
