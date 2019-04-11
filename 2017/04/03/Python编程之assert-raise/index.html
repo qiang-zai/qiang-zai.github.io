@@ -86,18 +86,18 @@
 
 
 
-<meta name="description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta name="description" content="看Python某些库的源码经常会看到 assertor raise这两个内置函数，但是自己平常写代码好像没怎么用过，使用 try except会多一点，可能是自己太low 。。。。">
 <meta name="keywords" content="assert,raise">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python编程之assert&amp;raise">
 <meta property="og:url" content="http://qiangzai.site/2017/04/03/Python编程之assert-raise/index.html">
 <meta property="og:site_name" content="LQ | 归来仍是少年">
-<meta property="og:description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta property="og:description" content="看Python某些库的源码经常会看到 assertor raise这两个内置函数，但是自己平常写代码好像没怎么用过，使用 try except会多一点，可能是自己太low 。。。。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-03T13:58:32.023Z">
+<meta property="og:updated_time" content="2019-04-11T13:40:10.491Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python编程之assert&amp;raise">
-<meta name="twitter:description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta name="twitter:description" content="看Python某些库的源码经常会看到 assertor raise这两个内置函数，但是自己平常写代码好像没怎么用过，使用 try except会多一点，可能是自己太low 。。。。">
 
 
 
@@ -406,7 +406,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  0 字
+                  328 字
                 </span>
               
 
@@ -443,7 +443,24 @@
       
 
       
-        
+        <p>看Python某些库的源码经常会看到 <code>assert</code>or <code>raise</code>这两个内置函数，但是自己平常写代码好像没怎么用过，使用 <code>try except</code>会多一点，可能是自己太low 。。。。</p>
+<a id="more"></a>
+<h3 id="语法介绍"><a href="#语法介绍" class="headerlink" title="语法介绍"></a>语法介绍</h3><hr>
+<h4 id="assert"><a href="#assert" class="headerlink" title="assert"></a>assert</h4><blockquote>
+<p><code>assert</code>主要的作用就是给程序断言，声明条件必须为真的判断，如果条件为假则抛出异常，并可以编写异常描述。</p>
+</blockquote>
+<h5 id="语法格式"><a href="#语法格式" class="headerlink" title="语法格式"></a>语法格式</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">assert</span> 表达式 <span class="string">'错误描述</span></span><br><span class="line"><span class="string"># 如果表达式为真则继续往下执行，如果为假则抛出断言异常&gt;&gt;AssertionError</span></span><br></pre></td></tr></table></figure>
+<h5 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">foo = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line"><span class="comment"># 断言foo列表的长度大于5</span></span><br><span class="line"><span class="keyword">assert</span> len(foo) &gt; <span class="number">5</span>, <span class="string">'列表长度不大于5'</span></span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Traceback (most recent call last):</span><br><span class="line">  File <span class="string">"/Users/qiangzai/Desktop/practiceCode/ElementaryClassCode/day01/01-list-questions-answers.py"</span>, line <span class="number">3</span>, <span class="keyword">in</span> &lt;module&gt;</span><br><span class="line">    <span class="keyword">assert</span> len(foo) &gt; <span class="number">5</span>, <span class="string">'列表长度不大于5'</span></span><br><span class="line">AssertionError: 列表长度不大于<span class="number">5</span></span><br></pre></td></tr></table></figure>
+<h4 id="raise"><a href="#raise" class="headerlink" title="raise"></a>raise</h4><blockquote>
+<p><code>raise</code>也是用来抛出异常的，一般用在自己觉得会报错的代码当中使用</p>
+</blockquote>
+<h5 id="语法格式-1"><a href="#语法格式-1" class="headerlink" title="语法格式"></a>语法格式</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">raise</span> TypeError(<span class="string">'错误描述'</span>)</span><br><span class="line"><span class="comment"># 注意这里的TypeError不是固定的，可以是任意自定义的内置错误类型</span></span><br><span class="line">	ValueError,NameError,PermissionError等一堆</span><br></pre></td></tr></table></figure>
+<h5 id="案例-1"><a href="#案例-1" class="headerlink" title="案例"></a>案例</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">num = <span class="number">1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line">    num += <span class="string">'1'</span></span><br><span class="line"><span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">    <span class="keyword">raise</span> TypeError(<span class="string">'字符串类型不能和整型相加'</span>)</span><br></pre></td></tr></table></figure>
+<p>输出</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">TypeError: 字符串类型不能和整型相加</span><br></pre></td></tr></table></figure>
+
       
     </div>
     
@@ -557,8 +574,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -634,6 +660,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#语法介绍"><span class="nav-number">1.</span> <span class="nav-text">语法介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#assert"><span class="nav-number">1.1.</span> <span class="nav-text">assert</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#语法格式"><span class="nav-number">1.1.1.</span> <span class="nav-text">语法格式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#案例"><span class="nav-number">1.1.2.</span> <span class="nav-text">案例</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#raise"><span class="nav-number">1.2.</span> <span class="nav-text">raise</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#语法格式-1"><span class="nav-number">1.2.1.</span> <span class="nav-text">语法格式</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#案例-1"><span class="nav-number">1.2.2.</span> <span class="nav-text">案例</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
