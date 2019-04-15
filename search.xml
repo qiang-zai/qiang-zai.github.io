@@ -1,9 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[python编程之list常见用法]]></title>
+    <title><![CDATA[Python编程之list常见用法]]></title>
     <url>%2F2019%2F04%2F11%2Fpython%E7%BC%96%E7%A8%8B%E4%B9%8Blist%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95%2F</url>
     <content type="text"></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>list</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[记录之Linux常用命令]]></title>
@@ -102,6 +108,14 @@
       <tags>
         <tag>csv</tag>
       </tags>
+  </entry>
+  <entry>
+    <title><![CDATA[Python面试题（二）：求列表当中最大的三个元素]]></title>
+    <url>%2F2018%2F04%2F15%2FPython%E9%9D%A2%E8%AF%95%E9%A2%98-%E4%BA%8C-%EF%BC%9A%E6%B1%82%E5%88%97%E8%A1%A8%E5%BD%93%E4%B8%AD%E6%9C%80%E5%A4%A7%E7%9A%84%E4%B8%89%E4%B8%AA%E5%85%83%E7%B4%A0%2F</url>
+    <content type="text"><![CDATA[在牛客网https://www.nowcoder.com/上刷题遇到如何从list中取得最大的三个值：自己写的方法复杂度太高，放上大牛的方法，复杂度很低。看了好几遍才体会到大概的精髓。 12345678910111213141516171819202122232425262728'''从list中取出最大的三个值__author__:无名'''def FindList3MaxNum(foo): max1, max2, max3 = None, None, None for num in foo: if max1 is None or max1 &lt; num: max1, num = num, max1 if num is None: continue if max2 is None or num &gt; max2: max2, num = num, max2 if num is None: continue if max3 is None or num &gt; max3: max3 = num return max1, max2, max3if __name__ == '__main__': foo = [78, 23, 10, 56, 4, 103, 89, 14] max1, max2, max3 = FindList3MaxNum(foo) print(max1, max2, max3)]]></content>
+      <categories>
+        <category>面试题</category>
+      </categories>
   </entry>
   <entry>
     <title><![CDATA[工具之Charles使用问题记录]]></title>
