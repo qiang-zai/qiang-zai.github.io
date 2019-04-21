@@ -1,17 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title><![CDATA[Python编程之list常见用法]]></title>
-    <url>%2F2019%2F04%2F11%2Fpython%E7%BC%96%E7%A8%8B%E4%B9%8Blist%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95%2F</url>
-    <content type="text"></content>
-      <categories>
-        <category>编程</category>
-      </categories>
-      <tags>
-        <tag>list</tag>
-      </tags>
-  </entry>
-  <entry>
     <title><![CDATA[记录之Linux常用命令]]></title>
     <url>%2F2019%2F04%2F07%2F%E8%AE%B0%E5%BD%95%E4%B9%8BLinux%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4%2F</url>
     <content type="text"><![CDATA[好记性不如烂笔头，记录一下常用的Linux 命令 1、find语法 1sudo find path -name file_name 案例：查找 根目录下的mysql相关文件 1sudo find / -name mysql 2、lsof语法 1sudo lsof -i:port 案例：查找8000端口对应的进程PID号 1sudo lsof -i:8000 3、nc nc是netcat的简写，能够实现任意TCP/UDP端口的监听,nc可以作为server以TCP或UDP方式侦听指定端口 语法 1nc -l port 案例：服务器监听9000端口 1nc -l 9000 4、telnet命令 用于远程登陆连接 语法 1telnet [-8acdEfFKLrx][-b&lt;主机别名&gt;][-e&lt;脱离字符&gt;][-k&lt;域名&gt;][-l&lt;用户名称&gt;][-n&lt;记录文件&gt;][-S&lt;服务类型&gt;][-X&lt;认证形态&gt;][主机名称或IP地址&lt;通信端口&gt;] 实例:登陆IP为xx的远程主机 1telnet 192.168.36.1]]></content>
@@ -116,6 +105,17 @@
       <categories>
         <category>面试题</category>
       </categories>
+  </entry>
+  <entry>
+    <title><![CDATA[Python编程之list常见用法]]></title>
+    <url>%2F2018%2F04%2F11%2Fpython%E7%BC%96%E7%A8%8B%E4%B9%8Blist%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95%2F</url>
+    <content type="text"><![CDATA[列表是Python最常用的数据类型之一，本文整理一下列表最常用的10种操作，如果开发过程当中遇到了，可以尝试从这些找答案 1、迭代列表时如何访问列表下标索引普通版：12345678items = [8, 23, 45]for index in range(len(items)): print(index, "--&gt;", items[index])&gt;&gt;&gt;0 --&gt; 81 --&gt; 232 --&gt; 45 Level Up版：1234567for index, item in enumerate(items): print(index, "--&gt;", item)&gt;&gt;&gt;0 --&gt; 81 --&gt; 232 --&gt; 45 enumerate还可以指定元素的第一个元素从第几个索引开始，默认是0，也可以指定从1开始： 1234567for index, item in enumerate(items, start=1): print(index, "--&gt;", item)&gt;&gt;&gt;1 --&gt; 82 --&gt; 233 --&gt; 45 2、append与extend方法有什么区别append表示把某个数据当做新元素追加到列表的最后面，它的参数可以是任意对象 1234567x = [1, 2, 3]y = [4, 5]x.append(y)print(x)&gt;&gt;&gt;[1, 2, 3, [4, 5]] extend 的参数必须是一个可迭代对象，表示把该对象里面的所有元素逐个地追加到列表的后面 1234567891011x = [1, 2, 3]y = [4, 5]x.extend(y)print(x)&gt;&gt;&gt;[1, 2, 3, 4, 5]# 等价于：for i in y: x.append(i) 3、检查列表是否为空普通版：1234567if len(items) == 0: print("空列表")或者if items == []: print("空列表") Level Up版：12if not items: print("空列表") 4、如何理解切片 切片用于获取列表中指定范的子集，语法非常简单 1items[start:end:step] 从 start 到 end-1 位置之间的元素。step 表示步长，默认为1，表示连续获取，如果 step 为 2 就表示每隔一个元素获取。 12345678910111213141516a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]&gt;&gt;&gt; a[3:8] # 第3到第8位置之间的元素[4, 5, 6, 7, 8]&gt;&gt;&gt; a[3:8:2] # 第3到第8位置之间的元素，每隔一个元素获取[4, 6, 8]&gt;&gt;&gt; a[:5] # 省略start表示从第0个元素开始[1, 2, 3, 4, 5]&gt;&gt;&gt; a[3:] # 省略end表示到最后一个元素[4, 5, 6, 7, 8, 9, 10]&gt;&gt;&gt; a[::] # 都省略相当于拷贝一个列表，这种拷贝属于浅拷贝[1, 2, 3, 4, 5, 6, 7, 8, 9, 10] 5、如何拷贝一个列表对象第一种方法：1new_list = old_list[:] 第二种方法：1new_list = list(old_list) 第三种方法：12345import copy# 浅拷贝new_list = copy.copy(old_list)# 深拷贝new_list = copy.deepcopy(old_list) 扩展，了解即可 6、如何获取列表中的最后一个元素 索引列表中的元素不仅支持正数还支持负数，正数表示从列表的左边开始索引，负数表示从列表的右边开始索引，获取最后一个元素有两种方法。 12345&gt;&gt;&gt; a = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]&gt;&gt;&gt; a[len(a)-1]10&gt;&gt;&gt; a[-1]10 7、如何对列表进行排序 列表排序有两种方式，一种是列表自带的方式 sort，一种是内建函数 sorted。复杂的数据类型可通过指定 key参数进行排序。由字典构成的列表，根据字典元素中的age字段进行排序： 12345678910items = [&#123;'name': 'Homer', 'age': 39&#125;, &#123;'name': 'Bart', 'age': 10&#125;, &#123;"name": 'cater', 'age': 20&#125;]items.sort(key=lambda item: item.get("age"))print(items)&gt;&gt;&gt;[&#123;'age': 10, 'name': 'Bart'&#125;, &#123;'age': 20, 'name': 'cater'&#125;, &#123;'age': 39, 'name': 'Homer'&#125;] 列表有 sort方法，用于对原列表进行重新排序，指定 key 参数，key 是匿名函数，item 是列表中的字典元素，我们根据字典中的age进行排序，默认是按升序排列，指定 reverse=True 按降序排列 1234items.sort(key=lambda item: item.get("age"), reverse=True)&gt;&gt;&gt;[&#123;'name': 'Homer', 'age': 39&#125;, &#123;'name': 'cater', 'age': 20&#125;, &#123;'name': 'Bart', 'age': 10&#125;] 如果不希望改变原列表，而是生成一个新的有序列表对象，那么可以内置函数 sorted ，该函数返回新列表 12345678910111213items = [&#123;'name': 'Homer', 'age': 39&#125;, &#123;'name': 'Bart', 'age': 10&#125;, &#123;"name": 'cater', 'age': 20&#125;]new_items = sorted(items, key=lambda item: item.get("age"))print(items)&gt;&gt;&gt;[&#123;'name': 'Homer', 'age': 39&#125;, &#123;'name': 'Bart', 'age': 10&#125;, &#123;'name': 'cater', 'age': 20&#125;]print(new_items)&gt;&gt;&gt;[&#123;'name': 'Bart', 'age': 10&#125;, &#123;'name': 'cater', 'age': 20&#125;, &#123;'name': 'Homer', 'age': 39&#125;] 8、如何移除列表中的元素删除列表中的元素有三种方式 remove 移除某个元素，而且只能移除第一次出现的元素 12345678910&gt;&gt;&gt; a = [0, 2, 2, 3]&gt;&gt;&gt; a.remove(2)&gt;&gt;&gt; a[0, 2, 3]# 如果要移除的元素不在列表中，则抛出 ValueError 异常&gt;&gt;&gt; a.remove(7)Traceback (most recent call last): File "&lt;stdin&gt;", line 1, in &lt;module&gt;ValueError: list.remove(x): x not in list· del根据指定的索引移除元素 12345678910&gt;&gt;&gt; a = [3, 2, 2, 1]# 移除第一个元素&gt;&gt;&gt; del a[1][3, 2, 1]# 当超出列表的下表索引时，抛出IndexError的异常&gt;&gt;&gt; del a[7]Traceback (most recent call last): File "&lt;stdin&gt;", line 1, in &lt;module&gt;IndexError: list assignment index out of range pop与del类似，但是pop方法可以返回移除的元素 1234567891011&gt;&gt;&gt; a = [4, 3, 5]&gt;&gt;&gt; a.pop(1)3&gt;&gt;&gt; a[4, 5]# 同样，当超出列表的下表索引时，抛出IndexError的异常&gt;&gt;&gt; a.pop(7)Traceback (most recent call last): File "&lt;stdin&gt;", line 1, in &lt;module&gt;IndexError: pop index out of range 9、如何连接两个列表12345678listone = [1, 2, 3]listtwo = [4, 5, 6]mergedlist = listone + listtwoprint(mergelist)&gt;&gt;&gt;[1, 2, 3, 4, 5, 6] 列表实现了 + 的运算符重载，使得 + 不仅支持数值相加，还支持两个列表相加，只要你实现了 对象的 __add__操作，任何对象都可以实现 + 操作，例如： 123456789101112131415161718192021class User(object): def __init__(self, age): self.age = age def __repr__(self): return 'User(%d)' % self.age def __add__(self, other): age = self.age + other.age return User(age)user_a = User(10)user_b = User(20)c = user_a + user_bprint(c)&gt;&gt;&gt;User(30) 10、如何随机获取列表中的某个元素123456789import randomitems = [8, 23, 45, 12, 78]&gt;&gt;&gt; random.choice(items)78&gt;&gt;&gt; random.choice(items)45&gt;&gt;&gt; random.choice(items)12]]></content>
+      <categories>
+        <category>编程</category>
+      </categories>
+      <tags>
+        <tag>list</tag>
+      </tags>
   </entry>
   <entry>
     <title><![CDATA[工具之Charles使用问题记录]]></title>
