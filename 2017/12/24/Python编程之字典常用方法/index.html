@@ -86,18 +86,18 @@
 
 
 
-<meta name="description" content="字典取值1、通过key取value12345678data = &amp;#123;&apos;age&apos;: 18, &apos;name&apos;: &apos;qiangzai&apos;&amp;#125;# 通过key取valuev1 = data[&apos;age&apos;]print(v1)  # 18# 如果key不存在报错KeyErrordata[&apos;gender&apos;]  # KeyError: &apos;gender&apos; 2、通过get方式12345678910data =">
+<meta name="description" content="字典是Python内置的数据类型，也是最常见的数据结构。本文记录一下字典使用的时候经常会遇到的API语法。">
 <meta name="keywords" content="dict">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Python编程之字典常用方法">
 <meta property="og:url" content="http://qiangzai.site/2017/12/24/Python编程之字典常用方法/index.html">
 <meta property="og:site_name" content="LQ | 归来仍是少年">
-<meta property="og:description" content="字典取值1、通过key取value12345678data = &amp;#123;&apos;age&apos;: 18, &apos;name&apos;: &apos;qiangzai&apos;&amp;#125;# 通过key取valuev1 = data[&apos;age&apos;]print(v1)  # 18# 如果key不存在报错KeyErrordata[&apos;gender&apos;]  # KeyError: &apos;gender&apos; 2、通过get方式12345678910data =">
+<meta property="og:description" content="字典是Python内置的数据类型，也是最常见的数据结构。本文记录一下字典使用的时候经常会遇到的API语法。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-04-26T10:48:30.921Z">
+<meta property="og:updated_time" content="2019-06-13T09:44:50.941Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python编程之字典常用方法">
-<meta name="twitter:description" content="字典取值1、通过key取value12345678data = &amp;#123;&apos;age&apos;: 18, &apos;name&apos;: &apos;qiangzai&apos;&amp;#125;# 通过key取valuev1 = data[&apos;age&apos;]print(v1)  # 18# 如果key不存在报错KeyErrordata[&apos;gender&apos;]  # KeyError: &apos;gender&apos; 2、通过get方式12345678910data =">
+<meta name="twitter:description" content="字典是Python内置的数据类型，也是最常见的数据结构。本文记录一下字典使用的时候经常会遇到的API语法。">
 
 
 
@@ -406,7 +406,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  517 字
+                  560 字
                 </span>
               
 
@@ -443,7 +443,9 @@
       
 
       
-        <h3 id="字典取值"><a href="#字典取值" class="headerlink" title="字典取值"></a>字典取值</h3><h4 id="1、通过key取value"><a href="#1、通过key取value" class="headerlink" title="1、通过key取value"></a>1、通过key取value</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">data = &#123;<span class="string">'age'</span>: <span class="number">18</span>, <span class="string">'name'</span>: <span class="string">'qiangzai'</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过key取value</span></span><br><span class="line">v1 = data[<span class="string">'age'</span>]</span><br><span class="line">print(v1)  <span class="comment"># 18</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果key不存在报错KeyError</span></span><br><span class="line">data[<span class="string">'gender'</span>]  <span class="comment"># KeyError: 'gender'</span></span><br></pre></td></tr></table></figure>
+        <p>字典是Python内置的数据类型，也是最常见的数据结构。本文记录一下字典使用的时候经常会遇到的API语法。</p>
+<a id="more"></a>
+<h3 id="字典取值"><a href="#字典取值" class="headerlink" title="字典取值"></a>字典取值</h3><h4 id="1、通过key取value"><a href="#1、通过key取value" class="headerlink" title="1、通过key取value"></a>1、通过key取value</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">data = &#123;<span class="string">'age'</span>: <span class="number">18</span>, <span class="string">'name'</span>: <span class="string">'qiangzai'</span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># 通过key取value</span></span><br><span class="line">v1 = data[<span class="string">'age'</span>]</span><br><span class="line">print(v1)  <span class="comment"># 18</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 如果key不存在报错KeyError</span></span><br><span class="line">data[<span class="string">'gender'</span>]  <span class="comment"># KeyError: 'gender'</span></span><br></pre></td></tr></table></figure>
 <h4 id="2、通过get方式"><a href="#2、通过get方式" class="headerlink" title="2、通过get方式"></a>2、通过get方式</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">data = &#123;<span class="string">'age'</span>: <span class="number">18</span>, <span class="string">'name'</span>: <span class="string">'qiangzai'</span>&#125;</span><br><span class="line"></span><br><span class="line">v1 = data.get(<span class="string">'age'</span>)</span><br><span class="line">print(v1)  <span class="comment"># 18</span></span><br><span class="line"></span><br><span class="line">v2 = data.get(<span class="string">'gender'</span>)</span><br><span class="line">print(v2)  <span class="comment"># None</span></span><br><span class="line"></span><br><span class="line">v3 = data.get(<span class="string">'gender'</span>, <span class="string">'男'</span>)</span><br><span class="line">print(v3) <span class="comment"># 男</span></span><br></pre></td></tr></table></figure>
 <p>总结：通过get取值不会报错，如果不存在可以指定默认值，不指定默认值为 <code>None</code></p>
 <h4 id="3、通过setdefault方式"><a href="#3、通过setdefault方式" class="headerlink" title="3、通过setdefault方式"></a>3、通过setdefault方式</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">data = &#123;<span class="string">'age'</span>: <span class="number">18</span>, <span class="string">'name'</span>: <span class="string">'qiangzai'</span>&#125;</span><br><span class="line"></span><br><span class="line">v1 = data.setdefault(<span class="string">'age'</span>)</span><br><span class="line">print(v1)  <span class="comment"># 18</span></span><br><span class="line"></span><br><span class="line">v2 = data.setdefault(<span class="string">'gender'</span>)</span><br><span class="line">print(v2)  <span class="comment"># None</span></span><br><span class="line">print(data)  <span class="comment"># &#123;'age': 18, 'name': 'qiangzai', 'gender': None&#125;</span></span><br><span class="line"></span><br><span class="line">v3 = data.setdefault(<span class="string">'score'</span>, <span class="number">100</span>)</span><br><span class="line">print(v3)  <span class="comment"># 100</span></span><br><span class="line">print(data)  <span class="comment"># &#123;'age': 18, 'name': 'qiangzai', 'gender': None, 'score': 100&#125;</span></span><br></pre></td></tr></table></figure>
