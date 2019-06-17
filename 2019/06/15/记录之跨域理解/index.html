@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="git,">
+  <meta name="keywords" content="cors,">
 
 
 
@@ -86,21 +86,18 @@
 
 
 
-<meta name="description" content="Git介绍Git是目前世界上最先进的分布式版本控制系统  方便多人协作开发 方便版本控制">
-<meta name="keywords" content="git">
+<meta name="description" content="对跨域总是似懂非懂的感觉，有时间知道但总是解释的不太明白，最近看了一些资料简单整理一下，方便以后忘记的时候捡起来。">
+<meta name="keywords" content="cors">
 <meta property="og:type" content="article">
-<meta property="og:title" content="记录之Git使用">
-<meta property="og:url" content="http://qiangzai.site/2018/06/05/记录之Git使用/index.html">
+<meta property="og:title" content="记录之跨域理解">
+<meta property="og:url" content="http://qiangzai.site/2019/06/15/记录之跨域理解/index.html">
 <meta property="og:site_name" content="LQ | 归来仍是少年">
-<meta property="og:description" content="Git介绍Git是目前世界上最先进的分布式版本控制系统  方便多人协作开发 方便版本控制">
+<meta property="og:description" content="对跨域总是似懂非懂的感觉，有时间知道但总是解释的不太明白，最近看了一些资料简单整理一下，方便以后忘记的时候捡起来。">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201906/%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6.png">
-<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201906/%E7%89%88%E6%9C%AC%E5%AF%B9%E6%AF%94.png">
-<meta property="og:updated_time" content="2019-06-06T09:14:18.125Z">
+<meta property="og:updated_time" content="2019-06-17T01:46:46.703Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="记录之Git使用">
-<meta name="twitter:description" content="Git介绍Git是目前世界上最先进的分布式版本控制系统  方便多人协作开发 方便版本控制">
-<meta name="twitter:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201906/%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6.png">
+<meta name="twitter:title" content="记录之跨域理解">
+<meta name="twitter:description" content="对跨域总是似懂非懂的感觉，有时间知道但总是解释的不太明白，最近看了一些资料简单整理一下，方便以后忘记的时候捡起来。">
 
 
 
@@ -130,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://qiangzai.site/2018/06/05/记录之Git使用/">
+  <link rel="canonical" href="http://qiangzai.site/2019/06/15/记录之跨域理解/">
 
 
 
 
 
-  <title>记录之Git使用 | LQ | 归来仍是少年</title>
+  <title>记录之跨域理解 | LQ | 归来仍是少年</title>
   
 
 
@@ -305,7 +302,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2018/06/05/记录之Git使用/">
+    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2019/06/15/记录之跨域理解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="强仔">
@@ -322,7 +319,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">记录之Git使用</h1>
+          <h1 class="post-title" itemprop="name headline">记录之跨域理解</h1>
         
 
         <div class="post-meta">
@@ -334,8 +331,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-06-05T17:20:33+08:00">
-                2018-06-05
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-15T11:02:14+08:00">
+                2019-06-15
               </time>
             
 
@@ -375,8 +372,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2018/06/05/记录之Git使用/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count valine-comment-count" data-xid="/2018/06/05/记录之Git使用/" itemprop="commentCount"></span>
+                <a href="/2019/06/15/记录之跨域理解/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/15/记录之跨域理解/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -384,7 +381,7 @@
 
           
           
-             <span id="/2018/06/05/记录之Git使用/" class="leancloud_visitors" data-flag-title="记录之Git使用">
+             <span id="/2019/06/15/记录之跨域理解/" class="leancloud_visitors" data-flag-title="记录之跨域理解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -409,7 +406,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1.7k 字
+                  3.2k 字
                 </span>
               
 
@@ -425,7 +422,7 @@
                   <span class="post-meta-item-text">阅读时长 &asymp;</span>
                 
                 <span title="阅读时长">
-                  6 分钟
+                  12 分钟
                 </span>
               
             </div>
@@ -446,258 +443,131 @@
       
 
       
-        <h3 id="Git介绍"><a href="#Git介绍" class="headerlink" title="Git介绍"></a>Git介绍</h3><p>Git是目前世界上最先进的分布式版本控制系统</p>
-<ul>
-<li>方便多人协作开发</li>
-<li>方便版本控制</li>
-</ul>
+        <p>对跨域总是似懂非懂的感觉，有时间知道但总是解释的不太明白，最近看了一些资料简单整理一下，方便以后忘记的时候捡起来。</p>
 <a id="more"></a>
-<h3 id="Git基本流程图"><a href="#Git基本流程图" class="headerlink" title="Git基本流程图"></a>Git基本流程图</h3><p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201906/%E5%88%86%E5%B8%83%E5%BC%8F%E7%89%88%E6%9C%AC%E6%8E%A7%E5%88%B6.png" alt></p>
-<h3 id="工作区-amp-暂存区-amp-仓库区介绍"><a href="#工作区-amp-暂存区-amp-仓库区介绍" class="headerlink" title="工作区&amp;暂存区&amp;仓库区介绍"></a>工作区&amp;暂存区&amp;仓库区介绍</h3><h4 id="工作区"><a href="#工作区" class="headerlink" title="工作区"></a>工作区</h4><ul>
-<li>对于<code>添加</code>、<code>修改</code>、<code>删除</code>文件的操作，都发生在工作区中</li>
-</ul>
-<h4 id="暂存区"><a href="#暂存区" class="headerlink" title="暂存区"></a>暂存区</h4><ul>
-<li>暂存区指将工作区中的操作完成小阶段的存储，是版本库的一部分</li>
-</ul>
-<h4 id="仓库区"><a href="#仓库区" class="headerlink" title="仓库区"></a>仓库区</h4><ul>
-<li>仓库区表示个人开发的一个小阶段的完成<ul>
-<li>仓库区中记录的各版本是可以查看并回退的</li>
-<li>但是暂存区的版本一旦提交就没有了</li>
-</ul>
-</li>
-</ul>
-<h3 id="本地Git常见操作"><a href="#本地Git常见操作" class="headerlink" title="本地Git常见操作"></a>本地Git常见操作</h3><h4 id="基本配置"><a href="#基本配置" class="headerlink" title="基本配置"></a>基本配置</h4><ul>
-<li>初始化仓库</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git init</span><br><span class="line"><span class="comment"># 会在初始化的路径下产生隐藏文件夹.git</span></span><br></pre></td></tr></table></figure>
+<h4 id="什么是同源策略？"><a href="#什么是同源策略？" class="headerlink" title="什么是同源策略？"></a>什么是同源策略？</h4><p>1995年，同源策略由 <code>Netscape</code>公司引入浏览器，目前所有浏览器都实行设个政策。最初，它的含义是指，A网页设置的 <code>Cookie</code>,B网页不能打开，除非这两个网页 <strong>同源</strong>.所谓同源指的是三个相同。</p>
 <ul>
-<li>配置个人信息</li>
+<li>1.协议</li>
+<li>2.域名</li>
+<li>3.端口<ul>
+<li>只要协议、域名、端口其中任意一者不同，均属跨域</li>
 </ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">git config user.name <span class="string">'qiang-zai'</span></span><br><span class="line">git config user.email <span class="string">'china_qiangzai@163.com'</span></span><br><span class="line"><span class="comment"># 配置的个人信息在.git/config文件下可以查看</span></span><br><span class="line"><span class="comment"># 默认不配置的话，会使用全局配置里面的用户名和邮箱；全局git配置文件路径：～/.gitconfig</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>举例来说：<code>http://www.example.com/dir/page.html</code>这个网址，协议是: <code>http://</code>,域名是: <code>www.example.com</code>,端口是：<code>80</code>（默认端口可以省略）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">http://www.example.com/dir2/other.html：同源</span><br><span class="line">http://example.com/dir/other.html：不同源（域名不同）</span><br><span class="line">https://www.example.com/dir/other.html：不同源（协议不同）</span><br><span class="line">http://www.example.com:<span class="number">81</span>/dir/other.html：不同源（端口不同）</span><br></pre></td></tr></table></figure>
+<h5 id="目的"><a href="#目的" class="headerlink" title="目的"></a>目的</h5><p>同源策略的目的，是为了保证用户信息的安全，防止恶意的网站窃取数据。</p>
+<p>设想这样一种情况：A网站是一家银行，用户登录以后，又去浏览其他网站。如果其他网站可以读取A网站的 Cookie，会发生什么？</p>
+<p>很显然，如果 Cookie 包含隐私（比如存款总额），这些信息就会泄漏。更可怕的是，Cookie 往往用来保存用户的登录状态，如果用户没有退出登录，其他网站就可以冒充用户，为所欲为。因为浏览器同时还规定，提交表单不受同源政策的限制。</p>
+<p>由此可见，”同源政策”是必需的，否则 Cookie 可以共享，互联网就毫无安全可言了。</p>
+<h4 id="限制范围"><a href="#限制范围" class="headerlink" title="限制范围"></a>限制范围</h4><p>随着互联网的发展，“同源策略”越来越严格，目前如果非同源，共有三种行为受到限制。</p>
 <ul>
-<li>查看文件状态</li>
-</ul>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git status</span><br></pre></td></tr></table></figure>
-<h4 id="基本操作"><a href="#基本操作" class="headerlink" title="基本操作"></a>基本操作</h4><ul>
-<li><p>将工作区文件添加到暂存区</p>
+<li><p>（1） Cookie、LocalStorage 和 IndexDB 无法读取。</p>
+</li>
+<li><p>（2） DOM 无法获得。</p>
+</li>
+<li><p>（3） AJAX 请求不能发送。</p>
 <ul>
-<li><code>git add .</code>  # 添加项目中的所有文件到暂存区</li>
-<li><code>git add xxx.py</code> # 添加啊指定文件到暂存区</li>
+<li>同源政策规定，<code>Ajax</code>请求只能发给同源的网址，否则就报错，有三种方法规避这个限制<ul>
+<li><code>JSONP</code>—&gt;使用 <code>Script</code>元素避免同源策略限制</li>
+<li><code>WebSocket</code>—&gt;WebSocket是一种通信协议，使用<code>ws://</code>（非加密）和<code>wss://</code>（加密）作为协议前缀。该协议不实行同源政策，只要服务器支持，就可以通过它进行跨源通信。</li>
+<li><code>CORS</code>—&gt;跨域资源共享，它是W3C标准，是跨域 <code>Ajax</code>请求的根本解决方法，相比 <code>JSONP</code>只能发送 <code>GET</code>请求，<code>CORS</code>允许任何类型的请求。</li>
 </ul>
 </li>
-<li><p>将暂存区文件提交到仓库区</p>
+<li>详情见阮一峰博客：<a href="http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2016/04/same-origin-policy.html</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="什么是CORS（跨域资源共享）？"><a href="#什么是CORS（跨域资源共享）？" class="headerlink" title="什么是CORS（跨域资源共享）？"></a>什么是CORS（跨域资源共享）？</h4><p>首先看官方给的解释：<code>CORS</code>是一个 <code>W3C</code>标准，全程是 <code>跨越资源共享(Cross-origin-resource-sharing)</code>。它允许浏览器向跨域（协议+域名+端口）服务器，发出 <code>XMLHttpRequest</code>请求,从而克服了 <code>Ajax</code>只能同源使用的限制。</p>
+<p>CORS需要浏览器和服务器同时支持，它的通信过程，都是浏览器自动完成，不需要用户参与。对于开发者来说，CORS通信与同源的Ajax通信没有差别，代码完全一样。浏览器一旦发现 <code>AJAX</code>请求跨域，就会自动添加一些附加的头信息，有时还会多出一次附加请求（option）。因此，实现 <code>CORS</code>通信的关键是服务器，只要服务器实现了 <code>CORS</code>接口，就可以跨源通信。</p>
+<h4 id="CORS的两种请求"><a href="#CORS的两种请求" class="headerlink" title="CORS的两种请求"></a>CORS的两种请求</h4><p>浏览器将 <code>CORS</code>请求分成两类：简单请求(simple request)和非简单请求(not-so-simple request)</p>
+<p>只要同时满足以下两大请求，就属于简单请求</p>
 <ul>
-<li><p><code>commit</code>会生成一条版本记录</p>
-</li>
-<li><p><code>-m</code>后面是版本描述信息</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -m <span class="string">'版本描述'</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>(1)请求方法是以下三种方法之一：<ul>
+<li><code>HEAD</code></li>
+<li><code>GET</code></li>
+<li><code>POST</code></li>
 </ul>
 </li>
-<li><p>将工作区修改的文件直接提交到仓库区</p>
+<li>(2)HTTP的请求头信息不超出以下几个字段：<ul>
+<li><code>Accept</code></li>
+<li><code>Accept-Language</code></li>
+<li><code>Content-Language</code></li>
+<li><code>Last-Event-ID</code></li>
+<li><code>Content-Type</code>：只限于三个值<code>application/x-www-form-urlencoded</code>、<code>multipart/form-data</code>、<code>text/plain</code></li>
+</ul>
+</li>
+</ul>
+<p>凡是不同时满足上面两个请求，就属于非简单请求，浏览器对这两种请求的处理，是不一样的。</p>
+<h4 id="CORS-简单请求"><a href="#CORS-简单请求" class="headerlink" title="CORS-简单请求"></a>CORS-简单请求</h4><h5 id="基本流程"><a href="#基本流程" class="headerlink" title="基本流程"></a>基本流程</h5><p>对于简单请求，浏览器直接发出 <code>CORS</code>请求，具体来说，就是在头信息之中，增加一个 <code>Origin</code>字段，下面是一个例子，浏览器发现这次跨源 <code>AJax</code>请求是简单请求，就自动在头信息之中，添加一个 <code>Origin</code>字段</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">GET</span> <span class="string">/cors</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Origin</span>: http://api.bob.com </span><br><span class="line"><span class="attribute">Host</span>: api.alice.com</span><br><span class="line"><span class="attribute">Accept-Language</span>: en-US</span><br><span class="line"><span class="attribute">Connection</span>: keep-alive</span><br><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0...</span><br></pre></td></tr></table></figure>
+<p>上面的头信息中，<code>Origin</code>字段用来说明，本次请求来自那个源(协议+域名+端口)。服务器根据这个值，决定是否同意这次请求。</p>
+<p>如果 <code>Origin</code>指定的源，不在许可范围内，服务器会返回一个正常的 <code>HTTP</code>回应，浏览器发现，这个回应的头信息没有包含 <code>Access-Control-Allow-Origin</code>字段，就知道出错了，从而抛出一个错误，被 <code>XMLHttpRequest</code>的 <code>onerror</code>回调函数捕获。注意，这种错误无法通过状态码识别，因为 <code>HTTP</code>回应的状态码有可能是200.</p>
+<p>如果 <code>Origin</code>指定的域名在许可范围内，服务器返回的响应，会多吹几个头信息字段。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Allow-Origin</span>: http://api.bob.com</span><br><span class="line"><span class="attribute">Access-Control-Allow-Credentials</span>: true</span><br><span class="line"><span class="attribute">Access-Control-Expose-Headers</span>: FooBar</span><br><span class="line"><span class="attribute">Content-Type</span>: text/html; charset=utf-8</span><br></pre></td></tr></table></figure>
+<p>上面的头信息这中，有三个与CORS请求相关的字段，都以 <code>Access-Control</code>开头</p>
 <ul>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git commit -am <span class="string">'版本描述'</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>(1) <code>Access-Control-Allow-Origin</code><ul>
+<li>该字段是必须的，它的值要么是请求时 <code>Origin</code>字段的值，要么是一个 <code>*</code>,表示接受任意域名的值。</li>
 </ul>
 </li>
-<li><p>查看历史版本</p>
+<li>(2) <code>Access-Control-Allow-Credentials</code><ul>
+<li>该字段可选，它的值是一个布尔值，表示是否允许发送 <code>Cookie</code>,默认情况下，Cookie不包括在 <code>CORS</code>请求之中，设为 <code>true</code>，即表示服务器明确许可，<code>Cookie</code>可以包含在请求中，一起发给服务器，这个值也只能设为 <code>true</code>，如果服务器不要浏览器发送 <code>Cookie</code>,删除该字段即可.</li>
+</ul>
+</li>
+<li>(3) <code>Access-Control-Expose-Headers</code><ul>
+<li>该字段可选。CORS请求时，<code>XMLHttpRequest</code>对象的<code>getResponseHeader()</code>方法只能拿到6个基本字段：<code>Cache-Control</code>、<code>Content-Language</code>、<code>Content-Type</code>、<code>Expires</code>、<code>Last-Modified</code>、<code>Pragma</code>。如果想拿到其他字段，就必须在<code>Access-Control-Expose-Headers</code>里面指定。上面的例子指定，<code>getResponseHeader(&#39;FooBar&#39;)</code>可以返回<code>FooBar</code>字段的值。</li>
+</ul>
+</li>
+</ul>
+<h5 id="withCredentials属性"><a href="#withCredentials属性" class="headerlink" title="withCredentials属性"></a>withCredentials属性</h5><p>上面说到，CORS请求默认不发送Cookie和HTTP认证信息。如果要把Cookie发到服务器，一方面要服务器同意，指定<code>Access-Control-Allow-Credentials</code>字段。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Access-Control-Allow-Credentials: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<p>另一方面，开发者必须在AJAX请求中打开<code>withCredentials</code>属性。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">withCredentials: <span class="literal">true</span> <span class="comment">// 携带cookie</span></span><br></pre></td></tr></table></figure>
+<p>否则，即使服务器同意发送Cookie，浏览器也不会发送。或者，服务器要求设置Cookie，浏览器也不会处理。</p>
+<p>需要注意的是，如果要发送Cookie，<code>Access-Control-Allow-Origin</code>就不能设为 <code>*</code>号，必须指定明确的，与请求网页（浏览器上的url）一致的域名。同时，<code>Cookie</code>依然遵循同源政策，只有用服务器域名设置的Cookie才会上传，其他域名的Cookie并不会上传，且（跨域）原网页代码中的 <code>document.cookie</code>也无法读取服务器域名下的 <code>Cookie</code>。</p>
+<h4 id="非简单请求"><a href="#非简单请求" class="headerlink" title="非简单请求"></a>非简单请求</h4><h5 id="预检请求"><a href="#预检请求" class="headerlink" title="预检请求"></a>预检请求</h5><p>非简单请求是那种对服务器有特殊要求的请求，比如请求方法是 <code>PUT</code>或 <code>DELETE</code>,或者 <code>Content-Type</code>字段的类型是 <code>application/json</code>.</p>
+<p>非简单请求的 <code>CORS</code>请求，会在正式通信之前，增加一次HTTP查询请求（option），称为预检请求(preflight).</p>
+<p>浏览器先询问服务器，当前网页所在的域名是否在服务器的许可名单之中，以及可以使用哪些HTTP动词和头信息字段，只有得到肯定答复，浏览器才会发出正式的 <code>XMLHttpRequest</code>请求，否则就报错。</p>
+<p>下面是一段浏览器的JS脚本</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> url = <span class="string">'http://api.alice.com/cors'</span>;</span><br><span class="line"><span class="keyword">var</span> xhr = <span class="keyword">new</span> XMLHttpRequest();</span><br><span class="line">xhr.open(<span class="string">'PUT'</span>, url, <span class="literal">true</span>);</span><br><span class="line">xhr.setRequestHeader(<span class="string">'X-Custom-Header'</span>, <span class="string">'value'</span>);</span><br><span class="line">xhr.send();</span><br></pre></td></tr></table></figure>
+<p>上面代码中，HTTP请求的方法是<code>PUT</code>，并且发送一个自定义头信息<code>X-Custom-Header</code>。</p>
+<p>浏览器发现，这是一个非简单请求，就自动发出一个”预检”请求，要求服务器确认可以这样请求。下面是这个”预检”请求的HTTP头信息。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">OPTIONS</span> <span class="string">/cors</span> HTTP/1.1</span><br><span class="line"><span class="attribute">Origin</span>: http://api.bob.com</span><br><span class="line"><span class="attribute">Access-Control-Request-Method</span>: PUT</span><br><span class="line"><span class="attribute">Access-Control-Request-Headers</span>: X-Custom-Header</span><br><span class="line"><span class="attribute">Host</span>: api.alice.com</span><br><span class="line"><span class="attribute">Accept-Language</span>: en-US</span><br><span class="line"><span class="attribute">Connection</span>: keep-alive</span><br><span class="line"><span class="attribute">User-Agent</span>: Mozilla/5.0...</span><br></pre></td></tr></table></figure>
+<p>“预检”请求用的请求方法是 <code>OPTION</code>方法，表示这个请求是用来询问的，头信息里面，关键字是 <code>Origin</code>，表示请求来自那个源，除了 <code>Origin</code>字段，“预检”请求的头信息包括两个特殊字段。</p>
 <ul>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">log</span>  </span><br><span class="line">git reflog</span><br><span class="line"><span class="comment"># git reflog可以查看所有分支的所有操作记录（包含commit和reset的操作），包括已经删除的commit记录，git log 则不能查看已经删除的commit记录</span></span><br></pre></td></tr></table></figure>
-</li>
+<li>（1）Access-Control-Request-Method<ul>
+<li>该字段是必须的，用来列出浏览器的CORS请求会用到哪些HTTP方法，上例是<code>PUT</code></li>
 </ul>
 </li>
-<li><p>回退版本（本地仓库&gt;工作区）</p>
-<ul>
-<li><p>方案一:版本较少的时候推荐使用</p>
-<ul>
-<li><p><code>HEAD</code>表示当前最新版本</p>
-</li>
-<li><p><code>HEAD^</code>表示当前最新版本的前一个版本</p>
-</li>
-<li><p><code>HEAD^^</code>表示当前最新版本的前两个版本，以此类推。。。</p>
-</li>
-<li><p><code>HEAD~1</code>表示当前最新版本的前一个版本</p>
-</li>
-<li><p><code>HEAD~10</code>表示当前最新版本的前10个版本，以此类推。。。</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard HEAD^</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>方案二：版本较多的时间推荐使用</p>
-<ul>
-<li><p>通过每个版本的版本号回退到指定版本 <code>git reflog</code>来查看版本号</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git reset --hard 版本号</span><br></pre></td></tr></table></figure>
-</li>
+<li>（2）Access-Control-Request-Headers<ul>
+<li>该字段是一个逗号分隔的字符串，指定浏览器CORS请求会额外发送的头信息字段，上例是<code>X-Custom-Header</code>。</li>
 </ul>
 </li>
 </ul>
+<h5 id="预检请求的回应"><a href="#预检请求的回应" class="headerlink" title="预检请求的回应"></a>预检请求的回应</h5><p>服务器收到”预检”请求以后，检查了<code>Origin</code>、<code>Access-Control-Request-Method</code>和<code>Access-Control-Request-Headers</code>字段以后，确认允许跨源请求，就可以做出回应。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">HTTP/1.1 <span class="number">200</span> OK</span><br><span class="line"><span class="attribute">Date</span>: Mon, 01 Dec 2008 01:15:39 GMT</span><br><span class="line"><span class="attribute">Server</span>: Apache/2.0.61 (Unix)</span><br><span class="line"><span class="attribute">Access-Control-Allow-Origin</span>: http://api.bob.com</span><br><span class="line"><span class="attribute">Access-Control-Allow-Methods</span>: GET, POST, PUT</span><br><span class="line"><span class="attribute">Access-Control-Allow-Headers</span>: X-Custom-Header</span><br><span class="line"><span class="attribute">Content-Type</span>: text/html; charset=utf-8</span><br><span class="line"><span class="attribute">Content-Encoding</span>: gzip</span><br><span class="line"><span class="attribute">Content-Length</span>: 0</span><br><span class="line"><span class="attribute">Keep-Alive</span>: timeout=2, max=100</span><br><span class="line"><span class="attribute">Connection</span>: Keep-Alive</span><br><span class="line"><span class="attribute">Content-Type</span>: text/plain</span><br></pre></td></tr></table></figure>
+<p>如果浏览器否定了”预检”请求，会返回一个正常的HTTP回应，但是没有任何CORS相关的头信息字段。这时，浏览器就会认定，服务器不同意预检请求，因此触发一个错误，被<code>XMLHttpRequest</code>对象的<code>onerror</code>回调函数捕获。控制台会打印出如下的报错信息。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">XMLHttpRequest cannot load http:<span class="comment">//api.alice.com.</span></span><br><span class="line">Origin http:<span class="comment">//api.bob.com is not allowed by Access-Control-Allow-Origin.</span></span><br></pre></td></tr></table></figure>
+<p>服务器回应的其他CORS相关字段如下。</p>
+<figure class="highlight http"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">Access-Control-Allow-Methods</span>: GET, POST, PUT</span><br><span class="line"><span class="attribute">Access-Control-Allow-Headers</span>: X-Custom-Header</span><br><span class="line"><span class="attribute">Access-Control-Allow-Credentials</span>: true</span><br><span class="line"><span class="attribute">Access-Control-Max-Age</span>: 1728000</span><br></pre></td></tr></table></figure>
+<p><strong>（1）Access-Control-Allow-Methods</strong></p>
+<p>该字段必需，它的值是逗号分隔的一个字符串，表明服务器支持的所有跨域请求的方法。注意，返回的是所有支持的方法，而不单是浏览器请求的那个方法。这是为了避免多次”预检”请求。</p>
+<p><strong>（2）Access-Control-Allow-Headers</strong></p>
+<p>如果浏览器请求包括<code>Access-Control-Request-Headers</code>字段，则<code>Access-Control-Allow-Headers</code>字段是必需的。它也是一个逗号分隔的字符串，表明服务器支持的所有头信息字段，不限于浏览器在”预检”中请求的字段。</p>
+<p><strong>（3）Access-Control-Allow-Credentials</strong></p>
+<p>该字段与简单请求时的含义相同。</p>
+<p><strong>（4）Access-Control-Max-Age</strong></p>
+<p>该字段可选，用来指定本次预检请求的有效期，单位为秒。上面结果中，有效期是20天（1728000秒），即允许缓存该条回应1728000秒（即20天），在此期间，不用发出另一条预检请求。</p>
+<h4 id="CORS与Jsonp比较"><a href="#CORS与Jsonp比较" class="headerlink" title="CORS与Jsonp比较"></a>CORS与Jsonp比较</h4><p>CORS与JSONP的使用目的相同，但是比JSONP更强大。</p>
+<p>JSONP只支持<code>GET</code>请求，CORS支持所有类型的HTTP请求。JSONP的优势在于支持老式浏览器，以及可以向不支持CORS的网站请求数据。</p>
+<h4 id="ajax跨域和不跨域有什么区别？"><a href="#ajax跨域和不跨域有什么区别？" class="headerlink" title="ajax跨域和不跨域有什么区别？"></a><code>ajax</code>跨域和不跨域有什么区别？</h4><ul>
+<li><p>非跨域请求限制比较少，但跨域请求的限制很多，最初 XHR 对象是不能跨域的，但新版的浏览器允许跨域，需要服务器端对当前网站开权限。在不允许跨域的年代，都是通过某些hack的方法来实现跨域的。通常是借助一些天生能够跨域的元素：<code>script, img, iframe</code>，这些元素里面script最好，因为可以很方便地执行JS代码，从而能够对返回的数据进行处理。</p>
 </li>
-<li><p>撤销修改</p>
-<blockquote>
-<p>只能撤销工作区、暂存区的代码，不能撤销本地仓库的代码</p>
-<p>撤销本地仓库的代码等于版本回退操作</p>
-</blockquote>
-<ul>
-<li><p>撤销工作区代码</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout 文件名</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>撤销暂存区代码</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 第一步 将暂存区代码撤销到工作区</span></span><br><span class="line">git reset HEAD 文件名</span><br><span class="line"><span class="comment"># 第二步 撤销工作区代码</span></span><br><span class="line">git checkout 文件名</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>对比版本库</p>
-<ul>
-<li><p>对比版本库（本地仓库）与工作区</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff HEAD -- xxx.py</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>对比版本库</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git diff HEAD HEAD^ -- xxx.py</span><br></pre></td></tr></table></figure>
-<p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201906/%E7%89%88%E6%9C%AC%E5%AF%B9%E6%AF%94.png" alt></p>
+<li><p>跨域的优势是能充分利用分布式集群系统，使某些服务压力可以分散到多台服务器上，但数据交互的安全性上有一定影响。不跨域的优势是前台页面和后台服务都在一个服务器上，安全性能高，但不能分摊负载。目前计算机行业正在向高集成，多并发，低耦合的方向发展。所有基础服务以接口的方式提供是很好的一种方案（像百度地图，微信，支付宝都有服务接口），基础服务和中间件之间的交互也可能采用服务调用的方式，这些问题就牵扯到跨域，处理好跨域和安全的平衡点是这类集成系统的需要重点权衡的方面之一。</p>
 </li>
 </ul>
-</li>
-<li><p>删除文件：删除文件分为确定删除和误删</p>
-<ul>
-<li><p>确定删除处理</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除文件(文件已经存在本地仓库版本库当中了)</span></span><br><span class="line">rm 文件名</span><br><span class="line"><span class="comment"># git确定删除文件</span></span><br><span class="line">git rm 文件名</span><br><span class="line"><span class="comment"># 删除后记录删除操作版本</span></span><br><span class="line">git commit -m <span class="string">'删除xxx文件'</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>误删文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除文件</span></span><br><span class="line">rm 文件名</span><br><span class="line"><span class="comment"># git 撤销修改</span></span><br><span class="line">git checkout -- 文件名</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
-<h3 id="协同开发"><a href="#协同开发" class="headerlink" title="协同开发"></a>协同开发</h3><h4 id="克隆项目"><a href="#克隆项目" class="headerlink" title="克隆项目"></a>克隆项目</h4><blockquote>
-<p>前提需要在GitHub/其他git服务器创建好项目仓库</p>
-</blockquote>
-<ul>
-<li><p>克隆远程仓库命令</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git <span class="built_in">clone</span> https://github.com/xxxx/xxxx.git</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>配置项目开发人员信息</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> 克隆的文件夹</span><br><span class="line">git config user.name <span class="string">'xxx'</span></span><br><span class="line">git config user.email <span class="string">'xxxx@163.com'</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>编辑代码</p>
-</li>
-<li><p>推送远端</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 工作区添加到暂存区</span></span><br><span class="line">git add .</span><br><span class="line"><span class="comment"># 暂存区提交到仓库区</span></span><br><span class="line">git commit -m <span class="string">'编辑代码'</span></span><br><span class="line"><span class="comment"># 推送远程仓库</span></span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在push的时候需要设置账号和密码，该密码则是github的账号和密码</p>
-<ul>
-<li><p>如果每次push都需要设置账号与密码，那么可以设置记住密码</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 设置记住密码（默认15分钟）：</span></span><br><span class="line">git config --global credential.helper cache</span><br><span class="line"><span class="comment"># 如果想自己设置时间，可以这样做(1小时后失效)：</span></span><br><span class="line">git config credential.helper <span class="string">'cache --timeout=3600'</span></span><br><span class="line"><span class="comment"># 长期存储密码：</span></span><br><span class="line">git config --global credential.helper store</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-<li><p>同步服务器代码</p>
-<ul>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<blockquote>
-<p>编辑代码之前要先pull，编码结束以后再 <code>commit</code>，最后再 <code>push</code></p>
-</blockquote>
-</li>
-</ul>
-<h4 id="冲突解决"><a href="#冲突解决" class="headerlink" title="冲突解决"></a>冲突解决</h4><ul>
-<li>容易冲突的操作方式<ul>
-<li>多个人同时操作了同一个文件</li>
-<li>一个人一直写不提交</li>
-<li>修改之前不更新最新代码</li>
-<li>提交之前不更新最新代码</li>
-<li>擅自修改同事代码</li>
-</ul>
-</li>
-<li>减少冲突的操作方式<ul>
-<li>养成良好的操作习惯,先<code>pull</code>在修改,修改完立即<code>commit</code>和<code>push</code></li>
-<li>一定要确保自己正在修改的文件是最新版本的</li>
-<li>各自开发各自的模块</li>
-<li>如果要修改公共文件,一定要先确认有没有人正在修改</li>
-<li>下班前一定要提交代码,上班第一件事拉取最新代码</li>
-<li>一定不要擅自修改同事的代码</li>
-</ul>
-</li>
-</ul>
-<h4 id="标签"><a href="#标签" class="headerlink" title="标签"></a>标签</h4><ul>
-<li><p>当某个大版本完成后，就需要打标签</p>
-<ul>
-<li>记录大版本</li>
-<li>备份大版本代码</li>
-</ul>
-</li>
-<li><p>本地打标签</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git tag -a 标签名 -m <span class="string">'标签描述'</span></span><br><span class="line"><span class="comment"># 案例</span></span><br><span class="line">git tag -a v1.0 -m <span class="string">'version 1.0'</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>推送标签到远程仓库</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git push origin 标签名</span><br><span class="line"><span class="comment"># 案例</span></span><br><span class="line">git push origin v1.0</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>删除本地和远程标签</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 删除本地标签</span></span><br><span class="line">git tag -d 标签名</span><br><span class="line"><span class="comment"># 删除远程仓库标签</span></span><br><span class="line">git push origin --delete tag 标签名</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h4><ul>
-<li><p>分支的作用</p>
-<ul>
-<li>区分生产环境代码以及开发环境代码</li>
-<li>解决线上出现的bug问题，方便代码调试</li>
-</ul>
-</li>
-<li><p>特点</p>
-<ul>
-<li>项目开发中公用分支包括 <code>master</code>、<code>dev</code></li>
-<li>分支 <code>master</code>是默认分支，用于发布，当需要发布时将 <code>dev</code>分支合并到 <code>master</code></li>
-<li>分支 <code>dev</code>是用于开发的分支，开发完阶段性的代码后，需要合并到 <code>master</code> 分支</li>
-</ul>
-</li>
-<li><p>查看当前分支</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git branch</span><br></pre></td></tr></table></figure>
-<ul>
-<li>没有创建其他分支时，只有 <code>master</code>分支</li>
-</ul>
-</li>
-<li><p>切换分支</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout -b dev</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>设置本地分支跟踪远程执行分支（将分支推送到远程）</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push -u origin dev</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在切换后的dev分支开发，修改代码</p>
-</li>
-<li><p>dev分支代码合并到master分支并提交</p>
-<ul>
-<li><p>只有当dev分支合并到master分支并push到远程仓库master分支以后，其他的开发人员才能获取到最新的代码</p>
-</li>
-<li><p>切换master分支</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git checkout master</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>合并 <code>dev</code>分支代码到 <code>master</code>主分支</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git merge dev</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>推送合并分支到远程仓库</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>其他开发人员同步合并后的代码</p>
-</li>
-<li><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git pull</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ul>
+<p>#### </p>
 
       
     </div>
@@ -715,7 +585,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/git/" rel="tag"># git</a>
+            <a href="/tags/cors/" rel="tag"># cors</a>
           
         </div>
       
@@ -743,8 +613,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/05/31/爬虫之Scrapy框架/" rel="next" title="爬虫之Scrapy框架">
-                <i class="fa fa-chevron-left"></i> 爬虫之Scrapy框架
+              <a href="/2019/06/11/记录之Ubuntu使用RabbitMQ/" rel="next" title="记录之Ubuntu使用RabbitMQ">
+                <i class="fa fa-chevron-left"></i> 记录之Ubuntu使用RabbitMQ
               </a>
             
           </div>
@@ -752,10 +622,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/07/31/爬虫之常见问题总结/" rel="prev" title="爬虫之常见问题总结">
-                爬虫之常见问题总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -906,7 +772,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Git介绍"><span class="nav-number">1.</span> <span class="nav-text">Git介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Git基本流程图"><span class="nav-number">2.</span> <span class="nav-text">Git基本流程图</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#工作区-amp-暂存区-amp-仓库区介绍"><span class="nav-number">3.</span> <span class="nav-text">工作区&amp;暂存区&amp;仓库区介绍</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#工作区"><span class="nav-number">3.1.</span> <span class="nav-text">工作区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#暂存区"><span class="nav-number">3.2.</span> <span class="nav-text">暂存区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#仓库区"><span class="nav-number">3.3.</span> <span class="nav-text">仓库区</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#本地Git常见操作"><span class="nav-number">4.</span> <span class="nav-text">本地Git常见操作</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基本配置"><span class="nav-number">4.1.</span> <span class="nav-text">基本配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基本操作"><span class="nav-number">4.2.</span> <span class="nav-text">基本操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#协同开发"><span class="nav-number">5.</span> <span class="nav-text">协同开发</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#克隆项目"><span class="nav-number">5.1.</span> <span class="nav-text">克隆项目</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#冲突解决"><span class="nav-number">5.2.</span> <span class="nav-text">冲突解决</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#标签"><span class="nav-number">5.3.</span> <span class="nav-text">标签</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分支"><span class="nav-number">5.4.</span> <span class="nav-text">分支</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是同源策略？"><span class="nav-number">1.</span> <span class="nav-text">什么是同源策略？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#目的"><span class="nav-number">1.1.</span> <span class="nav-text">目的</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#限制范围"><span class="nav-number">2.</span> <span class="nav-text">限制范围</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#什么是CORS（跨域资源共享）？"><span class="nav-number">3.</span> <span class="nav-text">什么是CORS（跨域资源共享）？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CORS的两种请求"><span class="nav-number">4.</span> <span class="nav-text">CORS的两种请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CORS-简单请求"><span class="nav-number">5.</span> <span class="nav-text">CORS-简单请求</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基本流程"><span class="nav-number">5.1.</span> <span class="nav-text">基本流程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#withCredentials属性"><span class="nav-number">5.2.</span> <span class="nav-text">withCredentials属性</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#非简单请求"><span class="nav-number">6.</span> <span class="nav-text">非简单请求</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#预检请求"><span class="nav-number">6.1.</span> <span class="nav-text">预检请求</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#预检请求的回应"><span class="nav-number">6.2.</span> <span class="nav-text">预检请求的回应</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CORS与Jsonp比较"><span class="nav-number">7.</span> <span class="nav-text">CORS与Jsonp比较</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ajax跨域和不跨域有什么区别？"><span class="nav-number">8.</span> <span class="nav-text">ajax跨域和不跨域有什么区别？</span></a></li></ol></div>
             
 
           </div>
