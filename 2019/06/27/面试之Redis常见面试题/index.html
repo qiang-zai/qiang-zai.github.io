@@ -75,7 +75,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="redis,">
 
 
 
@@ -86,16 +86,18 @@
 
 
 
-<meta name="description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
-<meta property="og:type" content="website">
-<meta property="og:title" content="LQ | 归来仍是少年">
-<meta property="og:url" content="http://qiangzai.site/tags/jsonpath/index.html">
+<meta name="description" content="Redis作为常用的内存型数据库,面试中会经常遇到,在网上看到一些 redis常见的面试题,简单整理一下.">
+<meta name="keywords" content="redis">
+<meta property="og:type" content="article">
+<meta property="og:title" content="面试之Redis常见面试题">
+<meta property="og:url" content="http://qiangzai.site/2019/06/27/面试之Redis常见面试题/index.html">
 <meta property="og:site_name" content="LQ | 归来仍是少年">
-<meta property="og:description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta property="og:description" content="Redis作为常用的内存型数据库,面试中会经常遇到,在网上看到一些 redis常见的面试题,简单整理一下.">
 <meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-06-27T10:40:11.946Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LQ | 归来仍是少年">
-<meta name="twitter:description" content="Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作">
+<meta name="twitter:title" content="面试之Redis常见面试题">
+<meta name="twitter:description" content="Redis作为常用的内存型数据库,面试中会经常遇到,在网上看到一些 redis常见的面试题,简单整理一下.">
 
 
 
@@ -125,13 +127,13 @@
 
 
 
-  <link rel="canonical" href="http://qiangzai.site/tags/jsonpath/">
+  <link rel="canonical" href="http://qiangzai.site/2019/06/27/面试之Redis常见面试题/">
 
 
 
 
 
-  <title>标签: jsonpath | LQ | 归来仍是少年</title>
+  <title>面试之Redis常见面试题 | LQ | 归来仍是少年</title>
   
 
 
@@ -150,7 +152,7 @@
     
   
 
-  <div class="container sidebar-position-left ">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -286,52 +288,246 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>jsonpath<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2019/06/27/面试之Redis常见面试题/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="强仔">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LQ | 归来仍是少年">
+    </span>
+
+    
+      <header class="post-header">
+
         
-            <a class="post-title-link" href="/2018/03/23/爬虫之数据提取/" itemprop="url">
-              
-                <span itemprop="name">爬虫之数据提取</span>
-              
-            </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">面试之Redis常见面试题</h1>
+        
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2018-03-23T13:41:54+08:00" content="2018-03-23">
-          03-23
-        </time>
-      </div>
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-06-27T18:09:16+08:00">
+                2019-06-27
+              </time>
+            
 
-    </header>
-  </article>
+            
 
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/面试题/" itemprop="url" rel="index">
+                    <span itemprop="name">面试题</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/06/27/面试之Redis常见面试题/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/06/27/面试之Redis常见面试题/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/06/27/面试之Redis常见面试题/" class="leancloud_visitors" data-flag-title="面试之Redis常见面试题">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  1.5k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  5 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>Redis</code>作为常用的内存型数据库,面试中会经常遇到,在网上看到一些 <code>redis</code>常见的面试题,简单整理一下.</p>
+<a id="more"></a>
+<h4 id="Redis有哪些数据结构"><a href="#Redis有哪些数据结构" class="headerlink" title="Redis有哪些数据结构?"></a>Redis有哪些数据结构?</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>字符串String、字典Hash、列表List、集合Set、有序集合SortedSet。</span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>如果你是Redis中高级用户，还需要加上下面几种数据结构HyperLogLog、Geo、Pub/Sub。</span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>如果你说还玩过Redis Module，像BloomFilter，RedisSearch，Redis-ML，面试官得眼睛就开始发亮了。</span><br></pre></td></tr></table></figure>
+<h4 id="使用过Redis分布式锁么-它是怎么回事"><a href="#使用过Redis分布式锁么-它是怎么回事" class="headerlink" title="使用过Redis分布式锁么,它是怎么回事?"></a>使用过Redis分布式锁么,它是怎么回事?</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>先拿setnx来争抢锁，抢到之后，再用expire给锁加一个过期时间防止锁忘记了释放。</span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>这时候对方会告诉你说你回答得不错，然后接着问如果在setnx之后执行expire之前进程意外crash或者要重启维护了，那会怎么样？</span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>这时候你要给予惊讶的反馈：唉，是喔，这个锁就永远得不到释放了。紧接着你需要抓一抓自己得脑袋，故作思考片刻，好像接下来的结果是你主动思考出来的，然后回答：我记得set指令有非常复杂的参数，这个应该是可以同时把setnx和expire合成一条指令来用的！对方这时会显露笑容，心里开始默念：摁，这小子还不错。</span><br></pre></td></tr></table></figure>
+<h4 id="假如-Redis里面有1亿个key-其中有10W个key是以某个固定的已知的前缀开头的-如果将它们全部找出来"><a href="#假如-Redis里面有1亿个key-其中有10W个key是以某个固定的已知的前缀开头的-如果将它们全部找出来" class="headerlink" title="假如 Redis里面有1亿个key,其中有10W个key是以某个固定的已知的前缀开头的,如果将它们全部找出来."></a>假如 Redis里面有1亿个key,其中有10W个key是以某个固定的已知的前缀开头的,如果将它们全部找出来.</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>使用keys指令可以扫出指定模式的key列表。</span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>对方接着追问：如果这个redis正在给线上的业务提供服务，那使用keys指令会有什么问题？</span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>这个时候你要回答redis关键的一个特性：redis的单线程的。keys指令会导致线程阻塞一段时间，线上服务会停顿，直到指令执行完毕，服务才能恢复。这个时候可以使用scan指令，scan指令可以无阻塞的提取出指定模式的key列表，但是会有一定的重复概率，在客户端做一次去重就可以了，但是整体所花费的时间会比直接用keys指令长。</span><br></pre></td></tr></table></figure>
+<h4 id="使用过Redis做异步队列么-你是怎么用的"><a href="#使用过Redis做异步队列么-你是怎么用的" class="headerlink" title="使用过Redis做异步队列么?你是怎么用的?"></a>使用过Redis做异步队列么?你是怎么用的?</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>一般使用list结构作为队列，rpush生产消息，lpop消费消息。当lpop没有消息的时候，要适当sleep一会再重试。</span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>如果对方追问可不可以不用sleep呢？list还有个指令叫blpop，在没有消息的时候，它会阻塞住直到消息到来。</span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>如果对方追问能不能生产一次消费多次呢？使用pub/sub主题订阅者模式，可以实现1:N的消息队列。</span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>如果对方追问pub/sub有什么缺点？在消费者下线的情况下，生产的消息会丢失，得使用专业的消息队列如rabbitmq等。</span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>如果对方追问redis如何实现延时队列？我估计现在你很想把面试官一棒打死如果你手上有一根棒球棍的话，怎么问的这么详细。但是你很克制，然后神态自若的回答道：使用sortedset，拿时间戳作为score，消息内容作为key调用zadd来生产消息，消费者用zrangebyscore指令获取N秒之前的数据轮询进行处理。</span><br></pre></td></tr></table></figure>
+<h4 id="如果有大量的key需要设置同一时间过期-怎么操作"><a href="#如果有大量的key需要设置同一时间过期-怎么操作" class="headerlink" title="如果有大量的key需要设置同一时间过期,怎么操作?"></a>如果有大量的key需要设置同一时间过期,怎么操作?</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>如果大量的key过期时间设置的过于集中，到过期的那个时间点，redis可能会出现短暂的卡顿现象。一般需要在时间上加一个随机值，使得过期时间分散一些。</span><br></pre></td></tr></table></figure>
+<h4 id="Redis如何做持久化"><a href="#Redis如何做持久化" class="headerlink" title="Redis如何做持久化"></a>Redis如何做持久化</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>bgsave做镜像全量持久化，aof做增量持久化。因为bgsave会耗费较长时间，不够实时，在停机的时候会导致大量丢失数据，所以需要aof来配合使用。</span><br><span class="line"><span class="bullet">* </span>在redis实例重启时，会使用bgsave持久化文件重新构建内存，再使用aof重放近期的操作指令来实现完整恢复重启之前的状态。</span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>对方追问那如果突然机器掉电会怎样？取决于aof日志sync属性的配置，如果不要求性能，在每条写指令时都sync一下磁盘，就不会丢失数据。但是在高性能的要求下每次都sync是不现实的，一般都使用定时sync，比如1s1次，这个时候最多就会丢失1s的数据。</span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>对方追问bgsave的原理是什么？你给出两个词汇就可以了，fork和cow。fork是指redis通过创建子进程来进行bgsave操作，cow指的是copy on write，子进程创建后，父子进程共享数据段，父进程继续提供读写服务，写脏的页面数据会逐渐和子进程分离开来。</span><br></pre></td></tr></table></figure>
+<h4 id="Pipeline有什么好处-为什么要用pipeline"><a href="#Pipeline有什么好处-为什么要用pipeline" class="headerlink" title="Pipeline有什么好处?为什么要用pipeline"></a>Pipeline有什么好处?为什么要用pipeline</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>可以将多次IO往返的时间缩减为一次，前提是pipeline执行的指令之间没有因果相关性。使用redis-benchmark进行压测的时候可以发现影响redis的QPS峰值的一个重要因素是pipeline批次指令的数目。</span><br></pre></td></tr></table></figure>
+<h4 id="Redis的同步机制了解么"><a href="#Redis的同步机制了解么" class="headerlink" title="Redis的同步机制了解么?"></a>Redis的同步机制了解么?</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>Redis可以使用主从同步，从从同步。第一次同步时，主节点做一次bgsave，并同时将后续修改操作记录到内存buffer，待完成后将rdb文件全量同步到复制节点，复制节点接受完成后将rdb镜像加载到内存。加载完成后，再通知主节点将期间修改的操作记录同步到复制节点进行重放就完成了同步过程。</span><br></pre></td></tr></table></figure>
+<h4 id="是否使用过Redis集群-集群的原理是什么"><a href="#是否使用过Redis集群-集群的原理是什么" class="headerlink" title="是否使用过Redis集群,集群的原理是什么?"></a>是否使用过Redis集群,集群的原理是什么?</h4><figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="bullet">* </span>Redis Sentinal着眼于高可用，在master宕机时会自动将slave提升为master，继续提供服务。</span><br><span class="line"></span><br><span class="line"><span class="bullet">* </span>Redis Cluster着眼于扩展性，在单个redis内存不足时，使用Cluster进行分片存储。</span><br></pre></td></tr></table></figure>
 
       
     </div>
+    
+    
+    
 
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/redis/" rel="tag"># redis</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/06/15/记录之跨域理解/" rel="next" title="记录之跨域理解">
+                <i class="fa fa-chevron-left"></i> 记录之跨域理解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -339,6 +535,13 @@
 
 
           
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
 
         </div>
         
@@ -359,8 +562,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -436,6 +648,22 @@
         </div>
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis有哪些数据结构"><span class="nav-number">1.</span> <span class="nav-text">Redis有哪些数据结构?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用过Redis分布式锁么-它是怎么回事"><span class="nav-number">2.</span> <span class="nav-text">使用过Redis分布式锁么,它是怎么回事?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#假如-Redis里面有1亿个key-其中有10W个key是以某个固定的已知的前缀开头的-如果将它们全部找出来"><span class="nav-number">3.</span> <span class="nav-text">假如 Redis里面有1亿个key,其中有10W个key是以某个固定的已知的前缀开头的,如果将它们全部找出来.</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#使用过Redis做异步队列么-你是怎么用的"><span class="nav-number">4.</span> <span class="nav-text">使用过Redis做异步队列么?你是怎么用的?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如果有大量的key需要设置同一时间过期-怎么操作"><span class="nav-number">5.</span> <span class="nav-text">如果有大量的key需要设置同一时间过期,怎么操作?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis如何做持久化"><span class="nav-number">6.</span> <span class="nav-text">Redis如何做持久化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Pipeline有什么好处-为什么要用pipeline"><span class="nav-number">7.</span> <span class="nav-text">Pipeline有什么好处?为什么要用pipeline</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Redis的同步机制了解么"><span class="nav-number">8.</span> <span class="nav-text">Redis的同步机制了解么?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#是否使用过Redis集群-集群的原理是什么"><span class="nav-number">9.</span> <span class="nav-text">是否使用过Redis集群,集群的原理是什么?</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
@@ -577,6 +805,10 @@
 
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
 
   
 
