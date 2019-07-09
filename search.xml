@@ -122,7 +122,7 @@
     <url>%2F2018%2F10%2F24%2FPython%E7%BC%96%E7%A8%8B%E4%B9%8B%E5%B8%B8%E8%A7%81%E7%9A%84%E5%86%85%E7%BD%AE%E5%87%BD%E6%95%B0%2F</url>
     <content type="text"><![CDATA[Python当中有很多的内置函数，在写代码的过程当中如果能够灵活运用，可以提高开发效率,今天就总结一下～ 文章Python环境为Py3.x filter 语法123# 第一个参数：是一个函数名称# 第二个参数：是一个可迭代对象filter(function, sequence) 执行过程function函数会一个一个调用sequence里面的item参数，然后执行function(item)，最后将执行结果为True的元素组成新的迭代器返回 案例说明12345678910111213foo = [1, 2, 3, 4, 5, 6]new_foo = list(filter(lambda x: x &gt; 3, foo))print(new_foo) # [4, 5, 6]# 等同于def func(item): return item &gt; 3new_iterable = filter(func, foo)print(new_iterable) # &lt;filter object at 0x105e23748&gt;new_foo = list(new_iterable)print(new_foo) # [4, 5, 6] zip() 语法1zip(iterable1, iteable2, ...) 执行过程zip会将 所有iterable里面的 item元素按照索引顺序，一一打包成元组，最终将元组组合成列表 案例说明12345l1 = [1, 2, 3, 4]l2 = [9, 10, 11, 12]ret = list(zip(l1, l2))print(ret) # [(1, 9), (2, 10), (3, 11), (4, 12)] Map()语法1map(func, sequence) 执行过程func函数会遍历sequence里面所有的 item元素，逐个执行 func(item)，并将返回的结果组成新的 map对象返回 案例说明12345# 列表所有元素平方l1 = [1, 2, 3, 4]m = map(lambda x: x * x, l1)print(list(m)) reduce()语法12from functools import reducereduce(func, sequence) 执行过程func函数会先从 sequence中取出前2个 item元素执行 func(item1,item2),把拿到的返回结果当作下一次执行 func函数的第一个参数，然后再从 sequence中取第三个 item当执行的第二个参数，后面以此类推 案例说明123456# l1列表所有元素的乘积l1 = [1, 2, 3, 4, 5, 6]from functools import reduceret = reduce(lambda x, y: x * y, l1)print(ret) # 720]]></content>
       <categories>
-        <category>Standard-Library</category>
+        <category>Python-Standard-Library</category>
       </categories>
       <tags>
         <tag>zip</tag>
@@ -223,7 +223,7 @@
     <url>%2F2018%2F04%2F26%2Fcsv%E5%92%8Cjson%E4%B9%8B%E9%97%B4%E7%9A%84%E8%BD%AC%E6%8D%A2%2F</url>
     <content type="text"><![CDATA[CSV（逗号分隔值文件格式），是一种通用的，相对简单的文件格式，被用户、商业、科学广泛使用，最广泛的应用是在程序之间转移表格数据。 文章目标：了解CSV的基本操作以及json格式数据如何写入CSV文件并转换Excel 使用场景爬虫拿到的大部分都是json格式数据，但是客户或者数据分析员一般更需要Excel这种格式的数据 基本操作 1、导入模块 12# python3.X内置模块不需要下载import csv 2、创建csv写入对象 12345# 创建文件对象f = open('03-test.csv', 'w', encoding='utf-8')# 创建csv写入对象csv_writer = csv.writer(f) 3、写入数据 123csv_writer.writerow(['姓名', '年龄', '性别'])csv_writer.writerow(['强仔', '18', '男'])csv_writer.writerow(['彤彤', '17', '女']) 4、关闭文件 1f.close() json2csv 1、先转换json格式为python数据类型 12345import csvimport json# data.json 为事先准备好的json数据with open('data.json', 'r') as f: data_list = json.load(f) # 转换成pyton数据类型 2、创建csv对象 12f = open('data.csv', 'w', encoding='utf-8')csv_writer = csv.writer(f) 3、写入数据 1234567# 3.1 写入标题也就是字典的关键字keycsv_writer.writerow(data_list[0].keys())# 3.2 遍历写入字典元素valuesfor data in data_list: csv_writer.writerow(data.values())# 3.3 关闭文件句柄f.close() csv转Execl见链接：https://jingyan.baidu.com/article/3c343ff7faa59b0d3779633e.html]]></content>
       <categories>
-        <category>Standard-Library</category>
+        <category>Python-Standard-Library</category>
       </categories>
       <tags>
         <tag>csv</tag>
@@ -323,7 +323,7 @@
     <url>%2F2018%2F01%2F27%2FPython%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BA%BF%E7%A8%8B%E6%B1%A0%2F</url>
     <content type="text"><![CDATA[作用 计算机每次创建线程和销毁线程需要额外占用资源，频繁创建和销毁线程会导致计算机性能下降 处理过程 优点 重复利用线程，减少因为创建线程和销毁线程带来不必要的性能销毁 让程序更加的稳定，不会因为同一时间创建线程过多而导致内存不够使程序引发系统一系列的问题 代码实现流程 1、导入线程池模块 1from multiprocessing.dummy import Pool 2、创建线程池 1pools = Pool(5) 3、定义线程池要执行的任务 12def exec_task(): print('---要执行的任务---') 4、任务完成的回调函数 12def exec_task_finish(self, result): print('执行任务完成回调函数') 注意回调函数必须要有result参数，result参数表示执行任务代码的返回值 5、线程池执行任务 1pools.apply_async(self.exec_task,callback=self.exec_task_finish) 扩展进程池 12# 导入进程池库from multiprocessing import Pool 协程池 12345# 打补丁import gevent.monkeygevent.monkey.patch_all()# 导入协程池库from gevent.pool import Pool 备注，默认线程池里面的线程是守护线程，进程池&amp;协程池同理]]></content>
       <categories>
-        <category>Standard-Library</category>
+        <category>Python-Concurrent</category>
       </categories>
       <tags>
         <tag>线程池</tag>
@@ -345,7 +345,7 @@
     <url>%2F2017%2F11%2F27%2FPython%E7%BC%96%E7%A8%8B%E4%B9%8B%E9%98%9F%E5%88%97Queue%2F</url>
     <content type="text"><![CDATA[Queue Queue是Python标准库中的线程安全的队列(FIFO)实现，提供了一个适用于多线程编程的先进先出的数据结构，即队列，用来在生产者和消费者之间的信息传递。 二种队列形式 FIFO队列FIFO即First in First Out，先进先出。Queue提供了一个基本的FIFO容器，使用方法很简单。 参数：maxsize是一个整数，指明了队列中能存放的数据个数的上限。一旦达到上限，插入会导致堵塞，直到队列中的数据被消费掉。 案例 创建队列 12from queue import Queueq = Queue(maxsize=3) 存取数据 1234# 存放数据q.put('aaa')# 获取数据q.get() LIFO队列LIFO即Last in First Out,后进先出。与栈的类似，使用也很简单,maxsize用法同上 创建队列 12from queue import LifoQueueq = LifoQueue() 存放数据API语法同上 常用方法 task_done() 告诉队列该任务已经处理完毕，队列的unfinished_tasks的属性-1 join() 堵塞调用线程，直到队列中的所有任务被处理完毕，一旦有数据被加入队列，未完成的任务数就会增加。当消费者线程调用task_done()（意味着有消费者取得任务并完成任务），未完成的任务数就会减少。当未完成的任务数降到0（内部就是当队列的unfinished_tasks属性为0时），join()解除阻塞。 put(item[, block[, timeout]]) 将item放入队列中。 如果可选的参数block为True且timeout为空对象（默认的情况，阻塞调用，无超时）。 如果timeout是个正整数，阻塞调用进程最多timeout秒，如果一直无空空间可用，抛出Full异常（带超时的阻塞调用）。 如果block为False，如果有空闲空间可用将数据放入队列，否则立即抛出Full异常 get() 从队列中移除并返回一个数据。block跟timeout参数同put方法 其非阻塞方法为｀get_nowait()｀相当与get(False) empty() 如果队列为空，返回True，反之返回False]]></content>
       <categories>
-        <category>Standard-Library</category>
+        <category>Python-Standard-Library</category>
       </categories>
       <tags>
         <tag>Queue</tag>
@@ -356,7 +356,7 @@
     <url>%2F2017%2F11%2F26%2FPython%E7%BC%96%E7%A8%8B%E4%B9%8B%E7%BA%BF%E7%A8%8B%E5%AE%88%E6%8A%A4%E5%92%8C%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%E9%97%AE%E9%A2%98%2F</url>
     <content type="text"><![CDATA[什么是守护线程？什么是非守护线程？什么是线程同步？ 目标：搞懂Python中的上面三个问题 非守护线程 线程概念当一个进程启动以后，默认会产生一个主线程，因为线程是程序执行的最小单位，在Python当中线程默认情况下就是setDaemon(False)（非守护线程）,也就是主线程执行完自己的任务退出以后，子线程会继续执行自己的任务，不会随主线程退出受影响 案例1234567891011121314151617import threadingimport timedef run(): time.sleep(2) # 延时等待2s print('---子线程结束执行---')def main(): t1 = threading.Thread(target=run) t1.start() print('---主线程结束执行---')if __name__ == '__main__': main() 输出 12---主线程结束执行------子线程结束执行--- 总结:非守护线程，子线程不随主线程结束而立马结束，而是继续执行 守护线程 当守护线程时，子线程会守护主线程，主线程一旦退出，全部子线程都会被强制终止 案例123456789101112131415161718import threadingimport timedef run(): time.sleep(2) print('---子线程结束---')def main(): t1 = threading.Thread(target=run) t1.setDaemon(True) # 设置子线程守护主线程 t1.start() print('---主线程结束---')if __name__ == '__main__': main() 输出 1---主线程结束--- 线程同步 线程同步就是让线程处于堵塞状态，等待子线程执行以后主线程再执行，也可以设置堵塞时间 案例（主线程堵塞，等待子线程结束以后再执行）123456789101112131415161718import threadingimport timedef run(): time.sleep(2) print('---子线程结束---')def main(): t1 = threading.Thread(target=run) t1.start() t1.join() # 主线程堵塞 print('---主线程结束---')if __name__ == '__main__': main() 输出 12---子线程结束------主线程结束--- 案例（主线程堵塞1s，主线程继续执行）123456789101112131415161718import threadingimport timedef run(): time.sleep(2) print('---子线程结束---')def main(): t1 = threading.Thread(target=run) t1.start() t1.join(timeout=1) # 主线程堵塞1s print('---主线程结束---')if __name__ == '__main__': main() 输出 12---主线程结束------子线程结束--- 案例（主线程堵塞1s，然后守护主线程）12345678910111213141516171819import threadingimport timedef run(): time.sleep(2) print('---子线程结束---')def main(): t1 = threading.Thread(target=run) t1.setDaemon(True) # 守护主线程 t1.start() t1.join(timeout=1) # 主线程堵塞1s print('---主线程结束---')if __name__ == '__main__': main() 输出 1---主线程结束--- 主线程等待1s后主线程结束，子线程随着主线程结束而结束 总结 1、为了保证程序能够正常的运行，主线程/主进程都会等所有的子进程/子线程执行完成以后再销毁。 2、当主进程内部非守护进程和守护进程同时存在时 主进程执行结束以后会先强制退出守护进程，再等非守护进程结束以后再销毁 3、当主线程内部非守护线程和守护线程同时存在时 主线程执行结束以后会先等待所有的非守护线程结束，再强制退出守护线程，最后销毁]]></content>
       <categories>
-        <category>Standard-Library</category>
+        <category>Python-Concurrent</category>
       </categories>
       <tags>
         <tag>线程</tag>
