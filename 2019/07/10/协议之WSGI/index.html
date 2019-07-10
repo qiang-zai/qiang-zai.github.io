@@ -1,0 +1,1428 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="简介Python Web开发中,后台服务端程序可以分为两个部分,1.是服务器程序 2.是应用程序.服务器通常是TCP服务器,负责处理来自客户端(一般都是浏览器/APP)请求的整理/分发/响应.2.后者负责具体的逻辑处理.这时候为了方便应用程序的开发,我们把常用的功能封装起来,成为各种Web开发框架,Django/Flask/Tornado.不同的框架有不同的开发方式,但是开发出来的应用程序都需要和">
+<meta property="og:type" content="article">
+<meta property="og:title" content="协议之WSGI">
+<meta property="og:url" content="http://qiangzai.site/2019/07/10/协议之WSGI/index.html">
+<meta property="og:site_name" content="LQ | 归来仍是少年">
+<meta property="og:description" content="简介Python Web开发中,后台服务端程序可以分为两个部分,1.是服务器程序 2.是应用程序.服务器通常是TCP服务器,负责处理来自客户端(一般都是浏览器/APP)请求的整理/分发/响应.2.后者负责具体的逻辑处理.这时候为了方便应用程序的开发,我们把常用的功能封装起来,成为各种Web开发框架,Django/Flask/Tornado.不同的框架有不同的开发方式,但是开发出来的应用程序都需要和">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201907/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A8%8B%E5%BA%8F%26%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F.png">
+<meta property="og:updated_time" content="2019-07-10T02:55:22.566Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="协议之WSGI">
+<meta name="twitter:description" content="简介Python Web开发中,后台服务端程序可以分为两个部分,1.是服务器程序 2.是应用程序.服务器通常是TCP服务器,负责处理来自客户端(一般都是浏览器/APP)请求的整理/分发/响应.2.后者负责具体的逻辑处理.这时候为了方便应用程序的开发,我们把常用的功能封装起来,成为各种Web开发框架,Django/Flask/Tornado.不同的框架有不同的开发方式,但是开发出来的应用程序都需要和">
+<meta name="twitter:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201907/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A8%8B%E5%BA%8F%26%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://qiangzai.site/2019/07/10/协议之WSGI/">
+
+
+
+
+
+  <title>协议之WSGI | LQ | 归来仍是少年</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LQ | 归来仍是少年</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Life is short. I use Python</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2019/07/10/协议之WSGI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="强仔">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LQ | 归来仍是少年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">协议之WSGI</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-10T22:00:11+08:00">
+                2019-07-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Web/" itemprop="url" rel="index">
+                    <span itemprop="name">Web</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/10/协议之WSGI/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/10/协议之WSGI/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/07/10/协议之WSGI/" class="leancloud_visitors" data-flag-title="协议之WSGI">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.5k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  10 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h4><p><code>Python Web</code>开发中,后台服务端程序可以分为两个部分,1.是服务器程序 2.是应用程序.服务器通常是<code>TCP</code>服务器,负责处理来自客户端(一般都是浏览器/APP)请求的整理/分发/响应.2.后者负责具体的逻辑处理.这时候为了方便应用程序的开发,我们把常用的功能封装起来,成为各种Web开发框架,<code>Django/Flask/Tornado</code>.不同的框架有不同的开发方式,但是开发出来的应用程序都需要和服务器程序配合,才能算是完整的后台服务.</p>
+<a id="more"></a>
+<p>如果服务器程序和应用程序之间没有标准的协议,我们在开发一套应用程序的时候是不是要针对某个具体的服务器程序来写,而不能随便来写.这时候我们就需要规定出一套特定协议,将应用程序和服务器程序解耦出来.而 <code>WSGI</code>就是这个作用.Python Web开发中,这套标准协议就是 <code>The Web Server Gateway Interface</code>,即 WSGI,这套标准在官方的 <a href="https://www.python.org/dev/peps/pep-0333/" target="_blank" rel="noopener">PEP 333</a>中描述.</p>
+<p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201907/%E6%9C%8D%E5%8A%A1%E5%99%A8%E7%A8%8B%E5%BA%8F%26%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F.png" alt></p>
+<h4 id="WSGI具体是什么"><a href="#WSGI具体是什么" class="headerlink" title="WSGI具体是什么?"></a>WSGI具体是什么?</h4><p><code>WSGI</code>是服务器程序与应用程序的一个约定,它规定了双方各自需要实现什么接口,提供了什么功能,以便二者能够配合使用.WSGI 不能规定的太复杂，否则对已有的服务器来说，实现起来会困难，不利于WSGI的普及。同时WSGI也不能规定的太多，例如cookie处理就没有在WSGI中规定，这是为了给框架最大的灵活性。要知道WSGI最终的目的是为了方便服务器与应用程序配合使用，而不是成为一个Web框架的标准。</p>
+<h4 id="WSGI-应用程序"><a href="#WSGI-应用程序" class="headerlink" title="WSGI-应用程序"></a>WSGI-应用程序</h4><p>WSGI规定:</p>
+<ul>
+<li>1.应用程序需要是一个可调用的对象</li>
+</ul>
+<p>我们看下<a href="https://www.python.org/dev/peps/pep-3333/" target="_blank" rel="noopener">官方文档</a>给出的定义</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">HELLO_WORLD = <span class="string">b"Hello world!\n"</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># callable function</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">simple_app</span><span class="params">(environ, start_response)</span>:</span></span><br><span class="line">    <span class="string">"""Simplest possible application object"""</span></span><br><span class="line">    status = <span class="string">'200 OK'</span></span><br><span class="line">    response_headers = [(<span class="string">'Content-type'</span>, <span class="string">'text/plain'</span>)]</span><br><span class="line">    start_response(status, response_headers)</span><br><span class="line">    <span class="keyword">return</span> [HELLO_WORLD]</span><br><span class="line"></span><br><span class="line"><span class="comment"># callable class</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">AppClass</span>:</span></span><br><span class="line">    <span class="string">"""Produce the same output, but using a class</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    (Note: 'AppClass' is the "application" here, so calling it</span></span><br><span class="line"><span class="string">    returns an instance of 'AppClass', which is then the iterable</span></span><br><span class="line"><span class="string">    return value of the "application callable" as required by</span></span><br><span class="line"><span class="string">    the spec.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    If we wanted to use *instances* of 'AppClass' as application</span></span><br><span class="line"><span class="string">    objects instead, we would have to implement a '__call__'</span></span><br><span class="line"><span class="string">    method, which would be invoked to execute the application,</span></span><br><span class="line"><span class="string">    and we would need to create an instance for use by the</span></span><br><span class="line"><span class="string">    server or gateway.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, environ, start_response)</span>:</span></span><br><span class="line">        self.environ = environ</span><br><span class="line">        self.start = start_response</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__iter__</span><span class="params">(self)</span>:</span></span><br><span class="line">        status = <span class="string">'200 OK'</span></span><br><span class="line">        response_headers = [(<span class="string">'Content-type'</span>, <span class="string">'text/plain'</span>)]</span><br><span class="line">        self.start(status, response_headers)</span><br><span class="line">        <span class="keyword">yield</span> HELLO_WORLD</span><br><span class="line"></span><br><span class="line"><span class="comment"># callable object</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ApplicationObj</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, environ, start_response)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> [HELL_WORLD]</span><br></pre></td></tr></table></figure>
+<p>翻译过来就是:</p>
+<ul>
+<li>应用程序可以是函数</li>
+<li>可以是一个 <code>instance</code>实例,实例的类需要实现 <code>__call__</code>方法</li>
+<li>可以是一个 <code>Class</code>类,内部实现了 <code>__iter__</code>方法.</li>
+</ul>
+<p>同时, <code>WSGI</code>规定</p>
+<ul>
+<li><p>2.可调用对象需要接收两个参数 <code>environ</code>和 <code>start_response</code></p>
+</li>
+<li><p>3.可调用对象要返回一个值,这个值是可迭代的</p>
+</li>
+</ul>
+<p>这时候了解Python Web开发的可能就会讲了,平时我们写的应用程序并不是这个样子的,应该是下面这种</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Index</span><span class="params">(View)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> <span class="string">'Hello world'</span></span><br></pre></td></tr></table></figure>
+<p>这是因为框架已经帮我们把WSGI规定的一些东西封装起来,我们平时用框架时看不到,只需要直接实现我们的逻辑，再返回一个值就好了。其它的东西框架帮我们做好了。这也是框架的价值所在，把常用的东西封装起来，让使用者只需要关注最重要的东西。</p>
+<p>比如 <code>Django</code>框架的 <code>WSGI Application</code> 就采用的 <code>callable object</code>的形式</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># lib/python3.7/site-packages/django/core/handlers/wsgi.py 146 line</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">WSGIHandler</span><span class="params">(base.BaseHandler)</span>:</span></span><br><span class="line">    request_class = WSGIRequest</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">        super(WSGIHandler, self).__init__(*args, **kwargs)</span><br><span class="line">        self.load_middleware()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__call__</span><span class="params">(self, environ, start_response)</span>:</span></span><br><span class="line">        set_script_prefix(get_script_name(environ))</span><br><span class="line">        signals.request_started.send(sender=self.__class__, environ=environ)</span><br><span class="line">        request = self.request_class(environ)</span><br><span class="line">        response = self.get_response(request)</span><br><span class="line"></span><br><span class="line">        response._handler_class = self.__class__</span><br><span class="line"></span><br><span class="line">        status = <span class="string">'%d %s'</span> % (response.status_code, response.reason_phrase)</span><br><span class="line">        response_headers = [(str(k), str(v)) <span class="keyword">for</span> k, v <span class="keyword">in</span> response.items()]</span><br><span class="line">        <span class="keyword">for</span> c <span class="keyword">in</span> response.cookies.values():</span><br><span class="line">            response_headers.append((str(<span class="string">'Set-Cookie'</span>), str(c.output(header=<span class="string">''</span>))))</span><br><span class="line">        start_response(force_str(status), response_headers)</span><br><span class="line">        <span class="keyword">if</span> getattr(response, <span class="string">'file_to_stream'</span>, <span class="literal">None</span>) <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span> <span class="keyword">and</span> environ.get(<span class="string">'wsgi.file_wrapper'</span>):</span><br><span class="line">            response = environ[<span class="string">'wsgi.file_wrapper'</span>](response.file_to_stream)</span><br><span class="line">        <span class="keyword">return</span> response</span><br></pre></td></tr></table></figure>
+<h4 id="WSGI-服务器程序"><a href="#WSGI-服务器程序" class="headerlink" title="WSGI-服务器程序"></a>WSGI-服务器程序</h4><p>服务器程序会在每次客户端的请求传来时,调用我们写好的应用程序,并将处理好的结果(<code>response</code>)返回客户端.</p>
+<ul>
+<li>4.服务器程序需要调用应用程序 <code>Application</code></li>
+</ul>
+<p>服务器程序大概是这个样子</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 具体见PEP333规范</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run_with_cgi</span><span class="params">(application)</span>:</span></span><br><span class="line">    environ = &#123;&#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">(data)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start_response</span><span class="params">(status, response_headers, exc_info=None)</span>:</span></span><br><span class="line">       <span class="keyword">pass</span></span><br><span class="line">	<span class="comment"># 调用应用程序</span></span><br><span class="line">    result = application(environ, start_response)</span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">for</span> data <span class="keyword">in</span> result:</span><br><span class="line">            <span class="keyword">if</span> data:    <span class="comment"># don't send headers until body appears</span></span><br><span class="line">                write(data)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> headers_sent:</span><br><span class="line">            write(<span class="string">''</span>)   <span class="comment"># send headers now if body was empty</span></span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        <span class="keyword">if</span> hasattr(result, <span class="string">'close'</span>):</span><br><span class="line">            result.close()</span><br></pre></td></tr></table></figure>
+<p>这里可以看出服务器程序是如何与应用程序配合完成用户请求的。</p>
+<p>WSGI规定了应用程序需要一个可调用对象，有两个参数，返回一个可迭代对象。在服务器 程序中，针对这几个规定，做了以下几件事：</p>
+<ul>
+<li>把应用程序需要的两个参数设置好</li>
+<li>调用应用程序</li>
+<li>迭代访问应用程序的返回结果，并将其传回客户端</li>
+</ul>
+<h4 id="WSGI-Middleware"><a href="#WSGI-Middleware" class="headerlink" title="WSGI-Middleware"></a>WSGI-Middleware</h4><p>有些功能可能介于服务器程序和应用程序之间,例如，服务器拿到了客户端请求的URL, 不同的URL需要交由不同的函数处理，这个功能叫做 URL Routing，这个功能就可以放在二者中间实现，这个中间层就是 middleware。</p>
+<p>有点类似于语法糖 <strong>装饰器</strong>,</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># URL Routing middleware</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">urlrouting</span><span class="params">(url_app_mapping)</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">midware_app</span><span class="params">(environ, start_response)</span>:</span></span><br><span class="line">        url = environ[<span class="string">'PATH_INFO'</span>]</span><br><span class="line">        app = url_app_mapping[url]</span><br><span class="line"> </span><br><span class="line">        result = app(environ, start_response)</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> midware_app</span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">中间件作用说明:</span></span><br><span class="line"><span class="string">服务器拿到了客户端请求的URL, 不同的URL需要交由不同的函数处理，这个功能叫做 URL Routing，这个功能就可以放在二者中间实现，这个中间层就是 middleware。</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h4 id="WSGI-详解"><a href="#WSGI-详解" class="headerlink" title="WSGI-详解"></a>WSGI-详解</h4><h5 id="应用程序"><a href="#应用程序" class="headerlink" title="应用程序"></a>应用程序</h5><ul>
+<li>应用程序是可调用对象(函数/类/类的实例) <code>application(environ, start_response)</code></li>
+<li>可调用对象有两个位置参数(注意是位置参数不是关键字参数)</li>
+</ul>
+<blockquote>
+<p>2个参数名称不是固定的,可以随便起,不过为了表达清楚所以一般都叫 <code>environ</code>和 <code>start_response</code></p>
+</blockquote>
+<ul>
+<li><p>第一个参数 <code>environ</code>是<code>Dict</code>字典对象,参数包含WSGI需要的一些变量</p>
+</li>
+<li><p>第二个参数 <code>start_response</code>参数是一个可调用对象,也有两个位置参数和一个可选参数.</p>
+<ul>
+<li><p><code>start_response(status, response_headers, exc_info=None)</code></p>
+<ul>
+<li><code>status</code>是状态码:比如201,404…..</li>
+<li><code>response_headers</code>参数是一个list类型,内容[header_name,header_value],</li>
+<li><code>exc_info</code>主要异常处理的时候使用,默认是None</li>
+</ul>
+</li>
+<li><p><code>start_response</code>必须返回一个可调用对象: <code>write(body_data)</code></p>
+</li>
+</ul>
+</li>
+<li><p>应用程序必须返回一个可迭代对象</p>
+</li>
+<li><p>应用程序必须在第一次返回可迭代数据之前调用 <code>start_response</code> 方法。<br>这是因为可迭代数据是 返回数据的 <code>body</code> 部分，在它返回之前，需要使用 <code>start_response</code> 返回 <code>response_headers</code> 响应头数据,通过响应头(response_headers)+响应体(body)拼接返回给客户端。</p>
+</li>
+</ul>
+<h5 id="服务器程序"><a href="#服务器程序" class="headerlink" title="服务器程序"></a>服务器程序</h5><ul>
+<li>服务器必须将可迭代对象的内容传递给客户端，可迭代对象会产生bytestrings，必须完全完成每个bytestring后才能请求下一个。</li>
+<li>假设result 为应用程序的返回的可迭代对象。如果len(result) 调用成功，那么result必须是可累积的。<br>如果result有close方法，那么每次完成对请求的处理时，必须调用它，无论这次请求正常完成，还是遇到了错误。</li>
+<li>服务器程序禁止使用可迭代对象的其它属性，除非这个可迭代对象是一个特殊类的实例，这个类会被 wsgi.file_wrapper定义。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># server programmed</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">run</span><span class="params">(application)</span>:</span></span><br><span class="line">    environ = &#123;&#125;</span><br><span class="line"> </span><br><span class="line">    <span class="comment"># set environ</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">write</span><span class="params">(data)</span>:</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">start_response</span><span class="params">(status, response_headers, exc_info=None)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> write</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        result = application(environ, start_response)</span><br><span class="line">    <span class="keyword">finally</span>:</span><br><span class="line">        <span class="keyword">if</span> hasattr(result, <span class="string">'close'</span>):</span><br><span class="line">            result.close()</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">if</span> hasattr(result, <span class="string">'__len__'</span>):</span><br><span class="line">        <span class="comment"># result must be accumulated</span></span><br><span class="line">        <span class="keyword">pass</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line">    <span class="keyword">for</span> data <span class="keyword">in</span> result:</span><br><span class="line">        write(data)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">HELLO_WORLD = <span class="string">b"Hello world!\n"</span></span><br><span class="line"> </span><br><span class="line"> </span><br><span class="line"><span class="comment"># callable function</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">application</span><span class="params">(environ, start_response)</span>:</span></span><br><span class="line">    status = <span class="string">'200 OK'</span></span><br><span class="line">    response_headers = [(<span class="string">'Content-type'</span>, <span class="string">'text/plain'</span>)]</span><br><span class="line">    start_response(status, response_headers)</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">return</span> [HELLO_WORLD]</span><br></pre></td></tr></table></figure>
+<h5 id="environ变量"><a href="#environ变量" class="headerlink" title="environ变量"></a>environ变量</h5><p>environ 变量需要包含 CGI 环境变量，它们在The Common Gateway Interface Specification 中定义，下面列出的变量必须包含在 enciron变量中：</p>
+<ul>
+<li><code>REQUEST_METHOD</code><br>HTTP 请求方法，例如 “GET”, “POST”</li>
+<li><code>SCRIPT_NAME</code><br>URL 路径的起始部分对应的应用程序对象，如果应用程序对象对应服务器的根，那么这个值可以为空字符串</li>
+<li><code>PATH_INFO</code><br>URL 路径除了起始部分后的剩余部分，用于找到相应的应用程序对象，如果请求的路径就是根路径，这个值为空字符串</li>
+<li><code>QUERY_STRING</code><br>URL路径中 ? 后面的部分</li>
+<li><code>CONTENT_TYPE</code><br>HTTP 请求中的 Content-Type 部分</li>
+<li><code>CONTENT_LENGTH</code><br>HTTP 请求中的Content-Lengh 部分</li>
+<li><code>SERVER_NAME, SERVER_PORT</code><br>与 SCRIPT_NAME，PATH_INFO 共同构成完整的 URL，它们永远不会为空。但是，如果 HTTP_HOST 存在的话，当构建 URL 时， HTTP_HOST优先于SERVER_NAME。</li>
+<li><code>SERVER_PROTOCOL</code><br>客户端使用的协议，例如 “HTTP/1.0”, “HTTP/1.1”, 它决定了如何处理 HTTP 请求的头部。这个名字其实应该叫REQUEST_PROTOCOL，因为它表示的是客户端请求的协议，而不是服务端响应的协议。但是为了和CGI兼容，我们只好叫这个名字了。 *HTTP_ Variables<br>这个是一个系列的变量名，都以HTTP开头，对应客户端支持的HTTP请求的头部信息。</li>
+</ul>
+<p>WSGI在Python标准库当中有一个实例—&gt; <code>wsgiref</code>,我们可以看下这些变量具体内容</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">REQUEST_METHOD = <span class="string">'GET'</span></span><br><span class="line">SCRIPT_NAME = <span class="string">''</span></span><br><span class="line">PATH_INFO = <span class="string">'/xyz'</span></span><br><span class="line">QUERY_STRING = <span class="string">'abc'</span></span><br><span class="line">CONTENT_TYPE = <span class="string">'text/plain'</span></span><br><span class="line">CONTENT_LENGTH = <span class="string">''</span></span><br><span class="line">SERVER_NAME = <span class="string">'minix-ubuntu-desktop'</span></span><br><span class="line">SERVER_PORT = <span class="string">'8000'</span></span><br><span class="line">SERVER_PROTOCOL = <span class="string">'HTTP/1.1'</span></span><br><span class="line"> </span><br><span class="line">HTTP_ACCEPT = <span class="string">'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8'</span></span><br><span class="line">HTTP_ACCEPT_ENCODING = <span class="string">'gzip,deflate,sdch'</span></span><br><span class="line">HTTP_ACCEPT_LANGUAGE = <span class="string">'en-US,en;q=0.8,zh;q=0.6,zh-CN;q=0.4,zh-TW;q=0.2'</span></span><br><span class="line">HTTP_CONNECTION = <span class="string">'keep-alive'</span></span><br><span class="line">HTTP_HOST = <span class="string">'localhost:8000'</span></span><br><span class="line">HTTP_USER_AGENT = <span class="string">'Mozilla/5.0 (X11; Linux i686) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/32.0.1700.77 Safari/537.36'</span></span><br></pre></td></tr></table></figure>
+<h5 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h5><p>HTTP 不支持 Unicode, 所有编码/解码都必须由应用程序完成，所有传递给或者来自server的字符串都必须是 <code>str</code> 或者<code>bytes</code>类型，而不是<code>unicode</code>。</p>
+<p>注意:WSGI中的 <code>bytestrings</code>在Python3中指 <code>bytes</code>,在Python2中指 <code>str</code></p>
+<h4 id="参考列表"><a href="#参考列表" class="headerlink" title="参考列表"></a>参考列表</h4><p><a href="https://blog.csdn.net/on_1y/article/details/18803563" target="_blank" rel="noopener">WSGI简介</a></p>
+<p><a href="https://pypi.org/project/wsgiref/" target="_blank" rel="noopener">Wsgiref文档</a></p>
+<p><a href="https://www.python.org/dev/peps/pep-3333/" target="_blank" rel="noopener">PEP333</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/09/DRF-Exception-Handler-源码分析/" rel="next" title="DRF-Exception-Handler&源码分析">
+                <i class="fa fa-chevron-left"></i> DRF-Exception-Handler&源码分析
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">强仔</p>
+              <p class="site-description motion-element" itemprop="description">Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">44</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/qiang-zai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:qiangzai996@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WSGI具体是什么"><span class="nav-number">2.</span> <span class="nav-text">WSGI具体是什么?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WSGI-应用程序"><span class="nav-number">3.</span> <span class="nav-text">WSGI-应用程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WSGI-服务器程序"><span class="nav-number">4.</span> <span class="nav-text">WSGI-服务器程序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WSGI-Middleware"><span class="nav-number">5.</span> <span class="nav-text">WSGI-Middleware</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WSGI-详解"><span class="nav-number">6.</span> <span class="nav-text">WSGI-详解</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#应用程序"><span class="nav-number">6.1.</span> <span class="nav-text">应用程序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#服务器程序"><span class="nav-number">6.2.</span> <span class="nav-text">服务器程序</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#environ变量"><span class="nav-number">6.3.</span> <span class="nav-text">environ变量</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Unicode"><span class="nav-number">6.4.</span> <span class="nav-text">Unicode</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#参考列表"><span class="nav-number">7.</span> <span class="nav-text">参考列表</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">强仔</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'mjE5WlYCSpcWonsNqQrIBcOA-gzGzoHsz',
+        appKey: 'W34u68g6zaSw4gfHaWVFAKlA',
+        placeholder: '欢迎评论交流',
+        avatar:'mm',
+        guest_info:['nick'], // 评论者只需要提供评论的昵称即可
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("mjE5WlYCSpcWonsNqQrIBcOA-gzGzoHsz", "W34u68g6zaSw4gfHaWVFAKlA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>
