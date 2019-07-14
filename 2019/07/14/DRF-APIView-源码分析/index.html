@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="APIView,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="DjangoRestFramework为了方便进行视图编写,REST框架提供了一个APIView类，它继承了Django的View类。接下来具体介绍一下APIView都做了哪些进一步封装">
+<meta name="keywords" content="APIView">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DRF-APIView&amp;源码分析">
+<meta property="og:url" content="http://qiangzai.site/2019/07/14/DRF-APIView-源码分析/index.html">
+<meta property="og:site_name" content="LQ | 归来仍是少年">
+<meta property="og:description" content="DjangoRestFramework为了方便进行视图编写,REST框架提供了一个APIView类，它继承了Django的View类。接下来具体介绍一下APIView都做了哪些进一步封装">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-14T11:16:56.359Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DRF-APIView&amp;源码分析">
+<meta name="twitter:description" content="DjangoRestFramework为了方便进行视图编写,REST框架提供了一个APIView类，它继承了Django的View类。接下来具体介绍一下APIView都做了哪些进一步封装">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://qiangzai.site/2019/07/14/DRF-APIView-源码分析/">
+
+
+
+
+
+  <title>DRF-APIView&源码分析 | LQ | 归来仍是少年</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LQ | 归来仍是少年</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Life is short. I use Python</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2019/07/14/DRF-APIView-源码分析/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="强仔">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LQ | 归来仍是少年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DRF-APIView&源码分析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-14T13:24:43+08:00">
+                2019-07-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django-Rest-Framework/" itemprop="url" rel="index">
+                    <span itemprop="name">Django-Rest-Framework</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/14/DRF-APIView-源码分析/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/14/DRF-APIView-源码分析/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/07/14/DRF-APIView-源码分析/" class="leancloud_visitors" data-flag-title="DRF-APIView&源码分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2.3k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  9 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><code>DjangoRestFramework</code>为了方便进行视图编写,REST框架提供了一个APIView类，它继承了Django的View类。接下来具体介绍一下APIView都做了哪些进一步封装</p>
+<a id="more"></a>
+<h4 id="APIView-VS-View"><a href="#APIView-VS-View" class="headerlink" title="APIView VS View"></a><code>APIView</code> VS <code>View</code></h4><p><code>APIView</code>类与Django原始的<code>View</code>的不同之处在于:</p>
+<ul>
+<li>传递给类视图处理方法的<code>request</code>参数是 <code>REST</code>框架的请求实例,而不是 <code>Django</code>的 <code>HttpRequest</code>实例;</li>
+<li>处理类视图响应使用的是REST框架的响应<code>Response</code>,而不是 <code>Django</code>的 <code>HttpResponse</code>,类视图配置内容协商<code>content_negotiation_class</code>并在响应上设置对应的渲染器<code>renderer_classes</code>;</li>
+<li>任何APIException异常都将被捕获并调解为适当的响应。</li>
+<li>传入的请求将经过身份认证，并在将请求发送到处理程序方法之前运行适当的权限和分流检查。</li>
+</ul>
+<p>使用<code>APIVIew</code>类与使用常规视图类<code>VIew</code>非常相似,通过传入的请求被分派到适当的处理程序方法,常用的有:get/post/delete/put.</p>
+<h4 id="案例-For-example"><a href="#案例-For-example" class="headerlink" title="案例:For example"></a>案例:For example</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.views <span class="keyword">import</span> APIView</span><br><span class="line"><span class="keyword">from</span> rest_framework.response <span class="keyword">import</span> Response</span><br><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> authentication, permissions</span><br><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListUsers</span><span class="params">(APIView)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    View to list all users in the system.</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">    * Requires token authentication.</span></span><br><span class="line"><span class="string">    * Only admin users are able to access this view.</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 配置Token认证,默认的全局配是SessionAuthentication/BasicAuthentication</span></span><br><span class="line">    authentication_classes = (authentication.TokenAuthentication,)</span><br><span class="line">    <span class="comment"># 权限只有管理员用户才能登陆,还有其他(AllowAny/IsAuthenticated/IsAuthenticastedOrReadOnly等等)</span></span><br><span class="line">    permission_classes = (permissions.IsAdminUser,)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, format=None)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Return a list of all users.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        usernames = [user.username <span class="keyword">for</span> user <span class="keyword">in</span> User.objects.all()]</span><br><span class="line">        <span class="keyword">return</span> Response(usernames)</span><br></pre></td></tr></table></figure>
+<h4 id="类属性相关配置"><a href="#类属性相关配置" class="headerlink" title="类属性相关配置"></a>类属性相关配置</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 导入DRF默认的配置 源码位置`/lib/python3.7/site-packages/rest_framework/views.py` 102 line</span></span><br><span class="line"><span class="keyword">from</span> rest_framework.settings <span class="keyword">import</span> api_settings</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">APIView</span><span class="params">(View)</span>:</span></span><br><span class="line">   <span class="string">'''类视图相关的一些配置,可以从全局当中获取也可以通过重写类属性来实现'''</span></span><br><span class="line">    renderer_classes = api_settings.DEFAULT_RENDERER_CLASSES  <span class="comment"># 渲染器类</span></span><br><span class="line">    parser_classes = api_settings.DEFAULT_PARSER_CLASSES  <span class="comment"># 解析器类</span></span><br><span class="line">    authentication_classes = api_settings.DEFAULT_AUTHENTICATION_CLASSES  <span class="comment"># 认证器类</span></span><br><span class="line">    throttle_classes = api_settings.DEFAULT_THROTTLE_CLASSES  <span class="comment"># 分流器类</span></span><br><span class="line">    permission_classes = api_settings.DEFAULT_PERMISSION_CLASSES  <span class="comment"># 权限器类</span></span><br><span class="line">    content_negotiation_class = api_settings.DEFAULT_CONTENT_NEGOTIATION_CLASS  <span class="comment"># 内容协商</span></span><br><span class="line">    metadata_class = api_settings.DEFAULT_METADATA_CLASS  <span class="comment"># 响应格式类</span></span><br><span class="line">    versioning_class = api_settings.DEFAULT_VERSIONING_CLASS <span class="comment"># API版本控制类</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># Allow dependency injection of other settings to make testing easier.</span></span><br><span class="line">    settings = api_settings  <span class="comment"># 配置文件</span></span><br><span class="line"></span><br><span class="line">    schema = DefaultSchema()  <span class="comment"># API测试主题</span></span><br></pre></td></tr></table></figure>
+<p>以下属性控制API视图的可插入方面。。</p>
+<ul>
+<li><code>renderer_classes</code></li>
+<li><code>parser_classes</code></li>
+<li><code>authenticastion_classes</code></li>
+<li><code>throttle_classes</code></li>
+<li><code>permission_classes</code></li>
+<li><code>content_negotiation_class</code></li>
+</ul>
+<h4 id="内置方法"><a href="#内置方法" class="headerlink" title="内置方法"></a>内置方法</h4><p>REST框架使用以下方法实例化各种可插入的API方法。通常不需要覆盖这些方法。</p>
+<ul>
+<li><code>get_renderers(self)</code></li>
+<li><code>get_parsers(self)</code></li>
+<li><code>get_authenticators(self)</code></li>
+<li><code>get_throttles(self)</code></li>
+<li><code>get_permissions(self)</code></li>
+<li><code>get_content_negotiator(self)</code></li>
+<li><code>get_exception_handler(self)</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># API policy instantiation methods</span></span><br><span class="line"><span class="comment"># API策略实例化方法</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_renderers</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    实例化并返回此视图可以使用的渲染器列表。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">return</span> [renderer() <span class="keyword">for</span> renderer <span class="keyword">in</span> self.renderer_classes]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_parsers</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    实例化并返回此视图可以使用的解析器列表。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">return</span> [parser() <span class="keyword">for</span> parser <span class="keyword">in</span> self.parser_classes]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_authenticators</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    实例化并返回此视图可以使用的认证器列表。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">return</span> [auth() <span class="keyword">for</span> auth <span class="keyword">in</span> self.authentication_classes]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_permissions</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    实例化并返回此视图所需的权限列表。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">return</span> [permission() <span class="keyword">for</span> permission <span class="keyword">in</span> self.permission_classes]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_throttles</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    实例化并返回此视图使用的分流器列表。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">return</span> [throttle() <span class="keyword">for</span> throttle <span class="keyword">in</span> self.throttle_classes]</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_content_negotiator</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    实例化并返回要使用的内容协商类。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> getattr(self, <span class="string">'_negotiator'</span>, <span class="literal">None</span>):</span><br><span class="line">        self._negotiator = self.content_negotiation_class()</span><br><span class="line">    <span class="keyword">return</span> self._negotiator</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_exception_handler</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    返回此视图使用的异常处理程序。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">return</span> self.settings.EXCEPTION_HANDLER</span><br></pre></td></tr></table></figure>
+<h4 id="API策略实现方法"><a href="#API策略实现方法" class="headerlink" title="API策略实现方法"></a>API策略实现方法</h4><blockquote>
+<p>在请求分派到处理程序方法之前，将调用以下方法。</p>
+</blockquote>
+<ul>
+<li><code>check_permissions(self, reqeust)</code></li>
+<li><code>check_throttles(self, request)</code></li>
+<li><code>perform_content_negotiation(self, request,force=False)</code></li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># API policy implementation methods</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">perform_content_negotiation</span><span class="params">(self, request, force=False)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    确定要使用哪种呈现器和媒体类型来呈现响应。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    renderers = self.get_renderers()</span><br><span class="line">    conneg = self.get_content_negotiator()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="keyword">return</span> conneg.select_renderer(request, renderers, self.format_kwarg)</span><br><span class="line">    <span class="keyword">except</span> Exception:</span><br><span class="line">        <span class="keyword">if</span> force:</span><br><span class="line">            <span class="keyword">return</span> (renderers[<span class="number">0</span>], renderers[<span class="number">0</span>].media_type)</span><br><span class="line">        <span class="keyword">raise</span></span><br><span class="line">        </span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_permissions</span><span class="params">(self, request)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    检查该请求是否应该被允许。</span></span><br><span class="line"><span class="string">    如果请求不被允许，则抛出适当的异常。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">for</span> permission <span class="keyword">in</span> self.get_permissions():</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> permission.has_permission(request, self):</span><br><span class="line">            self.permission_denied(</span><br><span class="line">                request, message=getattr(permission, <span class="string">'message'</span>, <span class="literal">None</span>)</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_object_permissions</span><span class="params">(self, request, obj)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    检查是否应该允许给定对象的请求。</span></span><br><span class="line"><span class="string">    如果请求不被允许，则抛出适当的异常。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">for</span> permission <span class="keyword">in</span> self.get_permissions():</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> permission.has_object_permission(request, self, obj):</span><br><span class="line">            self.permission_denied(</span><br><span class="line">                request, message=getattr(permission, <span class="string">'message'</span>, <span class="literal">None</span>)</span><br><span class="line">            )</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">check_throttles</span><span class="params">(self, request)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    检查请求是否应该被分流。</span></span><br><span class="line"><span class="string">    如果请求被分流，则引发适当的异常。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="keyword">for</span> throttle <span class="keyword">in</span> self.get_throttles():</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> throttle.allow_request(request, self):</span><br><span class="line">            self.throttled(request, throttle.wait())</span><br></pre></td></tr></table></figure>
+<h4 id="调度方法"><a href="#调度方法" class="headerlink" title="调度方法"></a>调度方法</h4><p>视图的<code>dispatch()</code>方法直接调用以下方法,这些函数执行在调用 <code>get()</code>,<code>post()</code>,<code>put()</code>,<code>patch()</code>,<code>delete()</code>等处理程序方法之前或之后需要执行的任何操作</p>
+<ul>
+<li><code>.initial(self,request, *args, **kwargs)</code><ul>
+<li>在执行调用处理程序方法之前需要执行的操作。此方法用于执行权限和节流，以及内容协商。</li>
+</ul>
+</li>
+<li><p><code>.handle_exception(self, exc)</code></p>
+<ul>
+<li>视图类当中的程序处理方法抛出的任何异常都将传递给该方法,该方法要么返回响应实例,要么重新引发异常</li>
+<li>默认实现处理 <code>rest_framework.exception</code>的任何子类, <code>APIException</code>以及Django的 <code>Http404</code>和 <code>PermissionDenied</code>异常并返回一个适当的错误响应.</li>
+<li>如果需要自定义API返回的错误响应,可以重写该方法</li>
+</ul>
+</li>
+<li><p><code>.initialize_request(self, request, *args, **kwargs)</code></p>
+<ul>
+<li>保证传递给类视图处理程序方法的请求对象是DRF请求的实例，而不是通常的Django HttpRequest。</li>
+</ul>
+</li>
+<li><code>.finalize_response(self, request, response, *args, **kwargs)</code><ul>
+<li>确保从处理程序方法返回的任何响应对象都将呈现为正确的内容类型(由内容协商决定)。</li>
+</ul>
+</li>
+</ul>
+<h4 id="类方法处理请求过程分析"><a href="#类方法处理请求过程分析" class="headerlink" title="类方法处理请求过程分析"></a>类方法处理请求过程分析</h4><ul>
+<li><code>as_view()</code></li>
+</ul>
+<blockquote>
+<p>调用父类VIew的as_view()方法,返回父类View方法内部的闭包函数view</p>
+</blockquote>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@classmethod</span></span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">as_view</span><span class="params">(cls, **initkwargs)</span>:</span></span><br><span class="line">      .......</span><br><span class="line">      <span class="comment"># 调用父类的as_view()方法,返回父类的内部函数的引用</span></span><br><span class="line">      view = super(APIView, cls).as_view(**initkwargs)</span><br><span class="line">      view.cls = cls</span><br><span class="line">      view.initkwargs = initkwargs</span><br><span class="line"></span><br><span class="line">      <span class="comment"># Note: session based authentication is explicitly CSRF validated,</span></span><br><span class="line">      <span class="comment"># all other authentication is CSRF exempt.</span></span><br><span class="line">      <span class="keyword">return</span> csrf_exempt(view)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>view</code>方法的源码<ul>
+<li>最后调用了 <code>self</code>的<code>dispatch</code>方法,这里需要分析一下dispatch方法从哪里来?</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">view</span><span class="params">(request, *args, **kwargs)</span>:</span></span><br><span class="line">    self = cls(**initkwargs)  <span class="comment"># 类视图实例化为对象</span></span><br><span class="line">    <span class="keyword">if</span> hasattr(self, <span class="string">'get'</span>) <span class="keyword">and</span> <span class="keyword">not</span> hasattr(self, <span class="string">'head'</span>):</span><br><span class="line">        self.head = self.get</span><br><span class="line">    self.request = request</span><br><span class="line">    self.args = args</span><br><span class="line">    self.kwargs = kwargs</span><br><span class="line">    <span class="comment"># 调用当前类视图对象的dispatch方法</span></span><br><span class="line">    <span class="keyword">return</span> self.dispatch(request, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+<p>需要注意的是Python3继承的顺序是广度优先,调用属性or方法时,先从自己找,再从左到右的父类查找,没有再去父类的父类…. <code>APIView</code>和 <code>View</code>中都有 <code>dispatch</code>方法,但是APIView查找顺序近,所以会先调用APIView的dispatch方法</p>
+<ul>
+<li><code>APIView--&gt;dispatch()</code>请求调度过程</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># View类视图定义的HTTP请求方法列表 django/views/generic/base.py 34 line</span></span><br><span class="line">http_method_names = [<span class="string">'get'</span>, <span class="string">'post'</span>, <span class="string">'put'</span>, <span class="string">'patch'</span>, <span class="string">'delete'</span>, <span class="string">'head'</span>, <span class="string">'options'</span>, <span class="string">'trace'</span>]</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">APIView</span><span class="params">(View)</span>:</span></span><br><span class="line">    ......</span><br><span class="line">	<span class="comment"># APIView类视图的dispatch方法 restframework/views.py 470 line</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dispatch</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        # LQ和Django原生的dispatch()方法类似,但是额外多了一些内容</span></span><br><span class="line"><span class="string">        异常捕获\请求对象的进一步封装和初始化\额外的检查</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        self.args = args</span><br><span class="line">        self.kwargs = kwargs</span><br><span class="line">        <span class="comment"># 根据原生Django封装的request对象产生新的请求对象(DRF的request)</span></span><br><span class="line">        request = self.initialize_request(request, *args, **kwargs)  </span><br><span class="line">        self.request = request</span><br><span class="line">        self.headers = self.default_response_headers  <span class="comment"># deprecate?</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="string">'''</span></span><br><span class="line"><span class="string">             # LQ:在运行处理请求的方法之前,需要进行一些检查:</span></span><br><span class="line"><span class="string">       		 内容协商/版本控制/认证/权限/限流/等等</span></span><br><span class="line"><span class="string">            '''</span></span><br><span class="line">            self.initial(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 通过请求对象的HTTP请求方法,获取类视图中对应的处理方法</span></span><br><span class="line">            <span class="keyword">if</span> request.method.lower() <span class="keyword">in</span> self.http_method_names:</span><br><span class="line">                handler = getattr(self, request.method.lower(),</span><br><span class="line">                                  self.http_method_not_allowed)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                handler = self.http_method_not_allowed</span><br><span class="line">			<span class="comment"># 调用处理方法,获取响应</span></span><br><span class="line">            response = handler(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">except</span> Exception <span class="keyword">as</span> exc:</span><br><span class="line">            <span class="comment"># 异常处理,具体可以参考我写的异常处理文章</span></span><br><span class="line">            response = self.handle_exception(exc)</span><br><span class="line">		<span class="comment"># 对响应对象进一步检查,封装</span></span><br><span class="line">        self.response = self.finalize_response(request, response, *args, **kwargs)</span><br><span class="line">        <span class="comment"># 返回响应</span></span><br><span class="line">        <span class="keyword">return</span> self.response</span><br></pre></td></tr></table></figure>
+<h4 id="DRF函数视图"><a href="#DRF函数视图" class="headerlink" title="DRF函数视图"></a>DRF函数视图</h4><p>REST框架还允许您使用基于常规函数的视图。它提供了一组简单的装饰器，这些装饰器包装基于函数的视图，以确保它们接收到请求的实例(而不是通常的Django HttpRequest)，并允许它们返回响应(而不是Django HttpResponse)，并允许您配置如何处理请求。</p>
+<h5 id="api-view"><a href="#api-view" class="headerlink" title="@api_view()"></a>@api_view()</h5><p><strong>Signature:</strong> <code>@api_view(http_method_names=[&#39;GET&#39;])</code></p>
+<p>该功能的核心是api_view装饰器，它接受视图应该响应的HTTP方法列表。例如，这是你如何写一个非常简单的视图，只是手动返回一些数据:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.decorators <span class="keyword">import</span> api_view</span><br><span class="line"></span><br><span class="line"><span class="meta">@api_view()</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello_world</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> Response(&#123;<span class="string">"message"</span>: <span class="string">"Hello, world!"</span>&#125;)</span><br></pre></td></tr></table></figure>
+<p>此视图将使用设置中指定的默认呈现器、解析器、身份验证类等。</p>
+<p>默认情况下，只接受GET方法。其他方法将响应“405方法不允许”。要更改此行为，请指定视图允许哪些方法，如下所示:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@api_view(['GET', 'POST'])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">hello_world</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">'POST'</span>:</span><br><span class="line">        <span class="keyword">return</span> Response(&#123;<span class="string">"message"</span>: <span class="string">"Got some data!"</span>, <span class="string">"data"</span>: request.data&#125;)</span><br><span class="line">    <span class="keyword">return</span> Response(&#123;<span class="string">"message"</span>: <span class="string">"Hello, world!"</span>&#125;)</span><br></pre></td></tr></table></figure>
+<h5 id="API装饰器"><a href="#API装饰器" class="headerlink" title="API装饰器"></a>API装饰器</h5><p>为了覆盖默认设置，REST框架提供了一组额外的装饰器，可以将它们添加到视图中。这些必须在<code>@api_view</code>装饰器之后。例如，要创建使用节流的视图，以确保特定用户每天只能调用它一次，可以使用<code>@throttle_classes</code>装饰器，传递节流类的列表:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> rest_framework.decorators <span class="keyword">import</span> api_view, throttle_classes</span><br><span class="line"><span class="keyword">from</span> rest_framework.throttling <span class="keyword">import</span> UserRateThrottle</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OncePerDayUserThrottle</span><span class="params">(UserRateThrottle)</span>:</span></span><br><span class="line">    <span class="string">'''</span></span><br><span class="line"><span class="string">    自定义限流器类</span></span><br><span class="line"><span class="string">    '''</span></span><br><span class="line">        rate = <span class="string">'1/day'</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@api_view(['GET'])</span></span><br><span class="line"><span class="meta">@throttle_classes([OncePerDayUserThrottle])</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">view</span><span class="params">(request)</span>:</span></span><br><span class="line">    <span class="keyword">return</span> Response(&#123;<span class="string">"message"</span>: <span class="string">"Hello for today! See you tomorrow!"</span>&#125;)</span><br></pre></td></tr></table></figure>
+<p>这些装饰器对应于上面的<code>APIView</code>子类上设置的属性</p>
+<ul>
+<li><p><code>@renderer_classes(...)</code></p>
+</li>
+<li><p><code>@parser_classes(...)</code></p>
+</li>
+<li><p><code>@authentication_classes(...)</code></p>
+</li>
+<li><p><code>@throttle_classes(...)</code></p>
+</li>
+<li><p><code>@permission_classes(...)</code></p>
+<blockquote>
+<p>这些装饰器都接受一个参数，该参数必须是类的列表或元组。</p>
+</blockquote>
+</li>
+</ul>
+<p><a href="https://www.django-rest-framework.org/api-guide/views/#class-based-views" target="_blank" rel="noopener">参考文档</a></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/APIView/" rel="tag"># APIView</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/10/协议之WSGI/" rel="next" title="协议之WSGI">
+                <i class="fa fa-chevron-left"></i> 协议之WSGI
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/07/14/DRF-Request-Response/" rel="prev" title="DRF-Request-Response">
+                DRF-Request-Response <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">强仔</p>
+              <p class="site-description motion-element" itemprop="description">Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">42</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">45</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/qiang-zai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:qiangzai996@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#APIView-VS-View"><span class="nav-number">1.</span> <span class="nav-text">APIView VS View</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例-For-example"><span class="nav-number">2.</span> <span class="nav-text">案例:For example</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类属性相关配置"><span class="nav-number">3.</span> <span class="nav-text">类属性相关配置</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#内置方法"><span class="nav-number">4.</span> <span class="nav-text">内置方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#API策略实现方法"><span class="nav-number">5.</span> <span class="nav-text">API策略实现方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#调度方法"><span class="nav-number">6.</span> <span class="nav-text">调度方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#类方法处理请求过程分析"><span class="nav-number">7.</span> <span class="nav-text">类方法处理请求过程分析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DRF函数视图"><span class="nav-number">8.</span> <span class="nav-text">DRF函数视图</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#api-view"><span class="nav-number">8.1.</span> <span class="nav-text">@api_view()</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#API装饰器"><span class="nav-number">8.2.</span> <span class="nav-text">API装饰器</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">强仔</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'mjE5WlYCSpcWonsNqQrIBcOA-gzGzoHsz',
+        appKey: 'W34u68g6zaSw4gfHaWVFAKlA',
+        placeholder: '欢迎评论交流',
+        avatar:'mm',
+        guest_info:['nick'], // 评论者只需要提供评论的昵称即可
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("mjE5WlYCSpcWonsNqQrIBcOA-gzGzoHsz", "W34u68g6zaSw4gfHaWVFAKlA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>
