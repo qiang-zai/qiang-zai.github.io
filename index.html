@@ -445,50 +445,16 @@
 
       
         
-          
-            <h4 id="request"><a href="#request" class="headerlink" title="request"></a>request</h4><blockquote>
+          <h4 id="request"><a href="#request" class="headerlink" title="request"></a>request</h4><blockquote>
 <p>介绍:类视图继承APIView以后,传入视图方法中的的 <code>request</code>参数是DRF框架提供的 <code>Request</code>类实例化的对象.</p>
 </blockquote>
-<ul>
-<li>DRF request对象产生源码</li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">APIView</span><span class="params">(View)</span>:</span></span><br><span class="line"> 	<span class="keyword">pass</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">initialize_request</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">           request:原生Django的request参数</span></span><br><span class="line"><span class="string">           返回初始请求对象</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        parser_context = self.get_parser_context(request)</span><br><span class="line">        <span class="string">'''</span></span><br><span class="line"><span class="string">            根据Request类实例化DRF请求对象  参数介绍:</span></span><br><span class="line"><span class="string">            - request(HttpRequest). The original request instance.</span></span><br><span class="line"><span class="string">            - parsers_classes(list/tuple). The parsers to use for parsing the</span></span><br><span class="line"><span class="string">              request content.</span></span><br><span class="line"><span class="string">            - authentication_classes(list/tuple). The authentications used to try</span></span><br><span class="line"><span class="string">              authenticating the request's user.</span></span><br><span class="line"><span class="string">        '''</span></span><br><span class="line">        <span class="keyword">return</span> Request(</span><br><span class="line">            request, <span class="comment"># django 原始请求(HttpRequest)</span></span><br><span class="line">            parsers=self.get_parsers(),  <span class="comment"># 解析器类</span></span><br><span class="line">            authenticators=self.get_authenticators(),  <span class="comment"># 用户认证方式列表/元组</span></span><br><span class="line">            negotiator=self.get_content_negotiator(),  <span class="comment"># 内容协商对象列表/元组</span></span><br><span class="line">            parser_context=parser_context  <span class="comment"># 从django 的request中解析的内容</span></span><br><span class="line">        )</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dispatch</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        APIView的请求调度方法在调用处理方法之前会调用initialize_request方法</span></span><br><span class="line"><span class="string">        生成request对象作为参数</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        request = self.initialize_request(request, *args, **kwargs) </span><br><span class="line">        <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
-<ul>
-<li><code>Request</code>类 </li>
-</ul>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># rest_framework/reqeust.py 143 line</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Request</span><span class="params">(object)</span>:</span></span><br><span class="line">    ......</span><br><span class="line"><span class="meta">	@property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">query_params</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        More semantically correct name for request.GET.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">return</span> self._request.GET</span><br><span class="line">    </span><br><span class="line"><span class="meta">   	@property</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">data</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> _hasattr(self, <span class="string">'_full_data'</span>):</span><br><span class="line">            self._load_data_and_files()</span><br><span class="line">        <span class="keyword">return</span> self._full_data</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_load_data_and_files</span><span class="params">(self)</span>:</span></span><br><span class="line">        <span class="string">"""</span></span><br><span class="line"><span class="string">        Parses the request content into `self.data`.</span></span><br><span class="line"><span class="string">        """</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> _hasattr(self, <span class="string">'_data'</span>):</span><br><span class="line">            self._data, self._files = self._parse()</span><br><span class="line">            <span class="keyword">if</span> self._files:</span><br><span class="line">                self._full_data = self._data.copy()</span><br><span class="line">                self._full_data.update(self._files)</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                self._full_data = self._data</span><br><span class="line"></span><br><span class="line">            <span class="comment"># if a form media type, copy data &amp; files refs to the underlying</span></span><br><span class="line">            <span class="comment"># http request so that closable objects are handled appropriately.</span></span><br><span class="line">            <span class="keyword">if</span> is_form_media_type(self.content_type):</span><br><span class="line">                self._request._post = self.POST</span><br><span class="line">                self._request._files = self.FILES</span><br></pre></td></tr></table></figure>
-<p>从源码中可以看出,Request类的对象有两个方法被 <code>@property</code>装饰器转换为属性</p>
-<ul>
-<li><p><code>data</code>:</p>
-<ul>
-<li>包含解析之后的请求体数据,已经解析为字典,相当于 Django原生的request的 body/POST/FILES属性</li>
-<li>它支持解析POST之外的其他HTTP方法的内容,比如获取PUT/PATCH的请求内容;</li>
-</ul>
-</li>
-<li><p><code>query_params</code>:</p>
-<ul>
-<li><code>query_params</code>是request.GET的更正确的同义词</li>
-<li>主要就是获取请求URL中的查询字符串,相当于原生Django的request.GET属性</li>
-<li>官方给出的解释</li>
-</ul>
-<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">For clarity inside your code, we recommend using request.query_params instead of the Django's standard request.GET. Doing so will help keep your codebase more correct and obvious - any HTTP method type may include query parameters, not just GET requests.</span><br><span class="line">'''</span><br><span class="line">为了使代码更清晰，我们建议使用request。query_params而不是Django的标准request.GET。这样做将有助于保持代码库更加正确和明显——任何HTTP方法类型都可能包含查询参数，而不仅仅是GET请求。</span><br><span class="line">'''</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h4 id="response"><a href="#response" class="headerlink" title="response"></a>response</h4><blockquote>
-<p>介绍:Response对象会根据客户端请求头的 Accept,自动转换为对应的格式,并进行返回</p>
-</blockquote>
-<ul>
-<li>请求头1: <code>application/json</code><ul>
-<li>服务器会将响应数据转为json数据进行返回(没指定时,默认返回JSON)</li>
-</ul>
-</li>
-<li>请求头2:<code>text/html</code><ul>
-<li>服务器会将响应数据转换为HTML格式返回</li>
-</ul>
-</li>
-</ul>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2019/07/14/DRF-Request-Response/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
