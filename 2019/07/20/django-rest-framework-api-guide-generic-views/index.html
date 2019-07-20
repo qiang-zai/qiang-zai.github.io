@@ -1,0 +1,1608 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="GenericViews,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Django’s generic views… were developed as a shortcut for common usage patterns… They take certain common idioms and patterns found in view development and abstract them so that you can quickly write c">
+<meta name="keywords" content="GenericViews">
+<meta property="og:type" content="article">
+<meta property="og:title" content="DRF-Generic-Views&amp;源码分析">
+<meta property="og:url" content="http://qiangzai.site/2019/07/20/django-rest-framework-api-guide-generic-views/index.html">
+<meta property="og:site_name" content="LQ | 归来仍是少年">
+<meta property="og:description" content="Django’s generic views… were developed as a shortcut for common usage patterns… They take certain common idioms and patterns found in view development and abstract them so that you can quickly write c">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-20T10:51:16.812Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="DRF-Generic-Views&amp;源码分析">
+<meta name="twitter:description" content="Django’s generic views… were developed as a shortcut for common usage patterns… They take certain common idioms and patterns found in view development and abstract them so that you can quickly write c">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://qiangzai.site/2019/07/20/django-rest-framework-api-guide-generic-views/">
+
+
+
+
+
+  <title>DRF-Generic-Views&源码分析 | LQ | 归来仍是少年</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LQ | 归来仍是少年</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Life is short. I use Python</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2019/07/20/django-rest-framework-api-guide-generic-views/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="强仔">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LQ | 归来仍是少年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">DRF-Generic-Views&源码分析</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-20T13:24:43+08:00">
+                2019-07-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Django-Rest-Framework/" itemprop="url" rel="index">
+                    <span itemprop="name">Django-Rest-Framework</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/07/20/django-rest-framework-api-guide-generic-views/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/07/20/django-rest-framework-api-guide-generic-views/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/07/20/django-rest-framework-api-guide-generic-views/" class="leancloud_visitors" data-flag-title="DRF-Generic-Views&源码分析">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4.2k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  17 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><em>Django’s generic views… were developed as a shortcut for common usage patterns… They take certain common idioms and patterns found in view development and abstract them so that you can quickly write common views of data without having to repeat yourself.</em> — Django Documentation</p>
+<p>这是一段来自Django官方文档的一句话,大概意思就是 <code>generic views</code>成为一种通用的使用模式,主要是对开发中类视图的通用用法和模式进行抽离,这样就可以快速的编写类视图,而不必重复写重复代码.</p>
+<a id="more"></a>
+<h3 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h3><ul>
+<li><p>使用类视图有一个非常关键的好处是,类视图可以通过继承组合重复编写的各个部分,<code>REST</code>框架提供一些预先构建的视图(<code>mixin类</code>,<code>GenericAPIView</code>)来实现,这些视图提供了常见的模式.</p>
+</li>
+<li><p><code>REST Framework</code>提供的<code>generic views</code>可以快速构建与数据库模型紧密映射的<code>API</code>视图.</p>
+</li>
+<li>如果DRF自带的常用<code>generic views</code>不适合你的<code>API</code>,可以使用常规的<code>APIView</code>类,或者重写<code>generic view</code>使用的<code>minxi</code>类和基类,组成适合当前<code>API</code>的类视图.</li>
+</ul>
+<h3 id="案例"><a href="#案例" class="headerlink" title="案例"></a>案例</h3><ul>
+<li>通常在使用<code>generic views</code>,你需要自定义类视图去继承,并设置几个类属性</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> django.contrib.auth.models <span class="keyword">import</span> User</span><br><span class="line"><span class="keyword">from</span> myapp.serializers <span class="keyword">import</span> UserSerializer</span><br><span class="line"><span class="keyword">from</span> rest_framework <span class="keyword">import</span> generics</span><br><span class="line"><span class="keyword">from</span> rest_framework.permissions <span class="keyword">import</span> IsAdminUser</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserList</span><span class="params">(generics.ListCreateAPIView)</span>:</span></span><br><span class="line">    queryset = User.objects.all()</span><br><span class="line">    serializer_class = UserSerializer</span><br><span class="line">    permission_classes = [IsAdminUser]</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对于实际的一些需求,你可能还需要重写<code>generic views</code>视图类当中的各种方法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UserList</span><span class="params">(generics.ListCreateAPIView)</span>:</span></span><br><span class="line">    queryset = User.objects.all()</span><br><span class="line">    serializer_class = UserSerializer</span><br><span class="line">    permission_classes = [IsAdminUser]</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">list</span><span class="params">(self, request)</span>:</span>  <span class="comment"># 重写父类的list方法</span></span><br><span class="line">        <span class="comment"># Note the use of `get_queryset()` instead of `self.queryset`</span></span><br><span class="line">        <span class="comment"># 注意: 使用`get_queryset()去替代self.queryset`</span></span><br><span class="line">        queryset = self.get_queryset()</span><br><span class="line">        serializer = UserSerializer(queryset, many=<span class="literal">True</span>)</span><br><span class="line">        <span class="keyword">return</span> Response(serializer.data)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>对于比较简单的情况,还可以使用<code>as_view()</code>方法传递任何类属性,这样连类视图都不用写了</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">url(<span class="string">r'^/users/'</span>, ListCreateAPIView.as_view(queryset=User.objects.all(), serializer_class=UserSerializer), name=<span class="string">'user-list'</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="GenericAPIView"><a href="#GenericAPIView" class="headerlink" title="GenericAPIView"></a>GenericAPIView</h3><p><code>GenericAPIView</code>继承自<code>APIView</code>类,在该类的基础上进行了扩展,为具体的通用性视图添加了常用的属性和方法,内置的每个通用型视图都是通过组合<code>GenericAPIView</code>和一个或多个<code>mixin</code>类来构建的.</p>
+<blockquote>
+<p>Note:通用型视图指DRF通过5个<code>minxi</code>类和<code>GenericAPIView</code>组合产生的9个通用型类视图,下面会详细讲解</p>
+</blockquote>
+<h4 id="属性-Attributes"><a href="#属性-Attributes" class="headerlink" title="属性-Attributes"></a>属性-Attributes</h4><h5 id="基本类属性-Basic-settings"><a href="#基本类属性-Basic-settings" class="headerlink" title="基本类属性-Basic settings"></a>基本类属性-Basic settings</h5><ul>
+<li><code>queryset</code><ul>
+<li>主要返回该视图所使用的模型类的查询集,通常必须设置该属性或重写<code>get_queryset()</code>方法;</li>
+<li>如果你重写了类视图的方法,在重写的方法中,应该使用<code>get_queryset()</code>,而不是直接使用<code>self.queryset</code>,这个是一个坑点!!!因为Django的ORM是惰性查询,<code>REST</code>内部会对<code>queryset</code>进行缓存用于后续的使用.我们再具体使用的时候应该调用<code>get_queryset()</code>,确保对每个请求重新评估<code>queryset</code>,以保证从数据库中查询的都是最新数据.</li>
+</ul>
+</li>
+<li><code>serializer_class</code><ul>
+<li>该属性主要是设置用于反序列化(校验|输入)以及序列化(输出)的序列化器,通常必须设置该属性,或者重写<code>get_serializer_class()</code>方法</li>
+</ul>
+</li>
+<li><code>lookup_field</code><ul>
+<li>用于查询单个模型实例对象的模型过滤字段,默认是<code>pk</code></li>
+<li>在使用超链接<code>hyperlinked API</code>时,如果需要使用自定义值，需要确保API视图和序列化器类都设置了查找字段。</li>
+</ul>
+</li>
+<li><code>lookup_url_kwarg</code><ul>
+<li>用于对象查找的URL关键字参数。<code>URL conf</code>中应该包含与此值对应的关键字参数。如果取消设置，则默认使用与<code>lookup_field</code>相同的值。</li>
+</ul>
+</li>
+</ul>
+<p><code>lookup_field</code>和<code>lookup_url_kwarg</code>这两个参数主要作用就是获取单个模型对象,对应的方法就是 <code>GenericAPIView</code>中的<code>get_object()</code>方法</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_object</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    根据 url conf中的关键字参数,从queryset当中查找单给实例对象</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="comment"># 过滤</span></span><br><span class="line">    queryset = self.filter_queryset(self.get_queryset())</span><br><span class="line"></span><br><span class="line">    <span class="comment"># url当中的参数名称 如果self.lookup_url_kwarg没有配置就使用self.lookup_field</span></span><br><span class="line">    lookup_url_kwarg = self.lookup_url_kwarg <span class="keyword">or</span> self.lookup_field</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 组成查询字典 key: self.lookup_field value: 在self.kwargs中通过lookup_url_kwarg拿到对应			的值 例: &#123;'pk': 1&#125;</span></span><br><span class="line">    filter_kwargs = &#123;self.lookup_field: self.kwargs[lookup_url_kwarg]&#125;</span><br><span class="line">    <span class="comment"># 根据过滤条件拿到对应的对象,如果不存在返回404</span></span><br><span class="line">    obj = get_object_or_404(queryset, **filter_kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 检查对该对象是否权限访问</span></span><br><span class="line">    self.check_object_permissions(self.request, obj)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> obj</span><br></pre></td></tr></table></figure>
+<h5 id="分页器-Pagination"><a href="#分页器-Pagination" class="headerlink" title="分页器-Pagination"></a>分页器-Pagination</h5><p>当类视图中使用了 <code>ListModelMixin</code>时,使用以下属性控制分页</p>
+<ul>
+<li><code>pagination_class</code><ul>
+<li>该类视图分页所使用的分页器类</li>
+<li>可以覆盖/重写该属性,也可以在全局settings配置自定义的分页器类</li>
+<li>设置<code>pagination_class=None</code>将禁用此视图中的分页</li>
+</ul>
+</li>
+</ul>
+<h5 id="过滤器-Filtering"><a href="#过滤器-Filtering" class="headerlink" title="过滤器-Filtering"></a>过滤器-Filtering</h5><ul>
+<li><code>filter_backends</code><ul>
+<li>用于筛选queryset的过滤器列表。默认值与DEFAULT_FILTER_BACKENDS设置相同的值。</li>
+</ul>
+</li>
+</ul>
+<h4 id="方法-Methods"><a href="#方法-Methods" class="headerlink" title="方法-Methods"></a>方法-Methods</h4><h5 id="基础方法-Base-methods"><a href="#基础方法-Base-methods" class="headerlink" title="基础方法-Base methods"></a>基础方法-Base methods</h5><ul>
+<li><p><code>get_queryset(self)</code></p>
+<ul>
+<li><p>返回应用于<code>ListAPIView</code>列表视图的<code>queryset</code>,并将其用作其他详细视图(RetrieveModelMixin/UpdateModelMixin/DestroyModelMixin)查找的基础</p>
+</li>
+<li><p>应该始终使用此方法，而不是访问<code>self.queryset</code>,具体原因见上文</p>
+</li>
+<li><p>可以重写该方法以提供动态行为，例如返回特定于发出请求的用户的queryset。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_queryset</span><span class="params">(self)</span>:</span></span><br><span class="line">    user = self.request.user</span><br><span class="line">    <span class="keyword">return</span> user.accounts.all()</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>get_objects(self)</code></p>
+<ul>
+<li><p>返回应用于<code>详细视图</code>的对象实例.默认使用<code>lookup_field</code>参数过滤<code>queryset</code>。</p>
+<blockquote>
+<p>Note: 详细视图指的其实就是<code>RetrieveModelMixin</code>/<code>UpdateModelMixin</code>/<code>DestroyModelMixin</code></p>
+</blockquote>
+</li>
+<li><p>可以重写以提供更复杂的行为，例如基于多个<code>URL kwarg</code>的对象查找。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_object</span><span class="params">(self)</span>:</span></span><br><span class="line">    queryset = self.get_queryset()</span><br><span class="line">    filter = &#123;&#125;</span><br><span class="line">    <span class="keyword">for</span> field <span class="keyword">in</span> self.multiple_lookup_fields:</span><br><span class="line">        filter[field] = self.kwargs[field]</span><br><span class="line"></span><br><span class="line">    obj = get_object_or_404(queryset, **filter)</span><br><span class="line">    self.check_object_permissions(self.request, obj)</span><br><span class="line">    <span class="keyword">return</span> obj</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>注意，如果您的API不包含任何对象级权限，您可以选择排除<code>self.check_object_permissions</code>，并简单地从get_object_or_404查找中返回对象。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p><code>filter_queryset(self, queryset)</code></p>
+<ul>
+<li><p>使用过滤器对<code>queryset</code>进行过滤,返回新的<code>queryset</code>对象</p>
+</li>
+<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">filter_queryset</span><span class="params">(self, queryset)</span>:</span></span><br><span class="line">    filter_backends = [CategoryFilter]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="string">'geo_route'</span> <span class="keyword">in</span> self.request.query_params:</span><br><span class="line">        filter_backends = [GeoRouteFilter, CategoryFilter]</span><br><span class="line">    <span class="keyword">elif</span> <span class="string">'geo_point'</span> <span class="keyword">in</span> self.request.query_params:</span><br><span class="line">        filter_backends = [GeoPointFilter, CategoryFilter]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> backend <span class="keyword">in</span> list(filter_backends):</span><br><span class="line">        queryset = backend().filter_queryset(self.request, queryset, view=self)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> queryset</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p><code>get_serializer_class(self)</code></p>
+<ul>
+<li><p>返回应用于序列化程序的类。默认返回类视图<code>serializer_class</code>属性。</p>
+</li>
+<li><p>可以重写以提供动态行为，例如为读写操作使用不同的序列化器，或为不同类型的用户提供不同的序列化器。</p>
+</li>
+<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">get_serializer_class</span><span class="params">(self)</span>:</span></span><br><span class="line">    <span class="keyword">if</span> self.request.user.is_staff:</span><br><span class="line">        <span class="keyword">return</span> FullAccountSerializer</span><br><span class="line">    <span class="keyword">return</span> BasicAccountSerializer</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+<h5 id="Save-and-deletion-hooks-保存和删除的钩子"><a href="#Save-and-deletion-hooks-保存和删除的钩子" class="headerlink" title="Save and deletion hooks-保存和删除的钩子"></a>Save and deletion hooks-保存和删除的钩子</h5><p><code>mixin</code>类提供了以下方法，并提供了对象保存或删除行为的简单重写。</p>
+<ul>
+<li><code>perform_create(self, serializer)</code>——在保存新对象实例时由<code>CreateModelMixin</code>调用。</li>
+<li><code>perform_update(self, serializer)</code>——在更新现有对象实例时由<code>UpdateModelMixin</code>调用</li>
+<li><code>perform_destroy(self, instance)</code>——在删除对象实例时由<code>DestroyModelMixin</code>调用。</li>
+</ul>
+<p>这些挂钩对于设置请求中隐含的属性(但不是请求数据的一部分)特别有用。例如，可以根据请求用户或URL关键字参数在对象上设置属性。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">perform_create</span><span class="params">(self, serializer)</span>:</span></span><br><span class="line">    serializer.save(user=self.request.user)</span><br></pre></td></tr></table></figure>
+<p>这些覆盖点对于添加保存对象之前或之后发生的行为也特别有用，比如发送电子邮件确认或记录更新。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">perform_update</span><span class="params">(self, serializer)</span>:</span></span><br><span class="line">    instance = serializer.save()</span><br><span class="line">    send_email_confirmation(user=self.request.user, modified=instance)</span><br></pre></td></tr></table></figure>
+<p>您还可以使用这些钩子通过引发ValidationError()来提供额外的验证。如果需要在数据库保存时应用一些验证逻辑，这将非常有用。例如:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">perform_create</span><span class="params">(self, serializer)</span>:</span></span><br><span class="line">    queryset = SignupRequest.objects.filter(user=self.request.user)</span><br><span class="line">    <span class="keyword">if</span> queryset.exists():</span><br><span class="line">        <span class="keyword">raise</span> ValidationError(<span class="string">'You have already signed up'</span>)</span><br><span class="line">    serializer.save(user=self.request.user)</span><br></pre></td></tr></table></figure>
+<h5 id="其他方法-Other-methods"><a href="#其他方法-Other-methods" class="headerlink" title="其他方法-Other methods"></a>其他方法-Other methods</h5><p>通常不需要覆盖以下方法，但如果使用<code>GenericAPIView</code>编写自定义视图，则可能需要调用这些方法。</p>
+<ul>
+<li><p><code>get_serializer_context(self)</code></p>
+<ul>
+<li>返回一个字典，其中包含应该提供给序列化程序的任何额外上下文。默认包括“request”、“view”和“format”键。</li>
+</ul>
+</li>
+<li><code>get_serializer(self, instance=None, data=None, many=False, partial=False)</code><ul>
+<li>返回一个序列化器对象</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_serializer</span><span class="params">(self, *args, **kwargs)</span>:</span></span><br><span class="line">      <span class="string">"""</span></span><br><span class="line"><span class="string">     	返回应该用于验证和的序列化器实例</span></span><br><span class="line"><span class="string">反序列化输入和序列化输出。</span></span><br><span class="line"><span class="string">      """</span></span><br><span class="line">      serializer_class = self.get_serializer_class()</span><br><span class="line">      kwargs[<span class="string">'context'</span>] = self.get_serializer_context()  <span class="comment"># 传递给序列化器</span></span><br><span class="line">      <span class="keyword">return</span> serializer_class(*args, **kwargs)</span><br><span class="line">  </span><br><span class="line">  <span class="function"><span class="keyword">def</span> <span class="title">get_serializer_context</span><span class="params">(self)</span>:</span></span><br><span class="line">      <span class="string">"""</span></span><br><span class="line"><span class="string">      提供给序列化器类的额外上下文。</span></span><br><span class="line"><span class="string">      """</span></span><br><span class="line">      <span class="keyword">return</span> &#123;</span><br><span class="line">          <span class="string">'request'</span>: self.request,</span><br><span class="line">          <span class="string">'format'</span>: self.format_kwarg,</span><br><span class="line">          <span class="string">'view'</span>: self</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>get_paginated_response(self, data)</code><ul>
+<li>返回分页格式的响应对象</li>
+</ul>
+</li>
+<li><p><code>paginate_queryset(self, queryset)</code></p>
+<ul>
+<li>如果需要分页queryset，则返回一个page对象，如果没有为此视图配置分页，则返回None。</li>
+</ul>
+</li>
+<li><p><code>filter_queryset(self, queryset)</code></p>
+<ul>
+<li>给定一个<code>queryset</code>，使用过滤器过滤,返回一个新的<code>queryset</code>。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Mixins"><a href="#Mixins" class="headerlink" title="Mixins"></a>Mixins</h3><blockquote>
+<p><code>mixin</code>类提供了用于提供基本视图行为的操作(Create|List|Update|Retrieve|Destory)。注意，<code>mixin</code>类提供了操作方法，而不是直接定义处理程序方法.</p>
+<p><code>mixin</code>类可以从<code>rest_framework.mixin</code>导入。</p>
+</blockquote>
+<h4 id="ListModelMixin"><a href="#ListModelMixin" class="headerlink" title="ListModelMixin"></a>ListModelMixin</h4><ul>
+<li>提供一个 <code>.list(request, *args, **kwargs)</code> 方法，实现了列出一个查询集;</li>
+<li>如果定义了分页器类，对<code>queryset</code>进行分页,将分页后的的对象列表 进行序列化返回;</li>
+<li>如果没有定义,则直接对<code>queryset</code>进行序列化返回;</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListModelMixin</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    一个queryset列表minxin类</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">list</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        queryset = self.filter_queryset(self.get_queryset())  <span class="comment"># 对queryset进行过滤</span></span><br><span class="line"></span><br><span class="line">        page = self.paginate_queryset(queryset)  <span class="comment"># 对queryset进行分页</span></span><br><span class="line">        <span class="keyword">if</span> page <span class="keyword">is</span> <span class="keyword">not</span> <span class="literal">None</span>:  <span class="comment"># 如果设置了分页器类</span></span><br><span class="line">            serializer = self.get_serializer(page, many=<span class="literal">True</span>)  <span class="comment"># 对分页后的数据序列化</span></span><br><span class="line">            <span class="keyword">return</span> self.get_paginated_response(serializer.data)  <span class="comment"># 响应</span></span><br><span class="line">        <span class="comment"># 没有设置分页器,直接序列化数据返回</span></span><br><span class="line">        serializer = self.get_serializer(queryset, many=<span class="literal">True</span>)</span><br><span class="line">        <span class="keyword">return</span> Response(serializer.data)</span><br></pre></td></tr></table></figure>
+<h4 id="CreateModelMixin"><a href="#CreateModelMixin" class="headerlink" title="CreateModelMixin"></a>CreateModelMixin</h4><ul>
+<li>提供<code>.create(request， *args， **kwargs)</code>方法，该方法实现创建和保存新模型实例;</li>
+<li>如果创建了一个对象，它将返回一个<code>201</code>创建的响应，并将对象的序列化表示作为响应的主体。如果表示包含一个名为url的键，则将用该值填充响应的位置头。</li>
+<li>如果为创建对象提供的请求数据无效，将返回<code>400</code>错误请求响应，并将错误细节作为响应的主体。</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateModelMixin</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    创建一个模型对象</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        serializer = self.get_serializer(data=request.data)  <span class="comment"># 获取序列化器对象</span></span><br><span class="line">        serializer.is_valid(raise_exception=<span class="literal">True</span>)  <span class="comment"># 序列化校验</span></span><br><span class="line">        self.perform_create(serializer)  <span class="comment"># 调用save方法创建模型对象</span></span><br><span class="line">        headers = self.get_success_headers(serializer.data)  <span class="comment"># 获取响应头部信息</span></span><br><span class="line">        <span class="keyword">return</span> Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">perform_create</span><span class="params">(self, serializer)</span>:</span></span><br><span class="line">        serializer.save()  <span class="comment"># 根据创建序列化器对象时传入的参数,调用Update/Create方法</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_success_headers</span><span class="params">(self, data)</span>:</span></span><br><span class="line">        <span class="string">'''判断序列化的数据中是否有一个key叫做`url`的数据,用该值填充响应的位置头'''</span></span><br><span class="line">        <span class="keyword">try</span>:</span><br><span class="line">            <span class="keyword">return</span> &#123;<span class="string">'Location'</span>: str(data[api_settings.URL_FIELD_NAME])&#125;</span><br><span class="line">        <span class="keyword">except</span> (TypeError, KeyError):</span><br><span class="line">            <span class="keyword">return</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="RetrieveModelMixin"><a href="#RetrieveModelMixin" class="headerlink" title="RetrieveModelMixin"></a>RetrieveModelMixin</h4><ul>
+<li><p>提供<code>.retrieve(request， *args， **kwargs)</code>方法，该方法实现在响应中返回现有模型实例。</p>
+</li>
+<li><p>如果能够检索到对象，则返回一个200 OK响应，并将对象的序列化结果作为响应的主体。否则它将返回<code>404</code> Not Found。</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RetrieveModelMixin</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    返回一个模型对象实例</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">retrieve</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="comment"># 获取模型实例对象,根据URL当中的参数</span></span><br><span class="line">        instance = self.get_object()</span><br><span class="line">        <span class="comment"># 获取序列化器对象</span></span><br><span class="line">        serializer = self.get_serializer(instance)</span><br><span class="line">        <span class="keyword">return</span> Response(serializer.data)  <span class="comment"># 返回模型对象的序列化器结果</span></span><br></pre></td></tr></table></figure>
+<h4 id="UpdateModelMixin"><a href="#UpdateModelMixin" class="headerlink" title="UpdateModelMixin"></a>UpdateModelMixin</h4><ul>
+<li><p>提供<code>.update(request， *args， **kwargs)</code>方法，该方法实现更新和保存当前模型实例。</p>
+</li>
+<li><p>还提供<code>.partial_update(request， *args， **kwargs)</code>方法，该方法类似于<code>update</code>方法，只是更新的所有字段都是可选的。这允许支持<code>HTTP PATCH</code>请求。</p>
+</li>
+<li><p>如果对象被更新，它将返回一个<code>200 OK</code>响应，并将对象的序列化表示作为响应的主体。</p>
+</li>
+<li><p>如果为更新对象提供的请求数据无效，将返回<code>400</code>个错误请求响应，并将错误细节作为响应的主体。</p>
+</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UpdateModelMixin</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    更新一个实例对象</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">update</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        partial = kwargs.pop(<span class="string">'partial'</span>, <span class="literal">False</span>)</span><br><span class="line">        instance = self.get_object()  <span class="comment"># 获取要更新的实例对象</span></span><br><span class="line">        serializer = self.get_serializer(instance, data=request.data, partial=partial)  <span class="comment"># 获取序列化器对象</span></span><br><span class="line">        serializer.is_valid(raise_exception=<span class="literal">True</span>)  <span class="comment"># 进行参数校验,如果失败抛出400异常</span></span><br><span class="line">        self.perform_update(serializer)  <span class="comment"># 调用更新方法</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> getattr(instance, <span class="string">'_prefetched_objects_cache'</span>, <span class="literal">None</span>):</span><br><span class="line">            <span class="comment"># 如果'prefetch_related'已应用于queryset，我们需要这样做</span></span><br><span class="line">            <span class="comment"># 强制使实例上的预取缓存无效</span></span><br><span class="line">            instance._prefetched_objects_cache = &#123;&#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> Response(serializer.data)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">perform_update</span><span class="params">(self, serializer)</span>:</span></span><br><span class="line">        serializer.save()  <span class="comment"># 序列化器对象调用保存方法save(),然后调用序列化器对象update方法</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">partial_update</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        kwargs[<span class="string">'partial'</span>] = <span class="literal">True</span>  <span class="comment"># 更新一部分字段</span></span><br><span class="line">        <span class="keyword">return</span> self.update(request, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+<h4 id="DestoryModelMixin"><a href="#DestoryModelMixin" class="headerlink" title="DestoryModelMixin"></a>DestoryModelMixin</h4><p>提供<code>.destroy(request， *args， **kwargs)</code>方法，该方法实现删除现有模型实例。</p>
+<p>如果一个对象被删除，它将返回一个<code>204 No Content response</code>，否则它将返回一个<code>404 Not Found</code>。</p>
+<h3 id="ConcreteViewClasses-通用类视图"><a href="#ConcreteViewClasses-通用类视图" class="headerlink" title="ConcreteViewClasses-通用类视图"></a>ConcreteViewClasses-通用类视图</h3><p>下面的类是具体的通用视图,通常我们都是使用这些类视图，除非您需要高度定制的行为。视图类可以从<code>rest_frame.generics</code>导入。</p>
+<h4 id="CreaAPIView"><a href="#CreaAPIView" class="headerlink" title="CreaAPIView"></a>CreaAPIView</h4><ul>
+<li><p>用于创建一个实例对象</p>
+</li>
+<li><p>提供一个<code>post</code>方法处理程序</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">CreateAPIView</span><span class="params">(mixins.CreateModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                    GenericAPIView)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    用于创建模型实例的具体视图。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="comment"># 调用CreateModelMixin中的create方法</span></span><br><span class="line">        <span class="keyword">return</span> self.create(request, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="ListAPIView"><a href="#ListAPIView" class="headerlink" title="ListAPIView"></a>ListAPIView</h4><ul>
+<li><p>用于提供模型实例列表</p>
+</li>
+<li><p>提供一个<code>get</code>方法处理程序</p>
+</li>
+<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListAPIView</span><span class="params">(mixins.ListModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                  GenericAPIView)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    列出queryset的具体视图。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="comment"># # ListModelMixin的get方法</span></span><br><span class="line">        <span class="keyword">return</span> self.list(request, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="RetrieveAPIView"><a href="#RetrieveAPIView" class="headerlink" title="RetrieveAPIView"></a>RetrieveAPIView</h4><ul>
+<li><p>用于提供单个模型实例对象</p>
+</li>
+<li><p>提供一个<code>get</code>方法处理程序</p>
+</li>
+<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RetrieveAPIView</span><span class="params">(mixins.RetrieveModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                      GenericAPIView)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    获取单个模型实例的具体视图。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="comment"># RetrieveModelMixin的get方法</span></span><br><span class="line">        <span class="keyword">return</span> self.retrieve(request, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="DestroyAPIView"><a href="#DestroyAPIView" class="headerlink" title="DestroyAPIView"></a>DestroyAPIView</h4><ul>
+<li><p>用于删除单个模型实例对象</p>
+</li>
+<li><p>提供一个<code>delete</code>方法处理程序</p>
+</li>
+<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DestroyAPIView</span><span class="params">(mixins.DestroyModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                     GenericAPIView)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    删除单个模型实例的具体视图</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="comment"># 调用DestroyModelMixin中的destroy方法</span></span><br><span class="line">        <span class="keyword">return</span> self.destroy(request, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="UpdateAPIView"><a href="#UpdateAPIView" class="headerlink" title="UpdateAPIView"></a>UpdateAPIView</h4><ul>
+<li><p>用于更新单个模型实例对象</p>
+</li>
+<li><p>提供<code>put</code>和<code>patch</code>方法处理程序</p>
+</li>
+<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">UpdateAPIView</span><span class="params">(mixins.UpdateModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                    GenericAPIView)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    更新单个模型实例的具体视图</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="comment"># 调用UpdateModelMixin中的update方法</span></span><br><span class="line">        <span class="keyword">return</span> self.update(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">patch</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="comment"># 调用UpdateModelMixin中的partial_update方法</span></span><br><span class="line">        <span class="keyword">return</span> self.partial_update(request, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="ListCreateAPIView"><a href="#ListCreateAPIView" class="headerlink" title="ListCreateAPIView"></a>ListCreateAPIView</h4><ul>
+<li><p>用于创建单个模型对象和获取模型对象集合</p>
+</li>
+<li><p>提供<code>get</code>和<code>post</code>方法处理程序</p>
+</li>
+<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">ListCreateAPIView</span><span class="params">(mixins.ListModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                        mixins.CreateModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                        GenericAPIView)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    列出queryset或创建模型实例的具体视图。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.list(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">post</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.create(request, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="RetrieveUpdateAPIView"><a href="#RetrieveUpdateAPIView" class="headerlink" title="RetrieveUpdateAPIView"></a>RetrieveUpdateAPIView</h4><ul>
+<li><p>用于读取和更新单个模型对象</p>
+</li>
+<li><p>提供<code>get</code>和<code>put</code>和<code>patch</code>方法处理程序</p>
+</li>
+<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RetrieveUpdateAPIView</span><span class="params">(mixins.RetrieveModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                            mixins.UpdateModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                            GenericAPIView)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    用于获取、更新单个模型实例的具体视图。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.retrieve(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.update(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">patch</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.partial_update(request, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="RetrieveDestroyAPIView"><a href="#RetrieveDestroyAPIView" class="headerlink" title="RetrieveDestroyAPIView"></a>RetrieveDestroyAPIView</h4><ul>
+<li><p>用于读取和删除单个模型对象</p>
+</li>
+<li><p>提供<code>get</code>和<code>delete</code>方法处理程序</p>
+</li>
+<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RetrieveDestroyAPIView</span><span class="params">(mixins.RetrieveModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                             mixins.DestroyModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                             GenericAPIView)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    用于获取或删除单个模型实例的具体视图。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.retrieve(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.destroy(request, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="RetrieveUpdateDestroyAPIView"><a href="#RetrieveUpdateDestroyAPIView" class="headerlink" title="RetrieveUpdateDestroyAPIView"></a>RetrieveUpdateDestroyAPIView</h4><ul>
+<li><p>用于读取/更新/删除单个模型对象</p>
+</li>
+<li><p>提供<code>get</code>和<code>put</code>和<code>patch</code>和<code>delete</code>方法处理程序</p>
+</li>
+<li><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RetrieveUpdateDestroyAPIView</span><span class="params">(mixins.RetrieveModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                                   mixins.UpdateModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                                   mixins.DestroyModelMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                                   GenericAPIView)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    用于获取、更新或删除模型实例的具体视图。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.retrieve(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">put</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.update(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">patch</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.partial_update(request, *args, **kwargs)</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">delete</span><span class="params">(self, request, *args, **kwargs)</span>:</span></span><br><span class="line">        <span class="keyword">return</span> self.destroy(request, *args, **kwargs)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="自定义通用视图"><a href="#自定义通用视图" class="headerlink" title="自定义通用视图"></a>自定义通用视图</h3><p>通常你会想使用现有的通用视图，然后稍微定制一下行为。如果您发现自己在多个地方重复使用了一些自定义行为，则可能需要将行为重构为普通类，然后根据需要将其应用于任何视图或视图集。</p>
+<h4 id="创建通用mixins类"><a href="#创建通用mixins类" class="headerlink" title="创建通用mixins类"></a>创建通用mixins类</h4><p>例如，如果需要根据<code>URL conf</code>中的多个字段查找对象，可以创建一个mixin类，如下所示:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MultipleFieldLookupMixin</span><span class="params">(object)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    将此mixin应用于任何视图或视图集，以获得多个字段筛选</span></span><br><span class="line"><span class="string">	基于' lookup_fields '属性，而不是默认的单字段过滤。</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">get_object</span><span class="params">(self)</span>:</span></span><br><span class="line">        queryset = self.get_queryset()             <span class="comment"># 获取查询集</span></span><br><span class="line">        queryset = self.filter_queryset(queryset)  <span class="comment"># 对查询集进行过滤</span></span><br><span class="line">        filter = &#123;&#125;</span><br><span class="line">        <span class="keyword">for</span> field <span class="keyword">in</span> self.lookup_fields:</span><br><span class="line">            <span class="keyword">if</span> self.kwargs[field]: <span class="comment"># 忽略不存在的过滤字段</span></span><br><span class="line">                filter[field] = self.kwargs[field]</span><br><span class="line">        obj = get_object_or_404(queryset, **filter)  <span class="comment"># Lookup the object</span></span><br><span class="line">        self.check_object_permissions(self.request, obj)</span><br><span class="line">        <span class="keyword">return</span> obj</span><br></pre></td></tr></table></figure>
+<p>然后，您可以在任何需要应用自定义行为的时候将此mixin应用到视图或视图集。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">RetrieveUserView</span><span class="params">(MultipleFieldLookupMixin, generics.RetrieveAPIView)</span>:</span></span><br><span class="line">    queryset = User.objects.all()</span><br><span class="line">    serializer_class = UserSerializer</span><br><span class="line">    lookup_fields = [<span class="string">'account'</span>, <span class="string">'username'</span>]</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>Note:如果您有需要使用的自定义行为，那么使用自定义mixin是一个不错的选择。</p>
+</blockquote>
+<h4 id="创建通用类视图-custom-base-classes"><a href="#创建通用类视图-custom-base-classes" class="headerlink" title="创建通用类视图-custom base classes"></a>创建通用类视图-custom base classes</h4><p>如果您正在跨多个视图使用mixin，您可以更进一步，创建您自己的一组基本视图，这些视图可以在整个项目中使用。例如:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseRetrieveView</span><span class="params">(MultipleFieldLookupMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                       generics.RetrieveAPIView)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BaseRetrieveUpdateDestroyView</span><span class="params">(MultipleFieldLookupMixin,</span></span></span><br><span class="line"><span class="class"><span class="params">                                    generics.RetrieveUpdateDestroyAPIView)</span>:</span></span><br><span class="line">    <span class="keyword">pass</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> Note:如果您的自定义行为始终需要在整个项目的大量视图中重复，那么使用自定义基类是一个很好的选择。</p>
+</blockquote>
+<p>以上内容来自:<a href="https://www.django-rest-framework.org/api-guide/generic-views/#concrete-view-classes" target="_blank" rel="noopener">Django-Rest-Framework官方指南</a>翻译加上自己的一些理解</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/GenericViews/" rel="tag"># GenericViews</a>
+          
+        </div>
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/17/DRF-Request-Response/" rel="next" title="DRF-Request-Response">
+                <i class="fa fa-chevron-left"></i> DRF-Request-Response
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">强仔</p>
+              <p class="site-description motion-element" itemprop="description">Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/qiang-zai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:qiangzai996@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#案例"><span class="nav-number">2.</span> <span class="nav-text">案例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#GenericAPIView"><span class="nav-number">3.</span> <span class="nav-text">GenericAPIView</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#属性-Attributes"><span class="nav-number">3.1.</span> <span class="nav-text">属性-Attributes</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基本类属性-Basic-settings"><span class="nav-number">3.1.1.</span> <span class="nav-text">基本类属性-Basic settings</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#分页器-Pagination"><span class="nav-number">3.1.2.</span> <span class="nav-text">分页器-Pagination</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#过滤器-Filtering"><span class="nav-number">3.1.3.</span> <span class="nav-text">过滤器-Filtering</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#方法-Methods"><span class="nav-number">3.2.</span> <span class="nav-text">方法-Methods</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#基础方法-Base-methods"><span class="nav-number">3.2.1.</span> <span class="nav-text">基础方法-Base methods</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Save-and-deletion-hooks-保存和删除的钩子"><span class="nav-number">3.2.2.</span> <span class="nav-text">Save and deletion hooks-保存和删除的钩子</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#其他方法-Other-methods"><span class="nav-number">3.2.3.</span> <span class="nav-text">其他方法-Other methods</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Mixins"><span class="nav-number">4.</span> <span class="nav-text">Mixins</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ListModelMixin"><span class="nav-number">4.1.</span> <span class="nav-text">ListModelMixin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#CreateModelMixin"><span class="nav-number">4.2.</span> <span class="nav-text">CreateModelMixin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RetrieveModelMixin"><span class="nav-number">4.3.</span> <span class="nav-text">RetrieveModelMixin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UpdateModelMixin"><span class="nav-number">4.4.</span> <span class="nav-text">UpdateModelMixin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DestoryModelMixin"><span class="nav-number">4.5.</span> <span class="nav-text">DestoryModelMixin</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ConcreteViewClasses-通用类视图"><span class="nav-number">5.</span> <span class="nav-text">ConcreteViewClasses-通用类视图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#CreaAPIView"><span class="nav-number">5.1.</span> <span class="nav-text">CreaAPIView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ListAPIView"><span class="nav-number">5.2.</span> <span class="nav-text">ListAPIView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RetrieveAPIView"><span class="nav-number">5.3.</span> <span class="nav-text">RetrieveAPIView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#DestroyAPIView"><span class="nav-number">5.4.</span> <span class="nav-text">DestroyAPIView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UpdateAPIView"><span class="nav-number">5.5.</span> <span class="nav-text">UpdateAPIView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ListCreateAPIView"><span class="nav-number">5.6.</span> <span class="nav-text">ListCreateAPIView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RetrieveUpdateAPIView"><span class="nav-number">5.7.</span> <span class="nav-text">RetrieveUpdateAPIView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RetrieveDestroyAPIView"><span class="nav-number">5.8.</span> <span class="nav-text">RetrieveDestroyAPIView</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RetrieveUpdateDestroyAPIView"><span class="nav-number">5.9.</span> <span class="nav-text">RetrieveUpdateDestroyAPIView</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#自定义通用视图"><span class="nav-number">6.</span> <span class="nav-text">自定义通用视图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#创建通用mixins类"><span class="nav-number">6.1.</span> <span class="nav-text">创建通用mixins类</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#创建通用类视图-custom-base-classes"><span class="nav-number">6.2.</span> <span class="nav-text">创建通用类视图-custom base classes</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">强仔</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'mjE5WlYCSpcWonsNqQrIBcOA-gzGzoHsz',
+        appKey: 'W34u68g6zaSw4gfHaWVFAKlA',
+        placeholder: '欢迎评论交流',
+        avatar:'mm',
+        guest_info:['nick'], // 评论者只需要提供评论的昵称即可
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("mjE5WlYCSpcWonsNqQrIBcOA-gzGzoHsz", "W34u68g6zaSw4gfHaWVFAKlA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>
