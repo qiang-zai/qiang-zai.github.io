@@ -94,7 +94,7 @@
 <meta property="og:site_name" content="LQ | 归来仍是少年">
 <meta property="og:description" content="好记性不如烂笔头，记录一下常用的Linux 命令">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-08T12:55:30.956Z">
+<meta property="og:updated_time" content="2019-07-21T03:08:36.170Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记录之Linux常用命令">
 <meta name="twitter:description" content="好记性不如烂笔头，记录一下常用的Linux 命令">
@@ -406,7 +406,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  294 字
+                  405 字
                 </span>
               
 
@@ -445,29 +445,29 @@
       
         <p>好记性不如烂笔头，记录一下常用的Linux 命令</p>
 <a id="more"></a>
-<h4 id="1、find"><a href="#1、find" class="headerlink" title="1、find"></a>1、find</h4><p>语法</p>
+<h4 id="1-find"><a href="#1-find" class="headerlink" title="1) find"></a>1) find</h4><p>语法</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo find path -name file_name</span><br></pre></td></tr></table></figure>
 <p>案例：查找 根目录下的mysql相关文件</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo find / -name mysql</span><br></pre></td></tr></table></figure>
-<h4 id="2、lsof"><a href="#2、lsof" class="headerlink" title="2、lsof"></a>2、lsof</h4><p>语法</p>
+<h4 id="2-lsof"><a href="#2-lsof" class="headerlink" title="2) lsof"></a>2) lsof</h4><p>语法</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo lsof -i:port</span><br></pre></td></tr></table></figure>
 <p>案例：查找8000端口对应的进程PID号</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo lsof -i:8000</span><br></pre></td></tr></table></figure>
-<h4 id="3、nc"><a href="#3、nc" class="headerlink" title="3、nc"></a>3、nc</h4><blockquote>
+<h4 id="3-nc"><a href="#3-nc" class="headerlink" title="3) nc"></a>3) nc</h4><blockquote>
 <p>nc是netcat的简写，能够实现任意TCP/UDP端口的监听,nc可以作为server以TCP或UDP方式侦听指定端口</p>
 </blockquote>
 <p>语法</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -l port</span><br></pre></td></tr></table></figure>
 <p>案例：服务器监听9000端口</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nc -l 9000</span><br></pre></td></tr></table></figure>
-<h4 id="4、telnet命令"><a href="#4、telnet命令" class="headerlink" title="4、telnet命令"></a>4、telnet命令</h4><blockquote>
+<h4 id="4-telnet命令"><a href="#4-telnet命令" class="headerlink" title="4) telnet命令"></a>4) telnet命令</h4><blockquote>
 <p>用于远程登陆连接</p>
 </blockquote>
 <p>语法</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet [-8acdEfFKLrx][-b&lt;主机别名&gt;][-e&lt;脱离字符&gt;][-k&lt;域名&gt;][-l&lt;用户名称&gt;][-n&lt;记录文件&gt;][-S&lt;服务类型&gt;][-X&lt;认证形态&gt;][主机名称或IP地址&lt;通信端口&gt;]</span><br></pre></td></tr></table></figure>
 <p>实例:登陆IP为xx的远程主机</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">telnet 192.168.36.1</span><br></pre></td></tr></table></figure>
-<h4 id="5、head-amp-tail命令"><a href="#5、head-amp-tail命令" class="headerlink" title="5、head&amp; tail命令"></a>5、<code>head</code>&amp; <code>tail</code>命令</h4><blockquote>
+<h4 id="5-head-amp-tail命令"><a href="#5-head-amp-tail命令" class="headerlink" title="5) head&amp; tail命令"></a>5) <code>head</code>&amp; <code>tail</code>命令</h4><blockquote>
 <p>查看文件内容,可以指定行数，也可以动态查看日志</p>
 </blockquote>
 <p>语法</p>
@@ -478,6 +478,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -n 10 /etc/profile</span><br></pre></td></tr></table></figure>
 <p>实例：动态查看 <code>/etc/nginx/log</code></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tail -f /etc/nginx/<span class="built_in">log</span></span><br></pre></td></tr></table></figure>
+<h4 id="6-netstat"><a href="#6-netstat" class="headerlink" title="6) netstat"></a>6) netstat</h4><blockquote>
+<p> netstat命令用于显示与IP、TCP、UDP和ICMP协议相关的统计数据，一般用于检验本机各端口的网络连接情况。netstat是在内核中访问网络及相关信息的程序，它能提供TCP连接，TCP和UDP监听，进程内存管理的相关报告。</p>
+</blockquote>
+<p>实例:查看<code>MySQL</code>的运行情况</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tnulp | grep mysql</span><br></pre></td></tr></table></figure>
+<p>结果</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">tcp        0      0 0.0.0.0:3306            0.0.0.0:*               LISTEN      846/mysqld</span><br></pre></td></tr></table></figure>
 
       
     </div>
@@ -615,7 +622,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">43</span>
+                  <span class="site-state-item-count">44</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -637,7 +644,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">46</span>
+                  <span class="site-state-item-count">47</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -686,7 +693,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、find"><span class="nav-number">1.</span> <span class="nav-text">1、find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、lsof"><span class="nav-number">2.</span> <span class="nav-text">2、lsof</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、nc"><span class="nav-number">3.</span> <span class="nav-text">3、nc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4、telnet命令"><span class="nav-number">4.</span> <span class="nav-text">4、telnet命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5、head-amp-tail命令"><span class="nav-number">5.</span> <span class="nav-text">5、head&amp; tail命令</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-find"><span class="nav-number">1.</span> <span class="nav-text">1) find</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-lsof"><span class="nav-number">2.</span> <span class="nav-text">2) lsof</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-nc"><span class="nav-number">3.</span> <span class="nav-text">3) nc</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-telnet命令"><span class="nav-number">4.</span> <span class="nav-text">4) telnet命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-head-amp-tail命令"><span class="nav-number">5.</span> <span class="nav-text">5) head&amp; tail命令</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-netstat"><span class="nav-number">6.</span> <span class="nav-text">6) netstat</span></a></li></ol></div>
             
 
           </div>
