@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[服务器部署Jupyter Notebook]]></title>
+    <url>%2F2019%2F09%2F12%2FNotebook%2F</url>
+    <content type="text"><![CDATA[现在IT高速发展,随着硬件资源的提升,很多编程环境都移交到线上,像阿里的天池.腾讯出的开发者平台都推出了各种语言的在线编程环境.解决了传统开发到处搭建环境的弊端,实现联网式的即时编程. Jupyter Notebook（此前被称为 IPython notebook）是一个交互式笔记本，支持运行 40 多种编程语言。它的核心在于展示与快速迭代。 本文:主要记录一下在腾讯云Ubuntu服务器上如何搭建Jupy Notebook实现在线编程 安装这里通过的是 pip 来进行安装,当然如果服务器上安装有 Anaconda也是比较方便的 1pip3 install jupyter 部署安装完成之后,简单几步即可完成Jupyter Notebook的部署 1.创建一个目录文件夹,我这里创建的路劲: /home/ubuntu/project,创建的目的是保存我们使用jupyter notebook创建的文件.PS:使用过Jupyter notebook的人应该都清楚. 2.生成 Jupyter Notebook的配文件 1jupyter-notebook --generate-config 生成的路径 /home/ubuntu/.jupyter/jupyter_notebook_config.py 3.生成密码, 密码主要是在你访问Jupyter的时候会用到 123'''终端输入ipython,回车以后输入下面代码：'''from notebook.auth import passwdpasswd() 之后两次输入密码则会自动生成以sha1:开头的密码hash值，复制出来后面填写； 4.修改配置文件。vim /home/ubuntu/.jupyter/jupyter_notebook_config.py，打开后在文件头插入： 123456c.NotebookApp.ip='*'c.NotebookApp.password = u'sha1:......' # 填写上面第三条生成的sha1开头的字符串密码c.NotebookApp.notebook_dir = u'/home/ubuntu/project'c.NotebookApp.open_browser = Falsec.NotebookApp.port = 8888 # 访问端口c.NotebookApp.allow_root = True 插入以后,保存退出 运行直接启动使用以下指令启动 Jupyter Notebook： 1jupyter notebook 此时，访问 http://&lt;您的IP 地址&gt;:8888 即可进入 Jupyter 首页。 后台运行直接以 jupyter notebook 命令启动 Jupyter 的方式在连接断开时将会中断，所以我们需要让 Jupyter 服务在后台常驻。 先按下 Ctrl + C 并输入 y 停止 Jupyter 服务，然后执行以下命令： 1nohup jupyter notebook &gt; /root/ubuntu/jupyter.log 2&gt;&amp;1 &amp; 该命令将使得 Jupyter 在后台运行，并将日志写在 /root/ubuntu/jupyter.log 文件中。 参考链接]]></content>
+      <categories>
+        <category>Tools</category>
+      </categories>
+  </entry>
+  <entry>
     <title><![CDATA[本地搭建GitLab服务]]></title>
     <url>%2F2019%2F08%2F13%2F%E6%9C%AC%E5%9C%B0%E6%90%AD%E5%BB%BAGitLab%E6%9C%8D%E5%8A%A1%2F</url>
     <content type="text"><![CDATA[介绍GitLab是由GItLab Inc.开发,使用MIT许可证的基于网络的Git仓库管理工具,且具有wiki和issue跟踪功能,和Github有些类似,区别在于GitLab个人注册用户也可以免费创建私有仓库.GItlab大部分使用的时候需要单独去部署在自己的服务器上,而且对配置也有一定要求. 搭建过程环境说明 系统使用的Ubuntu18.04 配置4G 1.首先安装一些依赖服务1sudo apt-get install curl openssh-server ca-certificates postfix 2.安装社区版-专业版收费12sudo curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.deb.sh | sudo bashsudo apt-get install gitlab-ce 3.修改ip1打开/etc/gitlab/gitlab.rb,将external_url = 'git.example.com'修改为自己的域名地址或者IP地址 4.执行重新加载配置1sudo gitlab-ctl reconfigure 启动完成后浏览器访问配置好的地址，应该出现重置管理员密码的界面,输入密码就可以了. 常用命令 启动服务 sudo gitlab-ctl start sudo gitlab-ctl reconfigure 大功告成]]></content>
