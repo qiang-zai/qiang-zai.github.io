@@ -94,10 +94,12 @@
 <meta property="og:site_name" content="LQ | 归来仍是少年">
 <meta property="og:description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。 Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。 它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Hash)">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-07-08T14:55:15.888Z">
+<meta property="og:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201912/Redis.png">
+<meta property="og:updated_time" content="2019-12-17T10:14:34.973Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="记录之redis常见操作">
 <meta name="twitter:description" content="REmote DIctionary Server(Redis) 是一个由Salvatore Sanfilippo写的key-value存储系统。 Redis是一个开源的使用ANSI C语言编写、遵守BSD协议、支持网络、可基于内存亦可持久化的日志型、Key-Value数据库，并提供多种语言的API。 它通常被称为数据结构服务器，因为值（value）可以是 字符串(String), 哈希(Hash)">
+<meta name="twitter:image" content="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201912/Redis.png">
 
 
 
@@ -454,6 +456,7 @@
 <p>yourpassword就是redis验证密码，设置密码以后发现可以登陆，但是无法执行命令了。<br>报错如下：<br><strong>(error) ERR operation not permitted</strong><br>这时候你可以用授权命令进行授权，就不报错了<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">auth yourPassword</span><br></pre></td></tr></table></figure></p>
 <p>另外，在连接服务器的时候就可以指定登录密码，避免单独输入上面授权命令</p>
 <p>命令如下:<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">redis-cli -h yourIp -p yourPort -a yourPassword</span><br></pre></td></tr></table></figure></p>
+<p><img src="https://blogs-1257207703.cos.ap-shanghai.myqcloud.com/201912/Redis.png" alt></p>
 <h3 id="客户端-服务器操作"><a href="#客户端-服务器操作" class="headerlink" title="客户端/服务器操作"></a>客户端/服务器操作</h3><h4 id="服务器端"><a href="#服务器端" class="headerlink" title="服务器端"></a>服务器端</h4><p>命令：<code>redis-server</code><br>查看帮助文档：<code>redis-server --help</code><br>关闭重启：ubuntu：<code>sudo service redis stop|start|restart</code><br>配置文件启动：<code>redis-server path/redis.conf</code></p>
 <h4 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h4><p>查看帮助文档：<code>redis-cli --help</code><br>连接：<code>redis-cli</code><br>运行测试：<code>ping</code>  返回 PONG<br>切换数据库：<code>select num</code> # 默认有16个数据库0～15</p>
 <h3 id="数据库结构"><a href="#数据库结构" class="headerlink" title="数据库结构"></a>数据库结构</h3><ul>
