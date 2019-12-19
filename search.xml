@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title></title>
-    <url>%2F2019%2F12%2F19%2FPython-%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E7%AF%87%2F</url>
+    <title><![CDATA[Python魔法方法]]></title>
+    <url>%2F2019%2F12%2F12%2FPython-%E9%AD%94%E6%B3%95%E6%96%B9%E6%B3%95%E7%AF%87%2F</url>
     <content type="text"><![CDATA[魔法方法是Python内置方法，不需要主动调用。几乎每个魔法方法都有一个对应的内置函数或者运算符，当我们对这个对象使用这些函数或者运算符时就会调用类中对应的魔法方法。 我们在调用Python类中的某个方法时，通常会看到某些特殊的方法，他们总是被双下划线所包围，格式：__方法名__。如果你的对象实现（重载）了这些方法中的某一个，那么这个方法就会在特殊的情况下被 Python 所调用，你可以定义自己想要的行为，而这一切都是自动发生的。 比较运算符&amp;魔法方法对应关系 __eq__对应的比较运算符== __ne__ 对应的比较运算符!= __lt__对应的比较运算符&lt; __le__对应的比较运算符&lt;= __gt__对应的比较运算符&gt; __ge__对应的比较运算符&gt;= 案例举个例子，Python中有个比较操作符 ==用来比较两个变量的大小，而这个操作符是通过方法__eq__来实现 的，所以只要我们通过改变这个方法的内部代码，就可以改变重新定义这个操作符的行为。 12345678910111213class String(str): '''定义一个String类继承str对象''' def __eq__(self, other): '''重写__eq__方法''' return len(self) == len(other)s1 = String('abc')s2 = String('123')print(s1) # 'abc'print(s2) # '123'print(s1 == s2) # True 上面代码String类继承str对象，实例化了2个字符串对象，然后对比两个字符串对象长度是否相等。重写__eq__方法以后，==比较操作符的作用就不再是比较两边的字符串内容是否一样，变成了比较长度。 算术运算符&amp;魔法方法对应关系 __add__对应的算术运算符+ __sub__对应的算术运算符- __mul__对应的算术运算符* __truediv__对应的算术运算符/ __floordiv__对应的算术运算符// __mod__对应的算术运算符% 案例1234567891011class Person(object): def __init__(self, age): self.age = age def __add__(self, other): return self.age + other.agep1 = Person(18)p2 = Person(20)print(p1 + p2) # 38 定义Person类，并实例化两个对象，求两个人的年龄之和。 赋值增加运算符对应关系 __iadd__对应的算术运算符+= __isub__对应的算术运算符-= __imul__对应的算术运算符*= __itruediv__对应的算术运算符/= __ifloordiv__对应的算术运算符//= __imod__对应的算术运算符%= 类型转换操作符 __int__实现到int的类型转换 int() __float__实现到float的类型转换 float() __complex__实现到complex的类型转换complex() __oct__实现到8进制的类型转换 oct() __hex__实现到16进制的类型转换 hex() 以上是关于操作符运算符的方法，我们很少会改变这些魔法方法除非你真的需要改变他们. 属性相关的魔法方法 __getattr__(self, name)定义当用户视图获取一个不存在的属性时的行为 __getattribute__(self, name) 定义当对象的属性被访问时的行为 __setattr__(self, name)定义当一个属性被设置时的行为 __delattr__(self, name)定义当一个属性被删除时的行为 容器相关的魔法方法 __len__(self)定义当被len()调用时的行为，返回容器中的元素个数 __getitem__(self, key) 定义获取容器中指定元素的姓名，相当于self[key] __setitme__(self, key, value)定义设置容器中的元素，和字典操作类型 __delitem__(slef, key)定义删除容器中的指定元素 相当于del self[key] __iter__(self)定义迭代容器中的元素的行为 __contains__(self,item)定义当使用测试运算符 in或者not in时的行为 上下文管理器 __enter__ __exit__]]></content>
+      <categories>
+        <category>Python-Advanced</category>
+      </categories>
   </entry>
   <entry>
     <title><![CDATA[Python模块之collections]]></title>
