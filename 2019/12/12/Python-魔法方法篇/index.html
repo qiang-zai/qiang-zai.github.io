@@ -93,7 +93,7 @@
 <meta property="og:site_name" content="LQ | 归来仍是少年">
 <meta property="og:description" content="魔法方法是Python内置方法，不需要主动调用。几乎每个魔法方法都有一个对应的内置函数或者运算符，当我们对这个对象使用这些函数或者运算符时就会调用类中对应的魔法方法。 我们在调用Python类中的某个方法时，通常会看到某些特殊的方法，他们总是被双下划线所包围，格式：__方法名__。如果你的对象实现（重载）了这些方法中的某一个，那么这个方法就会在特殊的情况下被 Python 所调用，你可以定义自己想">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-12-19T06:04:48.779Z">
+<meta property="og:updated_time" content="2019-12-20T08:47:09.066Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Python魔法方法">
 <meta name="twitter:description" content="魔法方法是Python内置方法，不需要主动调用。几乎每个魔法方法都有一个对应的内置函数或者运算符，当我们对这个对象使用这些函数或者运算符时就会调用类中对应的魔法方法。 我们在调用Python类中的某个方法时，通常会看到某些特殊的方法，他们总是被双下划线所包围，格式：__方法名__。如果你的对象实现（重载）了这些方法中的某一个，那么这个方法就会在特殊的情况下被 Python 所调用，你可以定义自己想">
@@ -405,7 +405,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  959 字
+                  963 字
                 </span>
               
 
@@ -486,10 +486,15 @@
 </ul>
 <p>以上是关于操作符运算符的方法，我们很少会改变这些魔法方法除非你真的需要改变他们.</p>
 <h3 id="属性相关的魔法方法"><a href="#属性相关的魔法方法" class="headerlink" title="属性相关的魔法方法"></a>属性相关的魔法方法</h3><ul>
-<li><code>__getattr__(self, name)</code>定义当用户视图获取一个不存在的属性时的行为</li>
-<li><code>__getattribute__(self, name)</code> 定义当对象的属性被访问时的行为</li>
-<li><code>__setattr__(self, name)</code>定义当一个属性被设置时的行为</li>
-<li><code>__delattr__(self, name)</code>定义当一个属性被删除时的行为</li>
+<li><p><code>__getattr__(self, name)</code>定义当用户视图获取一个不存在的属性时的行为</p>
+</li>
+<li><p><code>__getattribute__(self, name)</code> 定义当对象的属性被访问时的行为</p>
+</li>
+<li><p><code>__setattr__(self, name)</code>定义当一个属性被设置时的行为</p>
+</li>
+<li><p><code>__delattr__(self, name)</code>定义当一个属性被删除时的行为</p>
+<p><a href="https://www.jianshu.com/p/7aaf23831168" target="_blank" rel="noopener">扩展了解</a></p>
+</li>
 </ul>
 <h3 id="容器相关的魔法方法"><a href="#容器相关的魔法方法" class="headerlink" title="容器相关的魔法方法"></a>容器相关的魔法方法</h3><ul>
 <li><code>__len__(self)</code>定义当被<code>len()</code>调用时的行为，返回容器中的元素个数</li>
