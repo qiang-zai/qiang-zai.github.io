@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="很多使用Python的开发人员可能了解过 迭代器、生成器、装饰器。今天主要给大家分享Python的另外一种设计方法：描述器。什么是描述器？我们先来看下官方文档给出的摘要 12Defines descriptors, summarizes the protocol, and shows how descriptors are called. Examines a custom descriptor">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python之描述器">
+<meta property="og:url" content="http://qiangzai.site/2019/12/24/Python之描述器/index.html">
+<meta property="og:site_name" content="LQ | 归来仍是少年">
+<meta property="og:description" content="很多使用Python的开发人员可能了解过 迭代器、生成器、装饰器。今天主要给大家分享Python的另外一种设计方法：描述器。什么是描述器？我们先来看下官方文档给出的摘要 12Defines descriptors, summarizes the protocol, and shows how descriptors are called. Examines a custom descriptor">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-12-26T07:22:35.413Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python之描述器">
+<meta name="twitter:description" content="很多使用Python的开发人员可能了解过 迭代器、生成器、装饰器。今天主要给大家分享Python的另外一种设计方法：描述器。什么是描述器？我们先来看下官方文档给出的摘要 12Defines descriptors, summarizes the protocol, and shows how descriptors are called. Examines a custom descriptor">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":true,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://qiangzai.site/2019/12/24/Python之描述器/">
+
+
+
+
+
+  <title>Python之描述器 | LQ | 归来仍是少年</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">LQ | 归来仍是少年</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle">Life is short. I use Python</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://qiangzai.site/2019/12/24/Python之描述器/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="强仔">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="LQ | 归来仍是少年">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python之描述器</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-12-24T16:59:16+08:00">
+                2019-12-24
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python-Advanced/" itemprop="url" rel="index">
+                    <span itemprop="name">Python-Advanced</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2019/12/24/Python之描述器/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count valine-comment-count" data-xid="/2019/12/24/Python之描述器/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+             <span id="/2019/12/24/Python之描述器/" class="leancloud_visitors" data-flag-title="Python之描述器">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  2k 字
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  8 分钟
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>很多使用<code>Python</code>的开发人员可能了解过 <strong>迭代器</strong>、<strong>生成器</strong>、<strong>装饰器</strong>。今天主要给大家分享Python的另外一种设计方法：<strong>描述器</strong>。什么是描述器？我们先来看下<a href="https://docs.python.org/zh-cn/3/howto/descriptor.html" target="_blank" rel="noopener">官方文档</a>给出的摘要</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Defines descriptors, summarizes the protocol, and shows how descriptors are called. Examines a custom descriptor and several built-in Python descriptors including functions, properties, static methods, and class methods. Shows how each works by giving a pure Python equivalent and a sample application.</span><br><span class="line">学习描述器不仅能提供接触到更多工具集的方法，还能更深地理解 Python 工作的原理并更加体会到其设计的优雅性。</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+<h3 id="描述器定义和简介"><a href="#描述器定义和简介" class="headerlink" title="描述器定义和简介"></a>描述器定义和简介</h3><p>一个描述器是一个包含“绑定行为”的对象，对其属性的存取被描述器协议中定义的方法覆盖。这些方法有：<code>__get__()</code>、<code>__set__()</code>、<code>__delete__()</code>。如果某个类中定义了这些方法中的任意一个，那么这个对象就可以被称为一个描述器。</p>
+<p>实例对象属性访问的默认行为是从一个对象的<code>__dict__</code>字典类型的属性中获取、设置或删除。</p>
+<p>下面的列子 对象<code>p.name</code>的查找顺序会从 <code>p.__dict__[name]</code>开始,然后是<code>Person.__dict__[name]</code>,接下来依次查找<code>Person</code>的基类，不包括元类。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.name = <span class="string">'qiangzai'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p = Person()</span><br><span class="line">print(p.__dict__)  <span class="comment"># &#123;'name': 'qiangzai'&#125;</span></span><br><span class="line">p.age = <span class="number">18</span>  <span class="comment"># 给p实例对象添加age属性</span></span><br><span class="line">print(p.__dict__)  <span class="comment"># &#123;'name': 'qiangzai', 'age': 18&#125;</span></span><br></pre></td></tr></table></figure>
+<p>如果找到的值是一个定义了某个描述器方法的对象，则Python可能会重载默认行为并转而发起调用描述器方法。</p>
+<p>这具体发生在优先级链的那个环节则要根据所定义的描述器方法及其调用的方式来决定。</p>
+<h3 id="非数据描述器"><a href="#非数据描述器" class="headerlink" title="非数据描述器"></a>非数据描述器</h3><blockquote>
+<p>实例对象中只定义了<code>__get__()</code>的描述器称为非数据描述器(它们通常用于方法，但也可以用于其他用途)。</p>
+</blockquote>
+<h4 id="案例1-定义一个非数据描述器"><a href="#案例1-定义一个非数据描述器" class="headerlink" title="案例1 定义一个非数据描述器"></a>案例1 定义一个非数据描述器</h4><p>我们定义了两个类 <code>Descriptor</code>和<code>Person</code>,其中<code>Person</code>的类属性<code>name</code>是<code>Descriptor</code>的实例对象。注意一定是类属性，如果是实例属性就会失效。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, owner)</span>:</span></span><br><span class="line">		<span class="comment"># self 指A的实例对象 owner/instance指的是调用方的类及类的实例</span></span><br><span class="line">		print(self, instance, owner)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="comment"># 注意一定是类属性,而不是实例属性</span></span><br><span class="line">	name = Descriptor()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p = Person()</span><br><span class="line">p.name  <span class="comment"># &lt;__main__.Descriptor object at 0x10c6c1940&gt; &lt;__main__.Person object at 0x10c782668&gt; &lt;class '__main__.Person'&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">p.name的调用顺序</span></span><br><span class="line"><span class="string">1. p先去自己的__dict__去寻找name, 没有找到</span></span><br><span class="line"><span class="string">2. p又去自己的类 Person的__dict__找name, 找到了</span></span><br><span class="line"><span class="string">3. 找到以后返回name对应的value是一个描述器,会调用描述器的__get__方法</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line">Person.name  <span class="comment"># &lt;__main__.Descriptor object at 0x10a3cd940&gt; None &lt;class '__main__.Person'&gt;</span></span><br><span class="line"><span class="string">'''</span></span><br><span class="line"><span class="string">Person.name的调用顺序</span></span><br><span class="line"><span class="string">1. Person去自己的属性Person.__dict__中找到了name</span></span><br><span class="line"><span class="string">2. 发现找到的name对应的value是一个描述器,会调用描述器的__get__方法</span></span><br><span class="line"><span class="string">'''</span></span><br></pre></td></tr></table></figure>
+<h4 id="案例2-访问描述器对象的属性"><a href="#案例2-访问描述器对象的属性" class="headerlink" title="案例2 访问描述器对象的属性"></a>案例2 访问描述器对象的属性</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.cls_name = <span class="string">'Descriptor'</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, owner)</span>:</span></span><br><span class="line">		<span class="comment"># 将实例对象self本身返回</span></span><br><span class="line">		<span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></span><br><span class="line">	name = Descriptor()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p = Person()</span><br><span class="line">print(p.name.cls_name)  <span class="comment"># Descriptor</span></span><br></pre></td></tr></table></figure>
+<h4 id="案例3-非数据描述器的问题"><a href="#案例3-非数据描述器的问题" class="headerlink" title="案例3 非数据描述器的问题"></a>案例3 非数据描述器的问题</h4><ul>
+<li>当实例属性覆盖同名的类属性指向的非数据描述器时</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.cls_name = <span class="string">'Descriptor'</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, owner)</span>:</span></span><br><span class="line">		<span class="comment"># 将实例对象self本身返回</span></span><br><span class="line">		<span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></span><br><span class="line">	name = Descriptor()</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.name = <span class="string">'qiangzai'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p = Person()</span><br><span class="line">print(p.name)  <span class="comment"># qiangzai</span></span><br><span class="line">print(p.name.cls_name)  <span class="comment"># AttributeError: 'str' object has no attribute 'cls_name'</span></span><br></pre></td></tr></table></figure>
+<p><strong>结论：</strong>当类属性和实例属性同名时.实例对象访问属性的优先级链  实例对象.<code>__dict__</code> &gt; 类.<code>__dict__</code></p>
+<h3 id="数据描述器"><a href="#数据描述器" class="headerlink" title="数据描述器"></a>数据描述器</h3><blockquote>
+<p>如果一个对象定义了<code>__set__()</code>或<code>__delete__()</code>，那么它就被认为是一个数据描述器。</p>
+</blockquote>
+<h4 id="案例4-修复案例3的问题"><a href="#案例4-修复案例3的问题" class="headerlink" title="案例4 修复案例3的问题"></a>案例4 修复案例3的问题</h4><ul>
+<li>和👆上面案例3同样的代码，只加了一个<code>__set__()</code>方法</li>
+</ul>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.cls_name = <span class="string">'Descriptor'</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, owner)</span>:</span></span><br><span class="line">		<span class="comment"># 将实例对象self本身返回</span></span><br><span class="line">		<span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></span><br><span class="line">		<span class="keyword">pass</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></span><br><span class="line">	name = Descriptor()</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.name = <span class="string">'qiangzai'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p = Person()</span><br><span class="line">print(p.name)  <span class="comment"># &lt;__main__.Descriptor object at 0x104f03940&gt;</span></span><br><span class="line">print(p.name.cls_name)  <span class="comment"># Descriptor</span></span><br></pre></td></tr></table></figure>
+<p><strong>结论：</strong>实例对象访问属性时，数据描述器优先于实例对象的<code>__dict__</code>属性</p>
+<h4 id="案例4-数据描述器-set-的作用"><a href="#案例4-数据描述器-set-的作用" class="headerlink" title="案例4 数据描述器__set__的作用"></a>案例4 数据描述器<code>__set__</code>的作用</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Descriptor</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.cls_name = <span class="string">'Descriptor'</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, owner)</span>:</span></span><br><span class="line">		<span class="comment"># 将实例对象self本身返回</span></span><br><span class="line">		<span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></span><br><span class="line">		print(<span class="string">'----set---方法被执行'</span>)</span><br><span class="line">		self.age = value</span><br><span class="line">		print(value)</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></span><br><span class="line">	name = Descriptor()</span><br><span class="line"></span><br><span class="line">p = Person()</span><br><span class="line">print(p.name)  <span class="comment"># &lt;__main__.Descriptor object at 0x104f03940&gt;</span></span><br><span class="line">p.name = <span class="number">18</span>  <span class="comment"># 会调用__set__方法,并将18传递给参数value</span></span><br></pre></td></tr></table></figure>
+<p>执行结果</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;__main__.Descriptor object at <span class="number">0x105469908</span>&gt;</span><br><span class="line">----set---方法被执行</span><br><span class="line"><span class="number">18</span></span><br></pre></td></tr></table></figure>
+<p><strong>结论：</strong><code>__set__()</code>方法一般用来给描述器添加属性</p>
+<h3 id="描述器的应用"><a href="#描述器的应用" class="headerlink" title="描述器的应用"></a>描述器的应用</h3><h4 id="property-函数"><a href="#property-函数" class="headerlink" title="property() 函数"></a>property() 函数</h4><ul>
+<li><code>property(fget=None, fset=None, fdel=None, doc=None)</code></li>
+<li>参数说明<ul>
+<li><code>fget</code>是获取属性值的方法</li>
+<li><code>fset</code>是设置属性值的方法</li>
+<li><code>fdel</code>是删除属性值的方法</li>
+<li><code>doc</code>是属性描述描述信息，如果省略会把<code>fget</code>方法的<code>doscing</code>拿来用</li>
+</ul>
+</li>
+</ul>
+<h5 id="案例代码1"><a href="#案例代码1" class="headerlink" title="案例代码1"></a>案例代码1</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.__name = <span class="string">'qiangzai'</span></span><br><span class="line"></span><br><span class="line"><span class="meta">	@property</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">get_name</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> self.__name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">person = Person()</span><br><span class="line"><span class="comment"># 通过@property将通过调用函数拿到__name变成了通过属性就可以直接拿到</span></span><br><span class="line">print(person.get_name)  <span class="comment"># qiangzai</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>上面👆案例是大家经常会用到的<code>@property</code>场景</li>
+</ul>
+<h5 id="案例代码2"><a href="#案例代码2" class="headerlink" title="案例代码2"></a>案例代码2</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.__name = <span class="string">'qiangzai'</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">get_name</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> self.__name</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">set_name</span><span class="params">(self, value)</span>:</span></span><br><span class="line">		self.__name = value</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">del_name</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">del</span> self.__name</span><br><span class="line"></span><br><span class="line">	<span class="comment"># 整和型的property用法</span></span><br><span class="line">	name = property(fget=get_name, fset=set_name, fdel=del_name)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">person = Person()</span><br><span class="line">print(person.name)  <span class="comment"># 获取属性  qiangzai</span></span><br><span class="line">person.name = <span class="string">'LQ'</span>  <span class="comment"># 设置属性</span></span><br><span class="line">print(person.name)  <span class="comment"># 再次获取属性 LQ</span></span><br><span class="line"><span class="keyword">del</span> person.name     <span class="comment"># 删除属性</span></span><br><span class="line">print(person.name)  <span class="comment"># AttributeError: 'Person' object has no attribute '_Person__name'</span></span><br></pre></td></tr></table></figure>
+<p>上面👆这种写法等价于下面这种装饰器的写法👇</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.__name = <span class="string">'qiangzai'</span></span><br><span class="line"></span><br><span class="line"><span class="meta">	@property</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">name</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> self.__name</span><br><span class="line"></span><br><span class="line"><span class="meta">	@name.setter</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">name</span><span class="params">(self, value)</span>:</span></span><br><span class="line">		self.__name = value</span><br><span class="line"></span><br><span class="line"><span class="meta">	@name.deleter</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">name</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="keyword">del</span> self.__name</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">person = Person()</span><br><span class="line">print(person.name)  <span class="comment"># 获取属性  qiangzai</span></span><br><span class="line">person.name = <span class="string">'LQ'</span>  <span class="comment"># 设置属性</span></span><br><span class="line">print(person.name)  <span class="comment"># 再次获取属性 LQ</span></span><br><span class="line"><span class="keyword">del</span> person.name  <span class="comment"># 删除属性</span></span><br><span class="line">print(person.name)  <span class="comment"># AttributeError: 'Person' object has no attribute '_Person__name'</span></span><br></pre></td></tr></table></figure>
+<h5 id="案例代码3-手动实现property-函数"><a href="#案例代码3-手动实现property-函数" class="headerlink" title="案例代码3 手动实现property(函数)"></a>案例代码3 手动实现property(函数)</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">myproperty</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="string">'''自定义一个property'''</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, gfunc=None, sfunc=None, dfunc=None)</span>:</span></span><br><span class="line">		self.gfunc = gfunc</span><br><span class="line">		self.sfunc = sfunc</span><br><span class="line">		self.dfunc = dfunc</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, owner)</span>:</span></span><br><span class="line">		<span class="keyword">return</span> self.gfunc(instance)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">setter</span><span class="params">(self, sfunc)</span>:</span></span><br><span class="line">		self.sfunc = sfunc</span><br><span class="line">		<span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__set__</span><span class="params">(self, instance, value)</span>:</span></span><br><span class="line">		self.sfunc(instance, value)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">deleter</span><span class="params">(self, dfunc)</span>:</span></span><br><span class="line">		self.dfunc = dfunc</span><br><span class="line">		<span class="keyword">return</span> self</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__delete__</span><span class="params">(self, instance)</span>:</span></span><br><span class="line">		self.dfunc(instance)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Zoo</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="string">'''动物园'''</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self)</span>:</span></span><br><span class="line">		self.animal_list = [<span class="string">'大象'</span>, <span class="string">'长颈鹿'</span>]</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">get_animal</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="string">'''获取所有的动物'''</span></span><br><span class="line">		<span class="keyword">return</span> self.animal_list</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">add_animal</span><span class="params">(self, value)</span>:</span></span><br><span class="line">		<span class="string">'''添加动物'''</span></span><br><span class="line">		self.animal_list.append(value)</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">pop_animal</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="string">'''删除最后一个动物'''</span></span><br><span class="line">		self.animal_list.pop()</span><br><span class="line"></span><br><span class="line">	animal = myproperty(gfunc=get_animal, sfunc=add_animal, dfunc=pop_animal)</span><br><span class="line"></span><br><span class="line">zoo = Zoo()</span><br><span class="line">print(zoo.animal)  <span class="comment"># ['大象', '长颈鹿']</span></span><br><span class="line">zoo.animal = <span class="string">'猪猪'</span></span><br><span class="line">print(zoo.animal)  <span class="comment"># ['大象', '长颈鹿', '猪猪']</span></span><br><span class="line"><span class="keyword">del</span> zoo.animal</span><br><span class="line">print(zoo.animal)  <span class="comment"># ['大象', '长颈鹿']</span></span><br></pre></td></tr></table></figure>
+<h4 id="cached-property"><a href="#cached-property" class="headerlink" title="cached_property"></a>cached_property</h4><h5 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h5><p>第一次见到这个<code>cached_property</code>是在<code>Django</code>的源码当中，后来去看了源码发现也是通过<strong>描述器</strong>来实现的，而且是利用了非数据描述符的特性： <code>__dict__</code>优先级大于描述器。</p>
+<h5 id="作用"><a href="#作用" class="headerlink" title="作用"></a>作用</h5><p>主要是用来做缓存用的。第一次调用函数or方法时会执行代码，对代码的结果进行缓存，下次再使用该函数or方法时直接从<code>__dict__</code>中将结果取出返回。</p>
+<h5 id="案例代码"><a href="#案例代码" class="headerlink" title="案例代码"></a>案例代码</h5><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">cached_property</span><span class="params">(object)</span>:</span></span><br><span class="line">	<span class="string">'''缓存'''</span></span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, func)</span>:</span></span><br><span class="line">		self.func = func</span><br><span class="line">		self.func_name = func.__name__</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">__get__</span><span class="params">(self, instance, owner)</span>:</span></span><br><span class="line">		result = instance.__dict__[self.func_name] = self.func(instance)</span><br><span class="line">		<span class="keyword">return</span> result</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span><span class="params">(object)</span>:</span></span><br><span class="line"></span><br><span class="line"><span class="meta">	@cached_property  # students = cached_property(students)</span></span><br><span class="line">	<span class="function"><span class="keyword">def</span> <span class="title">students</span><span class="params">(self)</span>:</span></span><br><span class="line">		<span class="string">'''</span></span><br><span class="line"><span class="string">		计算过程非常复杂,同一个对象不论调用几次返回的结果都是一样的</span></span><br><span class="line"><span class="string">		'''</span></span><br><span class="line">		print(<span class="string">'计算了1万次'</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="string">'计算出来的的1万个学生信息'</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">p = Person()</span><br><span class="line">print(p.students)</span><br><span class="line">print(p.students)</span><br><span class="line">print(p.students)</span><br></pre></td></tr></table></figure>
+<p>结果👇</p>
+<figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">计算了1万次</span><br><span class="line">计算出来的的1万个学生信息</span><br><span class="line">计算出来的的1万个学生信息</span><br><span class="line">计算出来的的1万个学生信息</span><br></pre></td></tr></table></figure>
+<p><strong>结论：</strong>使用了<code>cached_property</code>以后，函数只执行了1次，优化了访问速度。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+        <div class="post-widgets">
+        
+
+        
+
+        
+          
+          <div id="needsharebutton-postbottom">
+            <span class="btn">
+              <i class="fa fa-share-alt" aria-hidden="true"></i>
+            </span>
+          </div>
+        
+        </div>
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/12/12/Python-魔法方法篇/" rel="next" title="Python魔法方法">
+                <i class="fa fa-chevron-left"></i> Python魔法方法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+    </div>
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">强仔</p>
+              <p class="site-description motion-element" itemprop="description">Python爱好者一枚，希望通过Blogs记录一下自己的生活和工作</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">49</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">19</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">48</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+            <div class="links-of-author motion-element">
+                
+                  <span class="links-of-author-item">
+                    <a href="https://github.com/qiang-zai" target="_blank" title="GitHub">
+                      
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
+                  </span>
+                
+                  <span class="links-of-author-item">
+                    <a href="mailto:qiangzai996@gmail.com" target="_blank" title="E-Mail">
+                      
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  </span>
+                
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#描述器定义和简介"><span class="nav-number">1.</span> <span class="nav-text">描述器定义和简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#非数据描述器"><span class="nav-number">2.</span> <span class="nav-text">非数据描述器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#案例1-定义一个非数据描述器"><span class="nav-number">2.1.</span> <span class="nav-text">案例1 定义一个非数据描述器</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例2-访问描述器对象的属性"><span class="nav-number">2.2.</span> <span class="nav-text">案例2 访问描述器对象的属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例3-非数据描述器的问题"><span class="nav-number">2.3.</span> <span class="nav-text">案例3 非数据描述器的问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#数据描述器"><span class="nav-number">3.</span> <span class="nav-text">数据描述器</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#案例4-修复案例3的问题"><span class="nav-number">3.1.</span> <span class="nav-text">案例4 修复案例3的问题</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#案例4-数据描述器-set-的作用"><span class="nav-number">3.2.</span> <span class="nav-text">案例4 数据描述器__set__的作用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#描述器的应用"><span class="nav-number">4.</span> <span class="nav-text">描述器的应用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#property-函数"><span class="nav-number">4.1.</span> <span class="nav-text">property() 函数</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#案例代码1"><span class="nav-number">4.1.1.</span> <span class="nav-text">案例代码1</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#案例代码2"><span class="nav-number">4.1.2.</span> <span class="nav-text">案例代码2</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#案例代码3-手动实现property-函数"><span class="nav-number">4.1.3.</span> <span class="nav-text">案例代码3 手动实现property(函数)</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#cached-property"><span class="nav-number">4.2.</span> <span class="nav-text">cached_property</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#介绍"><span class="nav-number">4.2.1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#作用"><span class="nav-number">4.2.2.</span> <span class="nav-text">作用</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#案例代码"><span class="nav-number">4.2.3.</span> <span class="nav-text">案例代码</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">强仔</span>
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  <script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script>
+  <script src="/js/src/Valine.min.js"></script>
+  
+  <script type="text/javascript">
+    var GUEST = ['nick','mail','link'];
+    var guest = 'nick';
+    guest = guest.split(',').filter(item=>{
+      return GUEST.indexOf(item)>-1;
+    });
+    new Valine({
+        el: '#comments' ,
+        verify: false,
+        notify: false,
+        appId: 'mjE5WlYCSpcWonsNqQrIBcOA-gzGzoHsz',
+        appKey: 'W34u68g6zaSw4gfHaWVFAKlA',
+        placeholder: '欢迎评论交流',
+        avatar:'mm',
+        guest_info:['nick'], // 评论者只需要提供评论的昵称即可
+        pageSize:'10' || 10,
+    });
+  </script>
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("mjE5WlYCSpcWonsNqQrIBcOA-gzGzoHsz", "W34u68g6zaSw4gfHaWVFAKlA");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/needsharebutton/needsharebutton.css">
+
+  
+  
+  <script src="/lib/needsharebutton/needsharebutton.js"></script>
+
+  <script>
+    
+      pbOptions = {};
+      
+          pbOptions.iconStyle = "box";
+      
+          pbOptions.boxForm = "horizontal";
+      
+          pbOptions.position = "bottomCenter";
+      
+          pbOptions.networks = "Weibo,Wechat,Douban,QQZone,Twitter,Facebook";
+      
+      new needShareButton('#needsharebutton-postbottom', pbOptions);
+    
+    
+  </script>
+
+  
+
+  
+
+  
+
+  
+
+  
+</body>
+</html>
